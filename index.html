@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rithik U R</title>
+    <title>Rithik U R // Digital Portfolio</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Fonts: Oswald (Massive Headings) & Plus Jakarta Sans (Clean Body) -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -32,11 +32,10 @@
                         body: ['Plus Jakarta Sans', 'sans-serif'],
                     },
                     colors: {
-                        volt: '#ccff00',     // High-energy neon yellow/green
+                        volt: '#ccff00',
                         dark: '#050505',
-                        darker: '#000000',
                         panel: '#111111',
-                        border: '#222222'
+                        border: '#262626'
                     }
                 }
             }
@@ -44,409 +43,377 @@
     </script>
 
     <style>
-        /* Base & Custom Selection */
         ::selection { background-color: #ccff00; color: #000; }
         
-        /* Custom Cursor Override for Desktop Only */
         @media (pointer: fine) {
             body { cursor: none; }
-            a, button, input, select, textarea { cursor: none; }
+            a, button { cursor: none; }
         }
 
-        body { font-family: 'Plus Jakarta Sans', sans-serif; cursor: default; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
         h1, h2, h3, h4, .font-heading { text-transform: uppercase; line-height: 0.95; }
         
-        /* Smooth Scroll Margin to prevent Header Overlap */
-        section { scroll-margin-top: 80px; }
+        section { scroll-margin-top: 100px; }
 
-        /* Hide scrollbar for clean look */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #222222; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #ccff00; }
-
-        /* Infinite Marquee Animation - SLOWED DOWN (40s) */
-        .marquee-wrapper {
-            overflow: hidden;
-            white-space: nowrap;
-            display: flex;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-        }
-        .marquee-content {
-            display: flex;
-            animation: marquee 40s linear infinite;
-        }
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        /* Grainy Noise Overlay */
+        .noise::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 150;
         }
 
-        /* Mouse Tracking Variables */
-        :root {
-            --mouse-x: 50%;
-            --mouse-y: 50%;
-        }
-
-        /* Abstract Grid Background - Reactive */
+        /* Background Grid */
+        :root { --mouse-x: 50%; --mouse-y: 50%; }
         .grid-bg {
             background-size: 40px 40px;
             background-image: 
                 linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
-            mask-image: radial-gradient(circle 800px at var(--mouse-x) var(--mouse-y), black 0%, transparent 100%);
-            -webkit-mask-image: radial-gradient(circle 800px at var(--mouse-x) var(--mouse-y), black 0%, transparent 100%);
+            mask-image: radial-gradient(circle 600px at var(--mouse-x) var(--mouse-y), black 0%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle 600px at var(--mouse-x) var(--mouse-y), black 0%, transparent 100%);
         }
 
         /* Glitch Effect */
-        .glitch {
-            position: relative;
-            display: inline-block;
-        }
+        .glitch { position: relative; display: inline-block; }
         .glitch::before, .glitch::after {
             content: attr(data-text);
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: #111111; /* Matches bg-panel */
+            background: transparent;
         }
-        .glitch::before {
-            left: 2px;
-            text-shadow: -2px 0 #ccff00;
-            clip-path: inset(20% 0 80% 0);
-            animation: glitch-anim 2s infinite linear alternate-reverse;
-        }
-        .glitch::after {
-            left: -2px;
-            text-shadow: 2px 0 #00ffff;
-            clip-path: inset(80% 0 20% 0);
-            animation: glitch-anim 3s infinite linear alternate-reverse reverse;
-        }
+        .glitch::before { left: 2px; text-shadow: -2px 0 #ff00c1; clip-path: inset(20% 0 80% 0); animation: glitch-anim 2s infinite linear alternate-reverse; }
+        .glitch::after { left: -2px; text-shadow: 2px 0 #00ffff; clip-path: inset(80% 0 20% 0); animation: glitch-anim 3s infinite linear alternate-reverse reverse; }
+        
         @keyframes glitch-anim {
             0% { clip-path: inset(20% 0 80% 0); transform: translate(0); }
-            20% { clip-path: inset(60% 0 10% 0); transform: translate(-2px, 1px); }
-            40% { clip-path: inset(40% 0 50% 0); transform: translate(2px, -1px); }
-            60% { clip-path: inset(80% 0 5% 0); transform: translate(-2px, 0); }
+            40% { clip-path: inset(60% 0 30% 0); transform: translate(2px, -1px); }
             80% { clip-path: inset(10% 0 70% 0); transform: translate(2px, 1px); }
             100% { clip-path: inset(30% 0 40% 0); transform: translate(0); }
         }
 
-        /* 3D Wireframe Animations */
-        .perspective-1000 { perspective: 1000px; }
-        .preserve-3d { transform-style: preserve-3d; }
-        @keyframes spin-3d {
-            0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+        /* Scanline Animation */
+        .scanline {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(to bottom, transparent, #ccff00, transparent);
+            opacity: 0.1;
+            pointer-events: none;
+            animation: scan 4s linear infinite;
         }
-        .animate-spin-3d { animation: spin-3d 25s linear infinite; }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
 
-        /* Custom Cursor Styles */
-        .cursor-dot {
-            position: fixed; top: 0; left: 0; width: 8px; height: 8px;
-            background-color: #ccff00; border-radius: 50%;
-            pointer-events: none; z-index: 9999;
-            transform: translate(-50%, -50%);
-        }
-        .cursor-ring {
-            position: fixed; top: 0; left: 0; width: 40px; height: 40px;
-            border: 1px solid rgba(204, 255, 0, 0.5); border-radius: 50%;
-            pointer-events: none; z-index: 9998;
-            transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
-        }
-        .cursor-ring.active {
-            width: 70px; height: 70px;
-            background-color: rgba(204, 255, 0, 0.1);
-            border-color: #ccff00;
+        /* Background Wires */
+        .wire-path { fill: none; stroke: #ccff00; stroke-width: 1; stroke-opacity: 0.08; stroke-dasharray: 1000; }
+        .wire-pulse { 
+            fill: none; 
+            stroke: #ccff00; 
+            stroke-width: 2; 
+            filter: drop-shadow(0 0 6px #ccff00); 
+            stroke-dasharray: 100, 1000; 
+            stroke-dashoffset: 1100;
         }
 
-        /* Clip Path for dynamic angled sections */
-        .clip-angle {
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 4vw), 0 100%);
-        }
+        /* Cursor */
+        .cursor-dot { position: fixed; top: 0; left: 0; width: 8px; height: 8px; background: #ccff00; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); }
+        .cursor-ring { position: fixed; top: 0; left: 0; width: 40px; height: 40px; border: 1px solid rgba(204, 255, 0, 0.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: all 0.2s; }
+        .cursor-ring.active { width: 65px; height: 65px; background: rgba(204, 255, 0, 0.05); border-color: #ccff00; }
 
-        /* Mobile Menu Transitions */
-        #mobile-menu {
-            transform: translateY(-100%);
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        /* UPDATED MARQUEE SPEED (From 40s to 20s) */
+        .marquee-content { animation: marquee 20s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        #mobile-menu { transform: translateY(-100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        #mobile-menu.open { transform: translateY(0); }
+
+        /* Vertical Progress Bar */
+        .progress-indicator {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: none;
         }
-        #mobile-menu.open {
-            transform: translateY(0);
+        @media (min-width: 1024px) { .progress-indicator { display: block; } }
+
+        /* Card Tilt Utility */
+        .tilt-card { transform-style: preserve-3d; transition: transform 0.1s ease-out; will-change: transform; }
+        
+        /* Glass Refraction Sheen */
+        .glass-sheen {
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-sheen::after {
+            content: "";
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.03) 50%, transparent 55%);
+            pointer-events: none;
+            z-index: 5;
         }
     </style>
 </head>
-<body class="relative bg-dark text-white">
+<body class="relative bg-dark text-white noise">
 
-    <!-- Custom Cursor (Desktop Only) -->
+    <!-- Custom Cursor -->
     <div class="cursor-dot hidden md:block"></div>
     <div class="cursor-ring hidden md:block"></div>
 
-    <!-- Responsive Glassmorphic Nav -->
+    <!-- Scroll Progress Sidebar -->
+    <div class="progress-indicator">
+        <div class="flex flex-col items-center gap-6">
+            <span class="font-heading text-[10px] tracking-widest text-white/20 uppercase rotate-[-90deg] origin-center translate-y-8">Scroll</span>
+            <div class="w-px h-32 bg-white/10 relative">
+                <div id="progress-bar" class="absolute top-0 left-0 w-full bg-volt h-0"></div>
+            </div>
+            <div id="section-label" class="font-heading text-xs tracking-[0.2em] text-volt uppercase rotate-[-90deg] origin-center -translate-y-8">Home</div>
+        </div>
+    </div>
+
+    <!-- Background Wires Layer with explicit movement IDs -->
+    <div id="wires-container" class="fixed inset-0 z-0 pointer-events-none opacity-40">
+        <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <path class="wire-path" d="M -50 150 L 250 150 L 250 350 L 600 350 L 600 100 L 1400 100" />
+            <path id="wire-pulse-1" class="wire-pulse" d="M -50 150 L 250 150 L 250 350 L 600 350 L 600 100 L 1400 100" />
+            
+            <path class="wire-path" d="M 1400 750 L 1000 750 L 1000 550 L 700 550 L 700 850 L -100 850" />
+            <path id="wire-pulse-2" class="wire-pulse" d="M 1400 750 L 1000 750 L 1000 550 L 700 550 L 700 850 L -100 850" />
+            
+            <path class="wire-path" d="M 300 -100 L 300 250 L -100 250" />
+            <path id="wire-pulse-3" class="wire-pulse" d="M 300 -100 L 300 250 L -100 250" />
+        </svg>
+    </div>
+
+    <!-- Nav -->
     <nav class="fixed top-0 w-full z-[100] bg-dark/40 backdrop-blur-xl border-b border-white/5 p-4 md:p-6 flex justify-between items-center">
         <div class="font-heading text-xl md:text-2xl font-bold tracking-wider uppercase">RITHIK <span class="text-volt">U R</span></div>
-        
-        <!-- Desktop Links -->
         <div class="hidden md:flex gap-8 font-bold text-sm tracking-widest uppercase">
             <a href="#about" class="hover:text-volt transition-colors">About</a>
             <a href="#stack" class="hover:text-volt transition-colors">Stack</a>
             <a href="#vibe" class="hover:text-volt transition-colors">Vibe</a>
             <a href="#contact" class="hover:text-volt transition-colors">Contact</a>
         </div>
-
-        <!-- Mobile Toggle -->
-        <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
-            <i data-lucide="menu" class="w-6 h-6"></i>
-        </button>
+        <button id="menu-toggle" class="md:hidden text-white"><i data-lucide="menu"></i></button>
     </nav>
 
     <!-- Mobile Menu Overlay -->
     <div id="mobile-menu" class="fixed inset-0 z-[90] bg-dark flex flex-col items-center justify-center gap-8 md:hidden">
-        <a href="#about" class="mobile-link font-heading text-4xl font-bold hover:text-volt transition-colors">About</a>
-        <a href="#stack" class="mobile-link font-heading text-4xl font-bold hover:text-volt transition-colors">Stack</a>
-        <a href="#vibe" class="mobile-link font-heading text-4xl font-bold hover:text-volt transition-colors">Vibe</a>
-        <a href="#contact" class="mobile-link font-heading text-4xl font-bold hover:text-volt transition-colors">Contact</a>
-        <button id="menu-close" class="mt-8 text-volt uppercase tracking-widest font-bold text-xs">Close Menu</button>
+        <a href="#about" class="mobile-link font-heading text-4xl font-bold hover:text-volt">About</a>
+        <a href="#stack" class="mobile-link font-heading text-4xl font-bold hover:text-volt">Stack</a>
+        <a href="#vibe" class="mobile-link font-heading text-4xl font-bold hover:text-volt">Vibe</a>
+        <a href="#contact" class="mobile-link font-heading text-4xl font-bold hover:text-volt">Contact</a>
+        <button id="menu-close" class="mt-8 text-volt uppercase tracking-widest font-bold text-xs">Close</button>
     </div>
 
     <!-- HERO SECTION -->
-    <header class="relative min-h-[90vh] md:min-h-screen flex flex-col justify-center overflow-hidden pt-32 pb-20">
+    <header id="home" class="relative min-h-[100vh] flex flex-col justify-center overflow-hidden pt-32 pb-20">
         <div class="absolute inset-0 grid-bg pointer-events-none z-0"></div>
-        
         <div class="z-10 px-6 md:px-12 flex flex-col items-center text-center">
-            <p class="font-body text-volt font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase mb-4 text-[10px] md:text-sm reveal-up">Information Technology</p>
-            <h1 class="font-heading text-[12vw] sm:text-[14vw] md:text-[12vw] font-bold text-white whitespace-normal md:whitespace-nowrap leading-[0.9] reveal-up max-w-[90vw]">
-                RITHIK <span class="text-transparent" style="-webkit-text-stroke: 1px #333;">U R</span>
+            <p class="font-body text-volt font-bold tracking-[0.3em] uppercase mb-4 text-[10px] md:text-sm reveal-up">Information Technology</p>
+            <h1 class="font-heading text-[12vw] sm:text-[14vw] md:text-[12vw] font-bold text-white leading-[0.9] reveal-up max-w-[90vw]">
+                RITHIK <span class="text-transparent" style="-webkit-text-stroke: 1.5px #333;">U R</span>
             </h1>
-            
             <div class="w-full max-w-2xl mt-8 reveal-up flex flex-col md:flex-row items-center gap-6 justify-center">
                 <p class="text-gray-400 text-base md:text-xl font-medium leading-relaxed text-center px-4">
                     Building the foundation. Writing logic. Obsessed with Full Stack Development.
                 </p>
             </div>
         </div>
-
-        <!-- Scroll indicator -->
-        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 reveal-up opacity-40">
-            <div class="w-[1px] h-10 md:h-12 bg-gradient-to-b from-volt to-transparent"></div>
-            <span class="text-[8px] uppercase tracking-widest text-volt font-bold">Scroll</span>
-        </div>
     </header>
 
-    <!-- KINETIC MARQUEE -->
-    <div class="bg-volt text-dark py-3 md:py-4 rotate-[-1deg] scale-105 z-20 relative overflow-hidden my-12 shadow-[0_0_40px_rgba(204,255,0,0.15)]">
+    <!-- MARQUEE (The band being speeded up) -->
+    <div class="bg-volt text-dark py-3 md:py-4 rotate-[-1deg] scale-105 z-20 relative overflow-hidden my-12">
         <div class="marquee-wrapper">
             <div class="marquee-content font-heading text-2xl md:text-4xl font-bold tracking-widest flex items-center">
-                <span>FULL STACK DEV</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
-                <span>PYTHON & C</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
-                <span>JAVASCRIPT</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
-                <span>BLENDER 3D</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
-                <span>PRACTICAL LEARNING</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
-                <span>SOFTWARE ENGINEERING</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
-                <!-- Duplicate -->
-                <span>FULL STACK DEV</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
-                <span>PYTHON & C</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
-                <span>JAVASCRIPT</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
-                <span>BLENDER 3D</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
-                <span>PRACTICAL LEARNING</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
-                <span>SOFTWARE ENGINEERING</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
+                <span>FULL STACK DEV</span><span class="mx-4 md:mx-6">⚡</span>
+                <span>PYTHON & C</span><span class="mx-4 md:mx-6">⚡</span>
+                <span>JAVASCRIPT</span><span class="mx-4 md:mx-6">⚡</span>
+                <span>BLENDER 3D</span><span class="mx-4 md:mx-6">⚡</span>
+                <span>PRACTICAL LEARNING</span><span class="mx-4 md:mx-6">⚡</span>
+                <span>SOFTWARE ENGINEERING</span><span class="mx-4 md:mx-6">⚡</span>
+                <!-- Duplicate for loop -->
+                <span>FULL STACK DEV</span><span class="mx-4 md:mx-6">⚡</span>
+                <span>PYTHON & C</span><span class="mx-4 md:mx-6">⚡</span>
+                <span>JAVASCRIPT</span><span class="mx-4 md:mx-6">⚡</span>
+                <span>BLENDER 3D</span><span class="mx-4 md:mx-6">⚡</span>
+                <span>PRACTICAL LEARNING</span><span class="mx-4 md:mx-6">⚡</span>
+                <span>SOFTWARE ENGINEERING</span><span class="mx-4 md:mx-6">⚡</span>
             </div>
         </div>
     </div>
 
-    <!-- STATS & EDUCATION -->
-    <section id="about" class="py-16 md:py-24 px-6 md:px-12 max-w-[1400px] mx-auto">
+    <!-- ABOUT / EDUCATION -->
+    <section id="about" class="py-24 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
-            <div class="lg:col-span-5 space-y-8 md:space-y-12">
+            <div class="lg:col-span-5 space-y-12">
                 <div class="reveal-fade">
-                    <p class="text-volt font-bold tracking-widest uppercase text-[10px] md:text-xs mb-2">Current Status</p>
-                    <h2 class="font-heading text-4xl md:text-7xl">THE<br>ACADEMICS</h2>
+                    <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">Academic Core</p>
+                    <h2 class="font-heading text-5xl md:text-7xl">FOUNDATION</h2>
                 </div>
-                
-                <div class="flex gap-8 md:gap-12 border-t border-border pt-8 reveal-fade">
+                <div class="flex gap-12 border-t border-border pt-8 reveal-fade">
                     <div>
-                        <p class="text-gray-500 text-[10px] md:text-sm font-bold uppercase tracking-wider mb-1">Sem 1 CGPA</p>
-                        <p class="font-heading text-5xl md:text-8xl text-volt">8.15</p>
+                        <p class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-1">Sem 1 CGPA</p>
+                        <p class="font-heading text-6xl md:text-8xl text-volt">8.15</p>
                     </div>
                     <div>
-                        <p class="text-gray-500 text-[10px] md:text-sm font-bold uppercase tracking-wider mb-1">Graduation</p>
-                        <p class="font-heading text-5xl md:text-8xl text-white">2029</p>
+                        <p class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-1">Graduation</p>
+                        <p class="font-heading text-6xl md:text-8xl text-white">2029</p>
                     </div>
                 </div>
             </div>
-
-            <div class="lg:col-span-7 bg-panel p-6 md:p-12 border border-border rounded-2xl reveal-fade">
-                <div class="flex flex-col md:flex-row justify-between items-start mb-8 border-b border-border pb-8 gap-4">
-                    <div>
-                        <h3 class="font-heading text-2xl md:text-3xl mb-1">B.Tech Information Technology</h3>
-                        <p class="text-gray-400 font-medium text-sm md:text-base">KPR Engineering College, Coimbatore</p>
+            
+            <div class="lg:col-span-7 space-y-6">
+                <!-- Terminal Component -->
+                <div class="bg-[#0a0a0a] rounded-xl border border-border overflow-hidden shadow-2xl reveal-fade tilt-card haptic-target">
+                    <div class="bg-panel px-4 py-2 border-b border-border flex items-center gap-2">
+                        <div class="flex gap-1.5">
+                            <div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+                        </div>
+                        <span class="text-[10px] font-mono text-gray-500 ml-4">zsh — rithik@portfolio</span>
                     </div>
-                    <div class="bg-dark px-4 py-2 rounded-full border border-border w-fit">
-                        <span class="w-2 h-2 rounded-full bg-volt inline-block mr-2 animate-pulse"></span>
-                        <span class="text-[10px] font-bold uppercase tracking-widest">Active</span>
+                    <div class="p-6 font-mono text-sm leading-relaxed min-h-[160px]">
+                        <p class="text-volt mb-2">$ status --current</p>
+                        <p id="terminal-text" class="text-gray-400"></p>
                     </div>
                 </div>
-                
-                <ul class="space-y-6 text-base md:text-lg text-gray-300">
-                    <li class="flex items-start gap-4">
-                        <i data-lucide="crosshair" class="w-5 h-5 md:w-6 md:h-6 text-volt shrink-0 mt-1"></i>
-                        <p>Bridging the gap between academic theory and practical application by actively studying modern web frameworks.</p>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <i data-lucide="terminal" class="w-5 h-5 md:w-6 md:h-6 text-volt shrink-0 mt-1"></i>
-                        <p>Building foundational self-directed projects. Writing scripts to solve real-world logistical problems.</p>
-                    </li>
-                </ul>
+
+                <div class="bg-panel p-8 border border-border rounded-3xl reveal-fade relative overflow-hidden group tilt-card haptic-target">
+                    <div class="scanline opacity-0 group-hover:opacity-10 transition-opacity"></div>
+                    <div class="flex flex-col md:flex-row justify-between items-start mb-8 border-b border-border pb-8 gap-4">
+                        <div>
+                            <h3 class="font-heading text-3xl mb-1 text-white uppercase">B.Tech IT</h3>
+                            <p class="text-gray-400 font-medium">KPR Engineering College, Coimbatore</p>
+                        </div>
+                        <div class="bg-dark px-4 py-2 rounded-full border border-border w-fit">
+                            <span class="w-2 h-2 rounded-full bg-volt inline-block mr-2 animate-pulse"></span>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-volt">Active</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-4 text-lg text-gray-300 font-medium">
+                        <li class="flex items-start gap-4">
+                            <i data-lucide="crosshair" class="w-6 h-6 text-volt shrink-0 mt-1"></i>
+                            <p>Studying modern web frameworks through practical builds.</p>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- TECH STACK -->
-    <section id="stack" class="py-16 md:py-24 bg-panel border-y border-border clip-angle relative overflow-hidden">
-        <div class="absolute inset-0 z-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
-            <div class="w-[400px] h-[400px] md:w-[800px] md:h-[800px] perspective-1000">
-                <div class="w-full h-full relative preserve-3d animate-spin-3d">
-                    <div class="absolute inset-0 border-[2px] md:border-[3px] border-volt rounded-full transform rotate-x-60"></div>
-                    <div class="absolute inset-0 border-[2px] md:border-[3px] border-white rounded-full transform rotate-y-60"></div>
-                </div>
-            </div>
-        </div>
-
+    <section id="stack" class="py-24 bg-panel border-y border-border clip-angle relative overflow-hidden">
         <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 reveal-fade gap-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 reveal-fade gap-4">
                 <div>
-                    <p class="text-volt font-bold tracking-widest uppercase text-[10px] md:text-xs mb-2">My Skills</p>
-                    <h2 class="font-heading text-5xl md:text-8xl glitch" data-text="TECH STACK">TECH STACK</h2>
+                    <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">Skillsets</p>
+                    <h2 class="font-heading text-6xl md:text-8xl glitch" data-text="TECH STACK">TECH STACK</h2>
                 </div>
-                <p class="text-gray-400 max-w-sm text-left md:text-right font-medium italic text-sm md:text-base">
-                    Focusing on "how it works" rather than just "how to write it."
-                </p>
             </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                <div class="group bg-dark border border-border p-6 md:p-8 hover:border-volt transition-colors reveal-fade">
-                    <div class="flex justify-between items-center mb-10 md:mb-12">
-                        <span class="font-heading text-3xl md:text-4xl text-gray-700 group-hover:text-white transition-colors">01</span>
-                        <i data-lucide="code-2" class="w-6 h-6 md:w-8 md:h-8 text-gray-600 group-hover:text-volt transition-colors"></i>
-                    </div>
-                    <h3 class="font-heading text-2xl md:text-3xl mb-2">PYTHON & C</h3>
-                    <p class="text-gray-500 text-xs md:text-sm font-medium">Core logic and algorithms. The starting point of my journey into systems.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Skill Card -->
+                <div class="group bg-dark border border-border p-8 hover:border-volt transition-all reveal-fade relative overflow-hidden tilt-card haptic-target">
+                    <div class="scanline"></div>
+                    <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10 group-hover:text-white/20 transition-colors">01</span><i data-lucide="code-2" class="w-6 h-6 text-volt"></i></div>
+                    <h3 class="font-heading text-2xl mb-2 text-white uppercase text-center">PYTHON & C</h3>
+                    <p class="text-gray-500 text-sm font-medium">Core systems and algorithms.</p>
                 </div>
-
-                <div class="group bg-dark border border-border p-6 md:p-8 hover:border-volt transition-colors reveal-fade">
-                    <div class="flex justify-between items-center mb-10 md:mb-12">
-                        <span class="font-heading text-3xl md:text-4xl text-gray-700 group-hover:text-white transition-colors">02</span>
-                        <i data-lucide="zap" class="w-6 h-6 md:w-8 md:h-8 text-gray-600 group-hover:text-volt transition-colors"></i>
-                    </div>
-                    <h3 class="font-heading text-2xl md:text-3xl mb-2">JAVASCRIPT</h3>
-                    <p class="text-gray-500 text-xs md:text-sm font-medium">The language of the web. Currently exploring interactivity and logic flows.</p>
+                <div class="group bg-dark border border-border p-8 hover:border-volt transition-all reveal-fade relative overflow-hidden tilt-card haptic-target">
+                    <div class="scanline"></div>
+                    <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10 group-hover:text-white/20 transition-colors">02</span><i data-lucide="zap" class="w-6 h-6 text-volt"></i></div>
+                    <h3 class="font-heading text-2xl mb-2 text-white uppercase text-center">JAVASCRIPT</h3>
+                    <p class="text-gray-500 text-sm font-medium">Interactive logic development.</p>
                 </div>
-
-                <div class="group bg-volt text-dark border border-volt p-6 md:p-8 reveal-fade">
-                    <div class="flex justify-between items-center mb-10 md:mb-12">
-                        <span class="font-heading text-3xl md:text-4xl text-black/40">03</span>
-                        <i data-lucide="box" class="w-6 h-6 md:w-8 md:h-8 text-dark"></i>
-                    </div>
-                    <h3 class="font-heading text-2xl md:text-3xl mb-2">BLENDER</h3>
-                    <p class="text-dark/80 text-xs md:text-sm font-bold">Exploring 3D space. Understanding vertex data and lighting for creative dev.</p>
+                <div class="group bg-volt text-dark border border-volt p-8 reveal-fade relative overflow-hidden tilt-card haptic-target text-center">
+                    <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-black/10">03</span><i data-lucide="box" class="w-6 h-6 text-dark"></i></div>
+                    <h3 class="font-heading text-2xl mb-2 uppercase">BLENDER</h3>
+                    <p class="text-dark/80 text-sm font-bold">Spatial 3D reasoning foundations.</p>
                 </div>
-
-                <div class="group bg-dark border border-border p-6 md:p-8 hover:border-volt transition-colors reveal-fade">
-                    <div class="flex justify-between items-center mb-10 md:mb-12">
-                        <span class="font-heading text-3xl md:text-4xl text-gray-700 group-hover:text-white transition-colors">04</span>
-                        <i data-lucide="layers" class="w-6 h-6 md:w-8 md:h-8 text-gray-600 group-hover:text-volt transition-colors"></i>
-                    </div>
-                    <h3 class="font-heading text-2xl md:text-3xl mb-2">WEB BASICS</h3>
-                    <p class="text-gray-500 text-xs md:text-sm font-medium">HTML & CSS. Semantic structure and layouts for the next-gen web.</p>
+                <div class="group bg-dark border border-border p-8 hover:border-volt transition-all reveal-fade relative overflow-hidden tilt-card haptic-target">
+                    <div class="scanline"></div>
+                    <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10 group-hover:text-white/20 transition-colors">04</span><i data-lucide="layers" class="w-6 h-6 text-volt"></i></div>
+                    <h3 class="font-heading text-2xl mb-2 text-white uppercase text-center">WEB BASICS</h3>
+                    <p class="text-gray-500 text-sm font-medium">Semantic structures & CSS.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- WHAT I LIKE SECTION -->
-    <section id="vibe" class="py-16 md:py-24 px-6 md:px-12 max-w-[1400px] mx-auto">
-        <div class="reveal-fade mb-12 md:mb-16">
-            <p class="text-volt font-bold tracking-widest uppercase text-[10px] md:text-xs mb-2">Personal Drive</p>
-            <h2 class="font-heading text-4xl md:text-8xl">WHAT I LIKE</h2>
+    <!-- VIBE -->
+    <section id="vibe" class="py-24 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
+        <div class="reveal-fade mb-16">
+            <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">Lifestyle</p>
+            <h2 class="font-heading text-6xl md:text-8xl">WHAT I LIKE</h2>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 md:gap-6">
-            <div class="md:col-span-2 md:row-span-2 bg-panel p-8 md:p-12 border border-border rounded-[1.5rem] md:rounded-[2rem] hover:border-volt hover:bg-dark transition-all duration-500 reveal-fade group relative overflow-hidden flex flex-col justify-end min-h-[300px] md:min-h-[400px]">
-                <i data-lucide="wrench" class="absolute -right-6 -top-6 md:-right-10 md:-top-10 w-48 h-48 md:w-64 md:h-64 text-white/5 group-hover:text-volt/10 transition-colors duration-500 rotate-12"></i>
-                <div class="relative z-10">
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-volt text-dark rounded-full flex items-center justify-center mb-6 md:mb-8 transform group-hover:scale-110 transition-transform duration-500">
-                        <i data-lucide="wrench" class="w-6 h-6 md:w-8 md:h-8"></i>
-                    </div>
-                    <h3 class="font-heading text-2xl md:text-4xl mb-4">PRACTICAL TECH</h3>
-                    <p class="text-gray-400 font-medium text-base md:text-lg">Hands-on tinkering. I learn by breaking and rebuilding things.</p>
-                </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6">
+            <div class="md:col-span-2 md:row-span-2 bg-panel p-12 border border-border rounded-3xl hover:border-volt group overflow-hidden flex flex-col justify-end min-h-[400px] relative tilt-card haptic-target">
+                <i data-lucide="wrench" class="absolute -right-10 -top-10 w-64 h-64 text-white/5 group-hover:text-volt/10 transition-colors"></i>
+                <div class="w-16 h-16 bg-volt text-dark rounded-full flex items-center justify-center mb-8"><i data-lucide="wrench"></i></div>
+                <h3 class="font-heading text-4xl mb-4 text-white uppercase">PRACTICAL TECH</h3>
+                <p class="text-gray-400 font-medium text-lg">Hands-on tinkering. Breaks things to understand them better.</p>
             </div>
-
-            <div class="md:col-span-2 md:row-span-1 bg-panel p-6 md:p-8 border border-border rounded-[1.5rem] md:rounded-[2rem] hover:border-volt hover:bg-dark transition-all duration-500 reveal-fade group relative overflow-hidden flex items-center gap-6 md:gap-8">
-                <div class="w-12 h-12 md:w-16 md:h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors duration-500">
-                    <i data-lucide="music" class="w-6 h-6 md:w-8 md:h-8"></i>
-                </div>
-                <div>
-                    <h3 class="font-heading text-2xl md:text-3xl mb-1">MUSIC</h3>
-                    <p class="text-gray-400 font-medium text-sm md:text-lg">The fuel for my focus. Rhythm is logic.</p>
-                </div>
+            <div class="md:col-span-2 md:row-span-1 bg-panel p-8 border border-border rounded-3xl flex items-center gap-8 hover:border-volt group tilt-card haptic-target">
+                <div class="w-16 h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors"><i data-lucide="music"></i></div>
+                <div><h3 class="font-heading text-3xl mb-1 text-white uppercase">MUSIC</h3><p class="text-gray-400 font-medium text-lg">Focus fuel.</p></div>
             </div>
-
-            <div class="md:col-span-2 md:row-span-1 bg-panel p-6 md:p-8 border border-border rounded-[1.5rem] md:rounded-[2rem] hover:border-volt hover:bg-dark transition-all duration-500 reveal-fade group relative overflow-hidden flex items-center gap-6 md:gap-8">
-                <div class="w-12 h-12 md:w-16 md:h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors duration-500">
-                    <i data-lucide="trees" class="w-6 h-6 md:w-8 md:h-8"></i>
-                </div>
-                <div>
-                    <h3 class="font-heading text-2xl md:text-3xl mb-1">NATURE</h3>
-                    <p class="text-gray-400 font-medium text-sm md:text-lg">Balance in the quiet. Recharge energy.</p>
-                </div>
+            <div class="md:col-span-2 md:row-span-1 bg-panel p-8 border border-border rounded-3xl flex items-center gap-8 hover:border-volt group tilt-card haptic-target">
+                <div class="w-16 h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors"><i data-lucide="trees"></i></div>
+                <div><h3 class="font-heading text-3xl mb-1 text-white uppercase">NATURE</h3><p class="text-gray-400 font-medium text-lg">Calm balance.</p></div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER / CONTACT -->
-    <footer id="contact" class="py-16 md:py-24 px-4 md:px-12 relative overflow-hidden mt-12">
-        <div class="absolute inset-0 z-0 pointer-events-none flex justify-center items-center">
-            <div class="w-[80vw] h-[80vw] md:w-[60vw] md:h-[60vw] bg-volt/10 rounded-full blur-[100px] absolute -bottom-1/4 -left-1/4"></div>
+    <!-- FOOTER -->
+    <footer id="contact" class="py-24 px-6 md:px-12 relative overflow-hidden mt-12 mb-12">
+        <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+            <div id="footer-orb-1" class="absolute w-[40vw] h-[40vw] bg-volt/10 rounded-full blur-[100px] top-[-10%] left-[-10%]"></div>
+            <div id="footer-orb-2" class="absolute w-[30vw] h-[30vw] bg-blue-500/5 rounded-full blur-[80px] bottom-[10%] right-[10%]"></div>
+            <div id="mouse-orb" class="absolute w-[20vw] h-[20vw] bg-volt/5 rounded-full blur-[60px] opacity-0 transition-opacity duration-500"></div>
         </div>
 
-        <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center md:items-end relative z-10 bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[2rem] md:rounded-[3rem] p-8 md:p-16 shadow-2xl overflow-hidden">
+        <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center md:items-end relative z-10 bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-10 md:p-16 shadow-[0_30px_100px_rgba(0,0,0,0.8)] glass-sheen">
             
-            <div class="absolute -bottom-6 -right-6 md:-bottom-10 md:-right-10 font-heading text-[20vw] md:text-[15vw] text-white/5 pointer-events-none leading-none select-none z-0">
+            <!-- Parallax Name in Background -->
+            <div id="parallax-name" class="absolute bottom-0 right-0 font-heading text-[22vw] text-white/5 pointer-events-none select-none z-0 tracking-tighter leading-[0.7] transform translate-y-[25%] translate-x-[15%]">
                 RITHIK
             </div>
-
-            <!-- System Status (Hidden on very small screens, visible on md+) -->
-            <div class="absolute top-8 right-8 hidden sm:flex flex-col items-end z-20">
-                <div class="flex items-center gap-2 bg-dark/50 px-3 py-1.5 rounded-full border border-white/10 mb-2">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute h-full w-full rounded-full bg-volt opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-volt"></span>
-                    </span>
-                    <span class="text-[8px] font-bold uppercase tracking-widest text-volt">Online</span>
+            
+            <div class="absolute top-10 right-10 md:top-14 md:right-14 flex flex-col items-end z-20">
+                <div class="flex items-center gap-2 bg-[#1e1e1e] px-3 py-1.5 rounded-full border border-white/5 mb-3 shadow-inner">
+                    <span class="w-1.5 h-1.5 rounded-full bg-volt shadow-[0_0_8px_#ccff00]"></span>
+                    <span class="text-[9px] font-bold uppercase tracking-widest text-volt">Available for Work</span>
                 </div>
-                <p class="font-mono text-xs text-white/50 tracking-tighter" id="live-time">00:00:00</p>
+                <div class="text-right">
+                    <p class="text-[9px] text-gray-500 uppercase tracking-widest mb-0.5 opacity-60">Local Time // IST</p>
+                    <p class="font-mono text-lg text-white/80 tracking-widest" id="live-time">00:00:00</p>
+                </div>
             </div>
 
             <div class="relative z-10">
-                <h2 class="font-heading text-5xl md:text-[8rem] leading-[1] mb-8 text-white">LET'S<br><span class="text-volt">BUILD.</span></h2>
+                <h2 class="font-heading text-6xl md:text-[9rem] leading-[0.9] mb-12 text-white uppercase">LET'S<br><span class="text-volt">BUILD.</span></h2>
                 <div class="flex gap-4">
-                    <a href="mailto:rithikur@gmail.com" class="w-12 h-12 md:w-14 md:h-14 bg-white/10 text-white border border-white/20 rounded-full flex items-center justify-center hover:bg-volt hover:text-dark hover:scale-110 transition-all duration-300">
-                        <i data-lucide="mail" class="w-5 h-5 md:w-6 md:h-6"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/in/rithik-u-r/" target="_blank" class="w-12 h-12 md:w-14 md:h-14 bg-white/10 text-white border border-white/20 rounded-full flex items-center justify-center hover:bg-volt hover:text-dark hover:scale-110 transition-all duration-300">
-                        <i data-lucide="linkedin" class="w-5 h-5 md:w-6 md:h-6"></i>
-                    </a>
-                    <a href="https://github.com/rithikur" target="_blank" class="w-12 h-12 md:w-14 md:h-14 bg-white/10 text-white border border-white/20 rounded-full flex items-center justify-center hover:bg-volt hover:text-dark hover:scale-110 transition-all duration-300">
-                        <i data-lucide="github" class="w-5 h-5 md:w-6 md:h-6"></i>
-                    </a>
+                    <a href="mailto:rithikur@gmail.com" class="social-icon group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target"><i data-lucide="mail" class="w-5 h-5"></i></a>
+                    <a href="tel:+919842789499" class="social-icon group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target"><i data-lucide="phone" class="w-5 h-5"></i></a>
+                    <a href="https://www.linkedin.com/in/rithik-u-r/" target="_blank" class="social-icon group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                    <a href="https://github.com/rithikur" target="_blank" class="social-icon group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target"><i data-lucide="github" class="w-5 h-5"></i></a>
                 </div>
             </div>
-            
-            <div class="md:text-right font-bold tracking-wider relative z-10 text-white">
-                <p class="text-xl md:text-2xl mb-1 md:mb-2">rithikur@gmail.com</p>
-                <p class="text-sm md:text-xl text-gray-400 font-medium">+91 9842789499</p>
-                <p class="mt-6 md:mt-8 text-[10px] md:text-sm text-gray-500 uppercase tracking-widest font-normal opacity-60">
-                    &copy; 2026 RITHIK U R.
-                </p>
+
+            <div class="md:text-right font-bold tracking-wider relative z-10 text-white mt-12 md:mt-0">
+                <div id="copy-email" class="inline-block group cursor-pointer haptic-target mb-1">
+                    <p id="email-text" class="text-xl md:text-3xl font-heading group-hover:text-volt transition-colors lowercase">rithikur@gmail.com</p>
+                    <div class="h-px w-0 group-hover:w-full bg-volt transition-all duration-500"></div>
+                </div>
+                <p class="text-lg md:text-xl text-white/90 font-heading mb-10 tracking-widest">+91 9842789499</p>
+                <div class="flex flex-col md:items-end">
+                    <p class="text-[9px] text-white/20 uppercase tracking-[0.4em] font-normal">&copy; 2026 RITHIK U R.</p>
+                </div>
             </div>
         </div>
     </footer>
@@ -454,102 +421,152 @@
     <script>
         lucide.createIcons();
 
-        const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            direction: 'vertical',
-            smooth: true,
-        });
-
+        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add((time) => { lenis.raf(time * 1000) });
-        gsap.ticker.lagSmoothing(0);
 
-        // Mobile Menu Logic
+        // Mobile Menu
         const menuToggle = document.getElementById('menu-toggle');
         const menuClose = document.getElementById('menu-close');
         const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
+        menuToggle.onclick = () => { mobileMenu.classList.add('open'); document.body.style.overflow='hidden'; triggerHaptic(); };
+        menuClose.onclick = () => { mobileMenu.classList.remove('open'); document.body.style.overflow=''; triggerHaptic(); };
 
-        const toggleMenu = () => {
-            mobileMenu.classList.toggle('open');
-            document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+        // Smooth Scroll
+        document.querySelectorAll('nav a[href^="#"], .mobile-link').forEach(anchor => {
+            anchor.onclick = (e) => {
+                e.preventDefault();
+                lenis.scrollTo(anchor.getAttribute('href'), { offset: -50 });
+                if(mobileMenu.classList.contains('open')) menuClose.click();
+                triggerHaptic();
+            };
+        });
+
+        // Haptic Feedback
+        function triggerHaptic(duration = 15) {
+            if ("vibrate" in navigator) { navigator.vibrate(duration); }
+        }
+
+        // Copy Email
+        const copyEmail = document.getElementById('copy-email');
+        const emailText = document.getElementById('email-text');
+        copyEmail.onclick = () => {
+            const val = "rithikur@gmail.com";
+            const el = document.createElement('textarea');
+            el.value = val; document.body.appendChild(el);
+            el.select(); document.execCommand('copy');
+            document.body.removeChild(el);
+            const orig = emailText.textContent;
+            emailText.textContent = "COPIED!"; emailText.style.color = "#ccff00";
+            triggerHaptic(50);
+            setTimeout(() => { emailText.textContent = orig; emailText.style.color = ""; }, 2000);
         };
 
-        menuToggle.addEventListener('click', toggleMenu);
-        menuClose.addEventListener('click', toggleMenu);
-        mobileLinks.forEach(link => link.addEventListener('click', () => {
-            mobileMenu.classList.remove('open');
-            document.body.style.overflow = '';
-        }));
+        // --- MOUSE & TILT & PARALLAX ---
+        const mouseOrb = document.getElementById('mouse-orb');
+        const wiresContainer = document.getElementById('wires-container');
 
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = this.getAttribute('href');
-                if (target !== '#') {
-                    lenis.scrollTo(target, { offset: -50 });
+        window.onmousemove = (e) => {
+            const { clientX, clientY } = e;
+            const xPercent = (clientX/window.innerWidth)*100;
+            const yPercent = (clientY/window.innerHeight)*100;
+            
+            document.documentElement.style.setProperty('--mouse-x', `${xPercent}%`);
+            document.documentElement.style.setProperty('--mouse-y', `${yPercent}%`);
+            
+            if(window.innerWidth > 768) {
+                gsap.to(".cursor-dot", { x: clientX, y: clientY, duration: 0 });
+                gsap.to(".cursor-ring", { x: clientX, y: clientY, duration: 0.15 });
+                
+                // Parallax shift for wires layer
+                gsap.to(wiresContainer, { x: (clientX - window.innerWidth/2) * 0.02, y: (clientY - window.innerHeight/2) * 0.02, duration: 1 });
+                
+                if(mouseOrb) {
+                    gsap.to(mouseOrb, { x: clientX - (window.innerWidth * 0.1), y: clientY - (window.innerWidth * 0.1), opacity: 1, duration: 1 });
                 }
+            }
+        };
+
+        // Tilt Cards
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                if(window.innerWidth <= 768) return;
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(card, { rotateY: x / 25, rotateX: -y / 25, duration: 0.4, ease: "power2.out" });
+            });
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.6, ease: "power3.out" });
             });
         });
 
-        // Live Clock
-        setInterval(() => {
-            const timeEl = document.getElementById('live-time');
-            if (timeEl) {
-                const now = new Date();
-                timeEl.textContent = now.toLocaleTimeString('en-IN', {
-                    timeZone: 'Asia/Kolkata',
-                    hour12: false,
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit'
-                });
+        // Magnetic Hover
+        document.querySelectorAll('a, button, .social-icon, .group, .bg-panel, .haptic-target').forEach(el => {
+            el.onmouseenter = () => document.querySelector('.cursor-ring')?.classList.add('active');
+            el.onmouseleave = () => document.querySelector('.cursor-ring')?.classList.remove('active');
+            el.addEventListener('click', () => triggerHaptic(20));
+        });
+
+        // Footer Motion Parallax
+        ScrollTrigger.create({
+            trigger: "#contact",
+            start: "top bottom",
+            onUpdate: (self) => {
+                const p = self.progress;
+                gsap.set("#parallax-name", { x: (1 - p) * 150 });
+                gsap.set("#footer-orb-1", { x: p * 100, y: p * -50 });
+                gsap.set("#footer-orb-2", { x: p * -100, y: p * 50 });
             }
+        });
+
+        // Terminal Effect
+        const terminalOutput = ["> Initializing student_profile.sys", "> Loading academic_foundation... OK [8.15 CGPA]", "> Scanning interest_stack... FULL STACK FOUND", "> Learning_mode: ACTIVE", "> Status: Obsessed with building something better."];
+        let t_i = 0; let lineIdx = 0;
+        const terminalEl = document.getElementById('terminal-text');
+        function typeLine() {
+            if (lineIdx < terminalOutput.length) {
+                const line = terminalOutput[lineIdx];
+                if (t_i < line.length) {
+                    terminalEl.innerHTML += line.charAt(t_i); t_i++; setTimeout(typeLine, 20);
+                } else {
+                    terminalEl.innerHTML += "<br>"; t_i = 0; lineIdx++; setTimeout(typeLine, 400);
+                }
+            }
+        }
+        ScrollTrigger.create({ trigger: "#about", start: "top 80%", onEnter: () => typeLine(), once: true });
+
+        // Continuous Data Pulses for Wires
+        const animateDataPulses = () => {
+            gsap.to("#wire-pulse-1", { strokeDashoffset: -1000, duration: 4, repeat: -1, ease: "none" });
+            gsap.to("#wire-pulse-2", { strokeDashoffset: 1100, duration: 5, repeat: -1, ease: "none", delay: 1 });
+            gsap.to("#wire-pulse-3", { strokeDashoffset: -1100, duration: 3, repeat: -1, ease: "none", delay: 0.5 });
+        };
+        window.onload = animateDataPulses;
+
+        // Progress update
+        const sectionIds = ['#home', '#about', '#stack', '#vibe', '#contact'];
+        const sectionNames = ['Home', 'About', 'Stack', 'Vibe', 'Contact'];
+        lenis.on('scroll', ({ scroll, limit }) => {
+            const progress = (scroll / limit) * 100;
+            gsap.to("#progress-bar", { height: `${progress}%`, duration: 0.1 });
+            const scrollPos = window.scrollY + 200;
+            sectionIds.forEach((id, i) => {
+                const el = document.querySelector(id);
+                if (el && scrollPos >= el.offsetTop) document.getElementById('section-label').textContent = sectionNames[i];
+            });
+        });
+
+        // Clock
+        setInterval(() => {
+            const el = document.getElementById('live-time');
+            if(el) el.textContent = new Date().toLocaleTimeString('en-IN', { timeZone:'Asia/Kolkata', hour12:false, hour:'2-digit', minute:'2-digit', second:'2-digit'});
         }, 1000);
 
-        // Animations
-        gsap.from(".reveal-up", {
-            y: 60,
-            opacity: 0,
-            duration: 1.2,
-            stagger: 0.1,
-            ease: "power4.out"
-        });
-
-        gsap.utils.toArray('.reveal-fade').forEach(element => {
-            gsap.from(element, {
-                scrollTrigger: {
-                    trigger: element,
-                    start: "top 90%",
-                    toggleActions: "play none none reverse"
-                },
-                y: 30,
-                opacity: 0,
-                duration: 1,
-                ease: "power3.out"
-            });
-        });
-
-        // Mouse Tracking
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorRing = document.querySelector('.cursor-ring');
-        
-        window.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth) * 100;
-            const y = (e.clientY / window.innerHeight) * 100;
-            document.documentElement.style.setProperty('--mouse-x', `${x}%`);
-            document.documentElement.style.setProperty('--mouse-y', `${y}%`);
-
-            if(window.innerWidth > 768 && cursorDot && cursorRing) {
-                gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0 });
-                gsap.to(cursorRing, { x: e.clientX, y: e.clientY, duration: 0.15 });
-            }
-        });
-
-        document.querySelectorAll('a, button, .group, .bg-panel').forEach(el => {
-            el.addEventListener('mouseenter', () => cursorRing?.classList.add('active'));
-            el.addEventListener('mouseleave', () => cursorRing?.classList.remove('active'));
+        // Intro
+        gsap.from(".reveal-up", { y: 60, opacity: 0, duration: 1.2, stagger: 0.1, ease: "power4.out" });
+        gsap.utils.toArray('.reveal-fade').forEach(el => {
+            gsap.from(el, { scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none reverse" }, y: 30, opacity: 0, duration: 1, ease: "power3.out" });
         });
     </script>
 </body>
