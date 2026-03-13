@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-[#050505] text-[#f4f4f5] antialiased overflow-x-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RITHIK U R // Developer</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts: Oswald (Massive Headings) & Plus Jakarta Sans (Clean Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Lenis for Smooth Scrolling -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['Oswald', 'sans-serif'],
+                        body: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        volt: '#ccff00',     // High-energy neon yellow/green
+                        dark: '#050505',
+                        darker: '#000000',
+                        panel: '#111111',
+                        border: '#222222'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base & Custom Selection */
+        ::selection { background-color: #ccff00; color: #000; }
+        
+        /* Custom Cursor Override for Desktop */
+        @media (pointer: fine) {
+            body { cursor: none; }
+            a, button, input, select, textarea { cursor: none; }
+        }
+
+        body { font-family: 'Plus Jakarta Sans', sans-serif; cursor: default; }
+        h1, h2, h3, h4, .font-heading { text-transform: uppercase; line-height: 0.9; }
+        
+        /* Smooth Scroll Margin to prevent Header Overlap */
+        section { scroll-margin-top: 100px; }
+
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #222222; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ccff00; }
+
+        /* Infinite Marquee Animation - SLOWED DOWN (40s) */
+        .marquee-wrapper {
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+        }
+        .marquee-content {
+            display: flex;
+            animation: marquee 40s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Mouse Tracking Variables */
+        :root {
+            --mouse-x: 50%;
+            --mouse-y: 50%;
+        }
+
+        /* Abstract Grid Background - Reactive */
+        .grid-bg {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            mask-image: radial-gradient(circle 800px at var(--mouse-x) var(--mouse-y), black 0%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle 800px at var(--mouse-x) var(--mouse-y), black 0%, transparent 100%);
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #111111; /* Matches bg-panel */
+        }
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #ccff00;
+            clip-path: inset(20% 0 80% 0);
+            animation: glitch-anim 2s infinite linear alternate-reverse;
+        }
+        .glitch::after {
+            left: -2px;
+            text-shadow: 2px 0 #00ffff;
+            clip-path: inset(80% 0 20% 0);
+            animation: glitch-anim 3s infinite linear alternate-reverse reverse;
+        }
+        @keyframes glitch-anim {
+            0% { clip-path: inset(20% 0 80% 0); transform: translate(0); }
+            20% { clip-path: inset(60% 0 10% 0); transform: translate(-2px, 1px); }
+            40% { clip-path: inset(40% 0 50% 0); transform: translate(2px, -1px); }
+            60% { clip-path: inset(80% 0 5% 0); transform: translate(-2px, 0); }
+            80% { clip-path: inset(10% 0 70% 0); transform: translate(2px, 1px); }
+            100% { clip-path: inset(30% 0 40% 0); transform: translate(0); }
+        }
+
+        /* 3D Wireframe Animations */
+        .perspective-1000 { perspective: 1000px; }
+        .preserve-3d { transform-style: preserve-3d; }
+        @keyframes spin-3d {
+            0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+        }
+        .animate-spin-3d { animation: spin-3d 25s linear infinite; }
+
+        /* Custom Cursor Styles */
+        .cursor-dot {
+            position: fixed; top: 0; left: 0; width: 8px; height: 8px;
+            background-color: #ccff00; border-radius: 50%;
+            pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+        .cursor-ring {
+            position: fixed; top: 0; left: 0; width: 40px; height: 40px;
+            border: 1px solid rgba(204, 255, 0, 0.5); border-radius: 50%;
+            pointer-events: none; z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+        }
+        .cursor-ring.active {
+            width: 70px; height: 70px;
+            background-color: rgba(204, 255, 0, 0.1);
+            border-color: #ccff00;
+        }
+
+        /* Clip Path for dynamic angled sections */
+        .clip-angle {
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 4vw), 0 100%);
+        }
+
+        .img-reveal { overflow: hidden; }
+        .img-reveal img { transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+        .img-reveal:hover img { transform: scale(1.05); }
+    </style>
+</head>
+<body class="relative bg-dark text-white">
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-ring hidden md:block"></div>
+
+    <!-- Glassmorphic Nav -->
+    <nav class="fixed top-0 w-full z-[100] bg-dark/40 backdrop-blur-xl border-b border-white/5 p-6 flex justify-between items-center">
+        <div class="font-heading text-2xl font-bold tracking-wider uppercase">RITHIK <span class="text-volt">U R</span></div>
+        <div class="flex gap-6 font-bold text-sm tracking-widest uppercase">
+            <a href="#about" class="hover:text-volt transition-colors">About</a>
+            <a href="#stack" class="hover:text-volt transition-colors">Stack</a>
+            <a href="#vibe" class="hover:text-volt transition-colors">Vibe</a>
+            <a href="#contact" class="hover:text-volt transition-colors">Contact</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="relative min-h-[100vh] flex flex-col justify-center overflow-hidden pt-24 pb-32">
+        <div class="absolute inset-0 grid-bg pointer-events-none z-0"></div>
+        
+        <div class="z-10 px-4 md:px-12 flex flex-col items-center text-center">
+            <p class="font-body text-volt font-bold tracking-[0.3em] uppercase mb-4 text-xs md:text-sm reveal-up">Information Technology</p>
+            <h1 class="font-heading text-[15vw] md:text-[12vw] font-bold text-white whitespace-nowrap reveal-up">
+                RITHIK <span class="text-transparent" style="-webkit-text-stroke: 2px #333;">U R</span>
+            </h1>
+            
+            <div class="w-full max-w-2xl mt-8 reveal-up flex flex-col md:flex-row items-center gap-6 justify-center">
+                <p class="text-gray-400 text-lg md:text-xl font-medium leading-relaxed text-center">
+                    Building the foundation. Writing logic. Obsessed with Full Stack Development.
+                </p>
+            </div>
+        </div>
+
+        <!-- Scroll indicator adjusted to prevent text overlap -->
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 reveal-up opacity-50">
+            <div class="w-[1px] h-12 bg-gradient-to-b from-volt to-transparent"></div>
+            <span class="text-[8px] uppercase tracking-widest text-volt font-bold">Scroll</span>
+        </div>
+    </header>
+
+    <!-- KINETIC MARQUEE (Slowed + JavaScript Added) -->
+    <div class="bg-volt text-dark py-4 rotate-[-1deg] scale-105 z-20 relative overflow-hidden my-12 shadow-[0_0_40px_rgba(204,255,0,0.15)]">
+        <div class="marquee-wrapper">
+            <div class="marquee-content font-heading text-4xl font-bold tracking-widest flex items-center">
+                <span>FULL STACK DEV</span><span class="mx-6 text-2xl">⚡</span>
+                <span>PYTHON & C</span><span class="mx-6 text-2xl">⚡</span>
+                <span>JAVASCRIPT</span><span class="mx-6 text-2xl">⚡</span>
+                <span>BLENDER 3D</span><span class="mx-6 text-2xl">⚡</span>
+                <span>PRACTICAL LEARNING</span><span class="mx-6 text-2xl">⚡</span>
+                <span>SOFTWARE ENGINEERING</span><span class="mx-6 text-2xl">⚡</span>
+                <!-- Duplicate for seamless loop -->
+                <span>FULL STACK DEV</span><span class="mx-6 text-2xl">⚡</span>
+                <span>PYTHON & C</span><span class="mx-6 text-2xl">⚡</span>
+                <span>JAVASCRIPT</span><span class="mx-6 text-2xl">⚡</span>
+                <span>BLENDER 3D</span><span class="mx-6 text-2xl">⚡</span>
+                <span>PRACTICAL LEARNING</span><span class="mx-6 text-2xl">⚡</span>
+                <span>SOFTWARE ENGINEERING</span><span class="mx-6 text-2xl">⚡</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- STATS & EDUCATION -->
+    <section id="about" class="py-24 px-4 md:px-12 max-w-[1400px] mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+            <div class="lg:col-span-5 space-y-12">
+                <div class="reveal-fade">
+                    <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">Current Status</p>
+                    <h2 class="font-heading text-5xl md:text-7xl">THE<br>ACADEMICS</h2>
+                </div>
+                
+                <div class="flex gap-12 border-t border-border pt-8 reveal-fade">
+                    <div>
+                        <p class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-1">Sem 1 CGPA</p>
+                        <p class="font-heading text-6xl md:text-8xl text-volt">8.15</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-1">Graduation</p>
+                        <p class="font-heading text-6xl md:text-8xl text-white">2029</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 bg-panel p-8 md:p-12 border border-border rounded-xl reveal-fade">
+                <div class="flex justify-between items-start mb-8 border-b border-border pb-8">
+                    <div>
+                        <h3 class="font-heading text-3xl mb-2">B.Tech Information Technology</h3>
+                        <p class="text-gray-400 font-medium">KPR Engineering College, Coimbatore</p>
+                    </div>
+                    <div class="bg-dark px-4 py-2 rounded-full border border-border">
+                        <span class="w-2 h-2 rounded-full bg-volt inline-block mr-2 animate-pulse"></span>
+                        <span class="text-xs font-bold uppercase tracking-widest">Active</span>
+                    </div>
+                </div>
+                
+                <ul class="space-y-6 text-lg text-gray-300">
+                    <li class="flex items-start gap-4">
+                        <i data-lucide="crosshair" class="w-6 h-6 text-volt shrink-0 mt-1"></i>
+                        <p>Bridging the gap between academic theory and practical application by actively studying modern web frameworks.</p>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <i data-lucide="terminal" class="w-6 h-6 text-volt shrink-0 mt-1"></i>
+                        <p>Building foundational self-directed projects. Writing scripts to solve real-world logistical problems.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE ARSENAL -->
+    <section id="stack" class="py-24 bg-panel border-y border-border clip-angle relative overflow-hidden">
+        
+        <!-- 3D Wireframe Background -->
+        <div class="absolute inset-0 z-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
+            <div class="w-[800px] h-[800px] perspective-1000">
+                <div class="w-full h-full relative preserve-3d animate-spin-3d">
+                    <div class="absolute inset-0 border-[3px] border-volt rounded-full transform rotate-x-60"></div>
+                    <div class="absolute inset-0 border-[3px] border-white rounded-full transform rotate-y-60"></div>
+                    <div class="absolute inset-0 border-[3px] border-volt rounded-full transform rotate-z-60 rotate-x-45"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-[1400px] mx-auto px-4 md:px-12 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 reveal-fade">
+                <div>
+                    <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">My Skills</p>
+                    <h2 class="font-heading text-6xl md:text-8xl glitch" data-text="TECH STACK">TECH STACK</h2>
+                </div>
+                <p class="text-gray-400 max-w-sm text-right mt-6 md:mt-0 font-medium italic">
+                    Focusing on "how it works" rather than just "how to write it."
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="group bg-dark border border-border p-8 hover:border-volt transition-colors reveal-fade cursor-none">
+                    <div class="flex justify-between items-center mb-12">
+                        <span class="font-heading text-4xl text-gray-700 group-hover:text-white transition-colors">01</span>
+                        <i data-lucide="code-2" class="w-8 h-8 text-gray-600 group-hover:text-volt transition-colors"></i>
+                    </div>
+                    <h3 class="font-heading text-3xl mb-2">PYTHON & C</h3>
+                    <p class="text-gray-500 text-sm font-medium">Core logic and algorithms. The starting point of my journey into systems.</p>
+                </div>
+
+                <div class="group bg-dark border border-border p-8 hover:border-volt transition-colors reveal-fade cursor-none">
+                    <div class="flex justify-between items-center mb-12">
+                        <span class="font-heading text-4xl text-gray-700 group-hover:text-white transition-colors">02</span>
+                        <i data-lucide="zap" class="w-8 h-8 text-gray-600 group-hover:text-volt transition-colors"></i>
+                    </div>
+                    <h3 class="font-heading text-3xl mb-2">JAVASCRIPT</h3>
+                    <p class="text-gray-500 text-sm font-medium">The language of the web. Currently exploring interactivity and logic flows.</p>
+                </div>
+
+                <div class="group bg-volt text-dark border border-volt p-8 reveal-fade cursor-none">
+                    <div class="flex justify-between items-center mb-12">
+                        <span class="font-heading text-4xl text-black/40">03</span>
+                        <i data-lucide="box" class="w-8 h-8 text-dark"></i>
+                    </div>
+                    <h3 class="font-heading text-3xl mb-2">BLENDER (BASICS)</h3>
+                    <p class="text-dark/80 text-sm font-bold">Exploring 3D space. Understanding vertex data and lighting for future creative dev.</p>
+                </div>
+
+                <div class="group bg-dark border border-border p-8 hover:border-volt transition-colors reveal-fade cursor-none">
+                    <div class="flex justify-between items-center mb-12">
+                        <span class="font-heading text-4xl text-gray-700 group-hover:text-white transition-colors">04</span>
+                        <i data-lucide="layers" class="w-8 h-8 text-gray-600 group-hover:text-volt transition-colors"></i>
+                    </div>
+                    <h3 class="font-heading text-3xl mb-2">WEB BASICS</h3>
+                    <p class="text-gray-500 text-sm font-medium">HTML & CSS. Semantic structure and layouts for the next-gen web.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT I LIKE SECTION -->
+    <section id="vibe" class="py-24 px-4 md:px-12 max-w-[1400px] mx-auto">
+        <div class="reveal-fade mb-16">
+            <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">Personal Drive</p>
+            <h2 class="font-heading text-6xl md:text-8xl">WHAT I LIKE</h2>
+        </div>
+
+        <!-- Bento Grid Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6">
+            
+            <!-- Bento Box 1: Large -->
+            <div class="md:col-span-2 md:row-span-2 bg-panel p-12 border border-border rounded-[2rem] hover:border-volt hover:bg-dark transition-all duration-500 reveal-fade group relative overflow-hidden flex flex-col justify-end min-h-[400px] cursor-none">
+                <i data-lucide="wrench" class="absolute -right-10 -top-10 w-64 h-64 text-white/5 group-hover:text-volt/10 transition-colors duration-500 rotate-12"></i>
+                <div class="relative z-10">
+                    <div class="w-16 h-16 bg-volt text-dark rounded-full flex items-center justify-center mb-8 transform group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="wrench" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="font-heading text-4xl mb-4">PRACTICAL TECH</h3>
+                    <p class="text-gray-400 font-medium text-lg">Hands-on tinkering. I learn by breaking and rebuilding things, focusing on practical use-cases.</p>
+                </div>
+            </div>
+
+            <!-- Bento Box 2: Wide -->
+            <div class="md:col-span-2 md:row-span-1 bg-panel p-8 border border-border rounded-[2rem] hover:border-volt hover:bg-dark transition-all duration-500 reveal-fade group relative overflow-hidden flex items-center gap-8 cursor-none">
+                <div class="w-16 h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors duration-500">
+                    <i data-lucide="music" class="w-8 h-8"></i>
+                </div>
+                <div>
+                    <h3 class="font-heading text-3xl mb-2">MUSIC</h3>
+                    <p class="text-gray-400 font-medium text-lg">The fuel for my focus. Rhythm and coding have a deep connection.</p>
+                </div>
+            </div>
+
+            <!-- Bento Box 3: Wide -->
+            <div class="md:col-span-2 md:row-span-1 bg-panel p-8 border border-border rounded-[2rem] hover:border-volt hover:bg-dark transition-all duration-500 reveal-fade group relative overflow-hidden flex items-center gap-8 cursor-none">
+                <div class="w-16 h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors duration-500">
+                    <i data-lucide="trees" class="w-8 h-8"></i>
+                </div>
+                <div>
+                    <h3 class="font-heading text-3xl mb-2">NATURE</h3>
+                    <p class="text-gray-400 font-medium text-lg">Exploring landscapes and finding balance in the quiet.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER / CONTACT -->
+    <footer id="contact" class="py-24 px-4 md:px-12 relative overflow-hidden mt-12">
+        <div class="absolute inset-0 z-0 pointer-events-none flex justify-center items-center">
+            <div class="w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-volt/20 rounded-full blur-[120px] absolute -bottom-1/4 -left-1/4"></div>
+            <div class="w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] bg-blue-500/10 rounded-full blur-[100px] absolute top-0 -right-1/4"></div>
+        </div>
+
+        <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center md:items-end relative z-10 bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-10 md:p-16 shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden">
+            
+            <div class="absolute -bottom-10 -right-10 font-heading text-[15vw] text-white/5 pointer-events-none leading-none select-none z-0">
+                RITHIK
+            </div>
+
+            <!-- NEW UNIQUE ELEMENT: System Status & Live Clock (Top Right) -->
+            <div class="absolute top-10 right-10 md:top-16 md:right-16 hidden sm:flex flex-col items-end z-20">
+                <div class="flex items-center gap-3 bg-dark/50 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full mb-4">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-volt opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-volt"></span>
+                    </span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-volt">Available for Work</span>
+                </div>
+                <div class="text-right">
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Local Time // IST</p>
+                    <p class="font-mono text-xl text-white/80 tracking-widest" id="live-time">00:00:00</p>
+                </div>
+            </div>
+
+            <div class="relative z-10">
+                <!-- Adjusted leading to prevent overlap -->
+                <h2 class="font-heading text-6xl md:text-[8rem] leading-[1] mb-8 text-white">LET'S<br><span class="text-volt">BUILD.</span></h2>
+                <div class="flex gap-4">
+                    <a href="mailto:rithikur@gmail.com" class="w-14 h-14 bg-white/10 text-white border border-white/20 rounded-full flex items-center justify-center hover:bg-volt hover:text-dark hover:border-volt hover:scale-110 transition-all duration-300">
+                        <i data-lucide="mail" class="w-6 h-6"></i>
+                    </a>
+                    <a href="tel:+919842789499" class="w-14 h-14 bg-white/10 text-white border border-white/20 rounded-full flex items-center justify-center hover:bg-volt hover:text-dark hover:border-volt hover:scale-110 transition-all duration-300">
+                        <i data-lucide="phone" class="w-6 h-6"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/rithik-u-r/" target="_blank" class="w-14 h-14 bg-white/10 text-white border border-white/20 rounded-full flex items-center justify-center hover:bg-volt hover:text-dark hover:border-volt hover:scale-110 transition-all duration-300">
+                        <i data-lucide="linkedin" class="w-6 h-6"></i>
+                    </a>
+                    <a href="https://github.com/rithikur" target="_blank" class="w-14 h-14 bg-white/10 text-white border border-white/20 rounded-full flex items-center justify-center hover:bg-volt hover:text-dark hover:border-volt hover:scale-110 transition-all duration-300">
+                        <i data-lucide="github" class="w-6 h-6"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="md:text-right font-bold tracking-wider relative z-10 text-white">
+                <p class="text-2xl mb-2">rithikur@gmail.com</p>
+                <p class="text-xl text-gray-400 font-medium">+91 9842789499</p>
+                <p class="mt-8 text-sm text-gray-500 uppercase tracking-widest">&copy; 2026 RITHIK U R.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            smooth: true,
+        });
+
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => { lenis.raf(time * 1000) });
+        gsap.ticker.lagSmoothing(0);
+
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                lenis.scrollTo(this.getAttribute('href'), { offset: -50 });
+            });
+        });
+
+        // --- Live Clock JS ---
+        const timeEl = document.getElementById('live-time');
+        if (timeEl) {
+            setInterval(() => {
+                const now = new Date();
+                timeEl.textContent = now.toLocaleTimeString('en-IN', {
+                    timeZone: 'Asia/Kolkata',
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+            }, 1000);
+        }
+
+        gsap.from(".reveal-up", {
+            y: 100,
+            opacity: 0,
+            duration: 1.2,
+            stagger: 0.1,
+            ease: "power4.out",
+            delay: 0.2
+        });
+
+        gsap.utils.toArray('.reveal-fade').forEach(element => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 85%",
+                    toggleActions: "play none none reverse"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+
+        // --- Custom Magnetic Cursor & Reactive Grid ---
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorRing = document.querySelector('.cursor-ring');
+        
+        // Track mouse globally
+        window.addEventListener('mousemove', (e) => {
+            // Update CSS variables for Reactive Background
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            document.documentElement.style.setProperty('--mouse-x', `${x}%`);
+            document.documentElement.style.setProperty('--mouse-y', `${y}%`);
+
+            // Move custom cursor elements via GSAP (Desktop only)
+            if(window.innerWidth > 768 && cursorDot && cursorRing) {
+                gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0, ease: "none" });
+                gsap.to(cursorRing, { x: e.clientX, y: e.clientY, duration: 0.15, ease: "power2.out" });
+            }
+        });
+
+        // Add magnetic/hover effect to interactable elements
+        const interactables = document.querySelectorAll('a, button, .group, .bg-panel');
+        interactables.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                if(cursorRing) cursorRing.classList.add('active');
+            });
+            el.addEventListener('mouseleave', () => {
+                if(cursorRing) cursorRing.classList.remove('active');
+            });
+        });
+
+    </script>
+</body>
+</html>
