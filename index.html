@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rithik U R </title>
+    <title>Rithik U R</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -47,20 +47,20 @@
         /* Base & Custom Selection */
         ::selection { background-color: #ccff00; color: #000; }
         
-        /* Custom Cursor Override for Desktop */
+        /* Custom Cursor Override for Desktop Only */
         @media (pointer: fine) {
             body { cursor: none; }
             a, button, input, select, textarea { cursor: none; }
         }
 
         body { font-family: 'Plus Jakarta Sans', sans-serif; cursor: default; }
-        h1, h2, h3, h4, .font-heading { text-transform: uppercase; line-height: 0.9; }
+        h1, h2, h3, h4, .font-heading { text-transform: uppercase; line-height: 0.95; }
         
         /* Smooth Scroll Margin to prevent Header Overlap */
-        section { scroll-margin-top: 100px; }
+        section { scroll-margin-top: 80px; }
 
         /* Hide scrollbar for clean look */
-        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: #222222; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #ccff00; }
@@ -164,113 +164,134 @@
             clip-path: polygon(0 0, 100% 0, 100% calc(100% - 4vw), 0 100%);
         }
 
-        .img-reveal { overflow: hidden; }
-        .img-reveal img { transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
-        .img-reveal:hover img { transform: scale(1.05); }
+        /* Mobile Menu Transitions */
+        #mobile-menu {
+            transform: translateY(-100%);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #mobile-menu.open {
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body class="relative bg-dark text-white">
 
-    <!-- Custom Cursor -->
+    <!-- Custom Cursor (Desktop Only) -->
     <div class="cursor-dot hidden md:block"></div>
     <div class="cursor-ring hidden md:block"></div>
 
-    <!-- Glassmorphic Nav -->
-    <nav class="fixed top-0 w-full z-[100] bg-dark/40 backdrop-blur-xl border-b border-white/5 p-6 flex justify-between items-center">
-        <div class="font-heading text-2xl font-bold tracking-wider uppercase">RITHIK <span class="text-volt">U R</span></div>
-        <div class="flex gap-6 font-bold text-sm tracking-widest uppercase">
+    <!-- Responsive Glassmorphic Nav -->
+    <nav class="fixed top-0 w-full z-[100] bg-dark/40 backdrop-blur-xl border-b border-white/5 p-4 md:p-6 flex justify-between items-center">
+        <div class="font-heading text-xl md:text-2xl font-bold tracking-wider uppercase">RITHIK <span class="text-volt">U R</span></div>
+        
+        <!-- Desktop Links -->
+        <div class="hidden md:flex gap-8 font-bold text-sm tracking-widest uppercase">
             <a href="#about" class="hover:text-volt transition-colors">About</a>
             <a href="#stack" class="hover:text-volt transition-colors">Stack</a>
             <a href="#vibe" class="hover:text-volt transition-colors">Vibe</a>
             <a href="#contact" class="hover:text-volt transition-colors">Contact</a>
         </div>
+
+        <!-- Mobile Toggle -->
+        <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
     </nav>
 
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-[90] bg-dark flex flex-col items-center justify-center gap-8 md:hidden">
+        <a href="#about" class="mobile-link font-heading text-4xl font-bold hover:text-volt transition-colors">About</a>
+        <a href="#stack" class="mobile-link font-heading text-4xl font-bold hover:text-volt transition-colors">Stack</a>
+        <a href="#vibe" class="mobile-link font-heading text-4xl font-bold hover:text-volt transition-colors">Vibe</a>
+        <a href="#contact" class="mobile-link font-heading text-4xl font-bold hover:text-volt transition-colors">Contact</a>
+        <button id="menu-close" class="mt-8 text-volt uppercase tracking-widest font-bold text-xs">Close Menu</button>
+    </div>
+
     <!-- HERO SECTION -->
-    <header class="relative min-h-[100vh] flex flex-col justify-center overflow-hidden pt-24 pb-32">
+    <header class="relative min-h-[90vh] md:min-h-screen flex flex-col justify-center overflow-hidden pt-32 pb-20">
         <div class="absolute inset-0 grid-bg pointer-events-none z-0"></div>
         
-        <div class="z-10 px-4 md:px-12 flex flex-col items-center text-center">
-            <p class="font-body text-volt font-bold tracking-[0.3em] uppercase mb-4 text-xs md:text-sm reveal-up">Information Technology</p>
-            <h1 class="font-heading text-[15vw] md:text-[12vw] font-bold text-white whitespace-nowrap reveal-up">
-                RITHIK <span class="text-transparent" style="-webkit-text-stroke: 2px #333;">U R</span>
+        <div class="z-10 px-6 md:px-12 flex flex-col items-center text-center">
+            <p class="font-body text-volt font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase mb-4 text-[10px] md:text-sm reveal-up">Information Technology</p>
+            <h1 class="font-heading text-[12vw] sm:text-[14vw] md:text-[12vw] font-bold text-white whitespace-normal md:whitespace-nowrap leading-[0.9] reveal-up max-w-[90vw]">
+                RITHIK <span class="text-transparent" style="-webkit-text-stroke: 1px #333;">U R</span>
             </h1>
             
             <div class="w-full max-w-2xl mt-8 reveal-up flex flex-col md:flex-row items-center gap-6 justify-center">
-                <p class="text-gray-400 text-lg md:text-xl font-medium leading-relaxed text-center">
+                <p class="text-gray-400 text-base md:text-xl font-medium leading-relaxed text-center px-4">
                     Building the foundation. Writing logic. Obsessed with Full Stack Development.
                 </p>
             </div>
         </div>
 
-        <!-- Scroll indicator adjusted to prevent text overlap -->
-        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 reveal-up opacity-50">
-            <div class="w-[1px] h-12 bg-gradient-to-b from-volt to-transparent"></div>
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 reveal-up opacity-40">
+            <div class="w-[1px] h-10 md:h-12 bg-gradient-to-b from-volt to-transparent"></div>
             <span class="text-[8px] uppercase tracking-widest text-volt font-bold">Scroll</span>
         </div>
     </header>
 
-    <!-- KINETIC MARQUEE (Slowed + JavaScript Added) -->
-    <div class="bg-volt text-dark py-4 rotate-[-1deg] scale-105 z-20 relative overflow-hidden my-12 shadow-[0_0_40px_rgba(204,255,0,0.15)]">
+    <!-- KINETIC MARQUEE -->
+    <div class="bg-volt text-dark py-3 md:py-4 rotate-[-1deg] scale-105 z-20 relative overflow-hidden my-12 shadow-[0_0_40px_rgba(204,255,0,0.15)]">
         <div class="marquee-wrapper">
-            <div class="marquee-content font-heading text-4xl font-bold tracking-widest flex items-center">
-                <span>FULL STACK DEV</span><span class="mx-6 text-2xl">⚡</span>
-                <span>PYTHON & C</span><span class="mx-6 text-2xl">⚡</span>
-                <span>JAVASCRIPT</span><span class="mx-6 text-2xl">⚡</span>
-                <span>BLENDER 3D</span><span class="mx-6 text-2xl">⚡</span>
-                <span>PRACTICAL LEARNING</span><span class="mx-6 text-2xl">⚡</span>
-                <span>SOFTWARE ENGINEERING</span><span class="mx-6 text-2xl">⚡</span>
-                <!-- Duplicate for seamless loop -->
-                <span>FULL STACK DEV</span><span class="mx-6 text-2xl">⚡</span>
-                <span>PYTHON & C</span><span class="mx-6 text-2xl">⚡</span>
-                <span>JAVASCRIPT</span><span class="mx-6 text-2xl">⚡</span>
-                <span>BLENDER 3D</span><span class="mx-6 text-2xl">⚡</span>
-                <span>PRACTICAL LEARNING</span><span class="mx-6 text-2xl">⚡</span>
-                <span>SOFTWARE ENGINEERING</span><span class="mx-6 text-2xl">⚡</span>
+            <div class="marquee-content font-heading text-2xl md:text-4xl font-bold tracking-widest flex items-center">
+                <span>FULL STACK DEV</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
+                <span>PYTHON & C</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
+                <span>JAVASCRIPT</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
+                <span>BLENDER 3D</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
+                <span>PRACTICAL LEARNING</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
+                <span>SOFTWARE ENGINEERING</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
+                <!-- Duplicate -->
+                <span>FULL STACK DEV</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
+                <span>PYTHON & C</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
+                <span>JAVASCRIPT</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
+                <span>BLENDER 3D</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
+                <span>PRACTICAL LEARNING</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
+                <span>SOFTWARE ENGINEERING</span><span class="mx-4 md:mx-6 text-xl">⚡</span>
             </div>
         </div>
     </div>
 
     <!-- STATS & EDUCATION -->
-    <section id="about" class="py-24 px-4 md:px-12 max-w-[1400px] mx-auto">
+    <section id="about" class="py-16 md:py-24 px-6 md:px-12 max-w-[1400px] mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
-            <div class="lg:col-span-5 space-y-12">
+            <div class="lg:col-span-5 space-y-8 md:space-y-12">
                 <div class="reveal-fade">
-                    <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">Current Status</p>
-                    <h2 class="font-heading text-5xl md:text-7xl">THE<br>ACADEMICS</h2>
+                    <p class="text-volt font-bold tracking-widest uppercase text-[10px] md:text-xs mb-2">Current Status</p>
+                    <h2 class="font-heading text-4xl md:text-7xl">THE<br>ACADEMICS</h2>
                 </div>
                 
-                <div class="flex gap-12 border-t border-border pt-8 reveal-fade">
+                <div class="flex gap-8 md:gap-12 border-t border-border pt-8 reveal-fade">
                     <div>
-                        <p class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-1">Sem 1 CGPA</p>
-                        <p class="font-heading text-6xl md:text-8xl text-volt">8.15</p>
+                        <p class="text-gray-500 text-[10px] md:text-sm font-bold uppercase tracking-wider mb-1">Sem 1 CGPA</p>
+                        <p class="font-heading text-5xl md:text-8xl text-volt">8.15</p>
                     </div>
                     <div>
-                        <p class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-1">Graduation</p>
-                        <p class="font-heading text-6xl md:text-8xl text-white">2029</p>
+                        <p class="text-gray-500 text-[10px] md:text-sm font-bold uppercase tracking-wider mb-1">Graduation</p>
+                        <p class="font-heading text-5xl md:text-8xl text-white">2029</p>
                     </div>
                 </div>
             </div>
 
-            <div class="lg:col-span-7 bg-panel p-8 md:p-12 border border-border rounded-xl reveal-fade">
-                <div class="flex justify-between items-start mb-8 border-b border-border pb-8">
+            <div class="lg:col-span-7 bg-panel p-6 md:p-12 border border-border rounded-2xl reveal-fade">
+                <div class="flex flex-col md:flex-row justify-between items-start mb-8 border-b border-border pb-8 gap-4">
                     <div>
-                        <h3 class="font-heading text-3xl mb-2">B.Tech Information Technology</h3>
-                        <p class="text-gray-400 font-medium">KPR Engineering College, Coimbatore</p>
+                        <h3 class="font-heading text-2xl md:text-3xl mb-1">B.Tech Information Technology</h3>
+                        <p class="text-gray-400 font-medium text-sm md:text-base">KPR Engineering College, Coimbatore</p>
                     </div>
-                    <div class="bg-dark px-4 py-2 rounded-full border border-border">
+                    <div class="bg-dark px-4 py-2 rounded-full border border-border w-fit">
                         <span class="w-2 h-2 rounded-full bg-volt inline-block mr-2 animate-pulse"></span>
-                        <span class="text-xs font-bold uppercase tracking-widest">Active</span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest">Active</span>
                     </div>
                 </div>
                 
-                <ul class="space-y-6 text-lg text-gray-300">
+                <ul class="space-y-6 text-base md:text-lg text-gray-300">
                     <li class="flex items-start gap-4">
-                        <i data-lucide="crosshair" class="w-6 h-6 text-volt shrink-0 mt-1"></i>
+                        <i data-lucide="crosshair" class="w-5 h-5 md:w-6 md:h-6 text-volt shrink-0 mt-1"></i>
                         <p>Bridging the gap between academic theory and practical application by actively studying modern web frameworks.</p>
                     </li>
                     <li class="flex items-start gap-4">
-                        <i data-lucide="terminal" class="w-6 h-6 text-volt shrink-0 mt-1"></i>
+                        <i data-lucide="terminal" class="w-5 h-5 md:w-6 md:h-6 text-volt shrink-0 mt-1"></i>
                         <p>Building foundational self-directed projects. Writing scripts to solve real-world logistical problems.</p>
                     </li>
                 </ul>
@@ -278,169 +299,154 @@
         </div>
     </section>
 
-    <!-- THE ARSENAL -->
-    <section id="stack" class="py-24 bg-panel border-y border-border clip-angle relative overflow-hidden">
-        
-        <!-- 3D Wireframe Background -->
+    <!-- TECH STACK -->
+    <section id="stack" class="py-16 md:py-24 bg-panel border-y border-border clip-angle relative overflow-hidden">
         <div class="absolute inset-0 z-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
-            <div class="w-[800px] h-[800px] perspective-1000">
+            <div class="w-[400px] h-[400px] md:w-[800px] md:h-[800px] perspective-1000">
                 <div class="w-full h-full relative preserve-3d animate-spin-3d">
-                    <div class="absolute inset-0 border-[3px] border-volt rounded-full transform rotate-x-60"></div>
-                    <div class="absolute inset-0 border-[3px] border-white rounded-full transform rotate-y-60"></div>
-                    <div class="absolute inset-0 border-[3px] border-volt rounded-full transform rotate-z-60 rotate-x-45"></div>
+                    <div class="absolute inset-0 border-[2px] md:border-[3px] border-volt rounded-full transform rotate-x-60"></div>
+                    <div class="absolute inset-0 border-[2px] md:border-[3px] border-white rounded-full transform rotate-y-60"></div>
                 </div>
             </div>
         </div>
 
-        <div class="max-w-[1400px] mx-auto px-4 md:px-12 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 reveal-fade">
+        <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 reveal-fade gap-4">
                 <div>
-                    <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">My Skills</p>
-                    <h2 class="font-heading text-6xl md:text-8xl glitch" data-text="TECH STACK">TECH STACK</h2>
+                    <p class="text-volt font-bold tracking-widest uppercase text-[10px] md:text-xs mb-2">My Skills</p>
+                    <h2 class="font-heading text-5xl md:text-8xl glitch" data-text="TECH STACK">TECH STACK</h2>
                 </div>
-                <p class="text-gray-400 max-w-sm text-right mt-6 md:mt-0 font-medium italic">
+                <p class="text-gray-400 max-w-sm text-left md:text-right font-medium italic text-sm md:text-base">
                     Focusing on "how it works" rather than just "how to write it."
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="group bg-dark border border-border p-8 hover:border-volt transition-colors reveal-fade cursor-none">
-                    <div class="flex justify-between items-center mb-12">
-                        <span class="font-heading text-4xl text-gray-700 group-hover:text-white transition-colors">01</span>
-                        <i data-lucide="code-2" class="w-8 h-8 text-gray-600 group-hover:text-volt transition-colors"></i>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                <div class="group bg-dark border border-border p-6 md:p-8 hover:border-volt transition-colors reveal-fade">
+                    <div class="flex justify-between items-center mb-10 md:mb-12">
+                        <span class="font-heading text-3xl md:text-4xl text-gray-700 group-hover:text-white transition-colors">01</span>
+                        <i data-lucide="code-2" class="w-6 h-6 md:w-8 md:h-8 text-gray-600 group-hover:text-volt transition-colors"></i>
                     </div>
-                    <h3 class="font-heading text-3xl mb-2">PYTHON & C</h3>
-                    <p class="text-gray-500 text-sm font-medium">Core logic and algorithms. The starting point of my journey into systems.</p>
+                    <h3 class="font-heading text-2xl md:text-3xl mb-2">PYTHON & C</h3>
+                    <p class="text-gray-500 text-xs md:text-sm font-medium">Core logic and algorithms. The starting point of my journey into systems.</p>
                 </div>
 
-                <div class="group bg-dark border border-border p-8 hover:border-volt transition-colors reveal-fade cursor-none">
-                    <div class="flex justify-between items-center mb-12">
-                        <span class="font-heading text-4xl text-gray-700 group-hover:text-white transition-colors">02</span>
-                        <i data-lucide="zap" class="w-8 h-8 text-gray-600 group-hover:text-volt transition-colors"></i>
+                <div class="group bg-dark border border-border p-6 md:p-8 hover:border-volt transition-colors reveal-fade">
+                    <div class="flex justify-between items-center mb-10 md:mb-12">
+                        <span class="font-heading text-3xl md:text-4xl text-gray-700 group-hover:text-white transition-colors">02</span>
+                        <i data-lucide="zap" class="w-6 h-6 md:w-8 md:h-8 text-gray-600 group-hover:text-volt transition-colors"></i>
                     </div>
-                    <h3 class="font-heading text-3xl mb-2">JAVASCRIPT</h3>
-                    <p class="text-gray-500 text-sm font-medium">The language of the web. Currently exploring interactivity and logic flows.</p>
+                    <h3 class="font-heading text-2xl md:text-3xl mb-2">JAVASCRIPT</h3>
+                    <p class="text-gray-500 text-xs md:text-sm font-medium">The language of the web. Currently exploring interactivity and logic flows.</p>
                 </div>
 
-                <div class="group bg-volt text-dark border border-volt p-8 reveal-fade cursor-none">
-                    <div class="flex justify-between items-center mb-12">
-                        <span class="font-heading text-4xl text-black/40">03</span>
-                        <i data-lucide="box" class="w-8 h-8 text-dark"></i>
+                <div class="group bg-volt text-dark border border-volt p-6 md:p-8 reveal-fade">
+                    <div class="flex justify-between items-center mb-10 md:mb-12">
+                        <span class="font-heading text-3xl md:text-4xl text-black/40">03</span>
+                        <i data-lucide="box" class="w-6 h-6 md:w-8 md:h-8 text-dark"></i>
                     </div>
-                    <h3 class="font-heading text-3xl mb-2">BLENDER (BASICS)</h3>
-                    <p class="text-dark/80 text-sm font-bold">Exploring 3D space. Understanding vertex data and lighting for future creative dev.</p>
+                    <h3 class="font-heading text-2xl md:text-3xl mb-2">BLENDER</h3>
+                    <p class="text-dark/80 text-xs md:text-sm font-bold">Exploring 3D space. Understanding vertex data and lighting for creative dev.</p>
                 </div>
 
-                <div class="group bg-dark border border-border p-8 hover:border-volt transition-colors reveal-fade cursor-none">
-                    <div class="flex justify-between items-center mb-12">
-                        <span class="font-heading text-4xl text-gray-700 group-hover:text-white transition-colors">04</span>
-                        <i data-lucide="layers" class="w-8 h-8 text-gray-600 group-hover:text-volt transition-colors"></i>
+                <div class="group bg-dark border border-border p-6 md:p-8 hover:border-volt transition-colors reveal-fade">
+                    <div class="flex justify-between items-center mb-10 md:mb-12">
+                        <span class="font-heading text-3xl md:text-4xl text-gray-700 group-hover:text-white transition-colors">04</span>
+                        <i data-lucide="layers" class="w-6 h-6 md:w-8 md:h-8 text-gray-600 group-hover:text-volt transition-colors"></i>
                     </div>
-                    <h3 class="font-heading text-3xl mb-2">WEB BASICS</h3>
-                    <p class="text-gray-500 text-sm font-medium">HTML & CSS. Semantic structure and layouts for the next-gen web.</p>
+                    <h3 class="font-heading text-2xl md:text-3xl mb-2">WEB BASICS</h3>
+                    <p class="text-gray-500 text-xs md:text-sm font-medium">HTML & CSS. Semantic structure and layouts for the next-gen web.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- WHAT I LIKE SECTION -->
-    <section id="vibe" class="py-24 px-4 md:px-12 max-w-[1400px] mx-auto">
-        <div class="reveal-fade mb-16">
-            <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">Personal Drive</p>
-            <h2 class="font-heading text-6xl md:text-8xl">WHAT I LIKE</h2>
+    <section id="vibe" class="py-16 md:py-24 px-6 md:px-12 max-w-[1400px] mx-auto">
+        <div class="reveal-fade mb-12 md:mb-16">
+            <p class="text-volt font-bold tracking-widest uppercase text-[10px] md:text-xs mb-2">Personal Drive</p>
+            <h2 class="font-heading text-4xl md:text-8xl">WHAT I LIKE</h2>
         </div>
 
-        <!-- Bento Grid Layout -->
-        <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6">
-            
-            <!-- Bento Box 1: Large -->
-            <div class="md:col-span-2 md:row-span-2 bg-panel p-12 border border-border rounded-[2rem] hover:border-volt hover:bg-dark transition-all duration-500 reveal-fade group relative overflow-hidden flex flex-col justify-end min-h-[400px] cursor-none">
-                <i data-lucide="wrench" class="absolute -right-10 -top-10 w-64 h-64 text-white/5 group-hover:text-volt/10 transition-colors duration-500 rotate-12"></i>
+        <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 md:gap-6">
+            <div class="md:col-span-2 md:row-span-2 bg-panel p-8 md:p-12 border border-border rounded-[1.5rem] md:rounded-[2rem] hover:border-volt hover:bg-dark transition-all duration-500 reveal-fade group relative overflow-hidden flex flex-col justify-end min-h-[300px] md:min-h-[400px]">
+                <i data-lucide="wrench" class="absolute -right-6 -top-6 md:-right-10 md:-top-10 w-48 h-48 md:w-64 md:h-64 text-white/5 group-hover:text-volt/10 transition-colors duration-500 rotate-12"></i>
                 <div class="relative z-10">
-                    <div class="w-16 h-16 bg-volt text-dark rounded-full flex items-center justify-center mb-8 transform group-hover:scale-110 transition-transform duration-500">
-                        <i data-lucide="wrench" class="w-8 h-8"></i>
+                    <div class="w-12 h-12 md:w-16 md:h-16 bg-volt text-dark rounded-full flex items-center justify-center mb-6 md:mb-8 transform group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="wrench" class="w-6 h-6 md:w-8 md:h-8"></i>
                     </div>
-                    <h3 class="font-heading text-4xl mb-4">PRACTICAL TECH</h3>
-                    <p class="text-gray-400 font-medium text-lg">Hands-on tinkering. I learn by breaking and rebuilding things, focusing on practical use-cases.</p>
+                    <h3 class="font-heading text-2xl md:text-4xl mb-4">PRACTICAL TECH</h3>
+                    <p class="text-gray-400 font-medium text-base md:text-lg">Hands-on tinkering. I learn by breaking and rebuilding things.</p>
                 </div>
             </div>
 
-            <!-- Bento Box 2: Wide -->
-            <div class="md:col-span-2 md:row-span-1 bg-panel p-8 border border-border rounded-[2rem] hover:border-volt hover:bg-dark transition-all duration-500 reveal-fade group relative overflow-hidden flex items-center gap-8 cursor-none">
-                <div class="w-16 h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors duration-500">
-                    <i data-lucide="music" class="w-8 h-8"></i>
+            <div class="md:col-span-2 md:row-span-1 bg-panel p-6 md:p-8 border border-border rounded-[1.5rem] md:rounded-[2rem] hover:border-volt hover:bg-dark transition-all duration-500 reveal-fade group relative overflow-hidden flex items-center gap-6 md:gap-8">
+                <div class="w-12 h-12 md:w-16 md:h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors duration-500">
+                    <i data-lucide="music" class="w-6 h-6 md:w-8 md:h-8"></i>
                 </div>
                 <div>
-                    <h3 class="font-heading text-3xl mb-2">MUSIC</h3>
-                    <p class="text-gray-400 font-medium text-lg">The fuel for my focus. Rhythm and coding have a deep connection.</p>
+                    <h3 class="font-heading text-2xl md:text-3xl mb-1">MUSIC</h3>
+                    <p class="text-gray-400 font-medium text-sm md:text-lg">The fuel for my focus. Rhythm is logic.</p>
                 </div>
             </div>
 
-            <!-- Bento Box 3: Wide -->
-            <div class="md:col-span-2 md:row-span-1 bg-panel p-8 border border-border rounded-[2rem] hover:border-volt hover:bg-dark transition-all duration-500 reveal-fade group relative overflow-hidden flex items-center gap-8 cursor-none">
-                <div class="w-16 h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors duration-500">
-                    <i data-lucide="trees" class="w-8 h-8"></i>
+            <div class="md:col-span-2 md:row-span-1 bg-panel p-6 md:p-8 border border-border rounded-[1.5rem] md:rounded-[2rem] hover:border-volt hover:bg-dark transition-all duration-500 reveal-fade group relative overflow-hidden flex items-center gap-6 md:gap-8">
+                <div class="w-12 h-12 md:w-16 md:h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors duration-500">
+                    <i data-lucide="trees" class="w-6 h-6 md:w-8 md:h-8"></i>
                 </div>
                 <div>
-                    <h3 class="font-heading text-3xl mb-2">NATURE</h3>
-                    <p class="text-gray-400 font-medium text-lg">Exploring landscapes and finding balance in the quiet.</p>
+                    <h3 class="font-heading text-2xl md:text-3xl mb-1">NATURE</h3>
+                    <p class="text-gray-400 font-medium text-sm md:text-lg">Balance in the quiet. Recharge energy.</p>
                 </div>
             </div>
-
         </div>
     </section>
 
     <!-- FOOTER / CONTACT -->
-    <footer id="contact" class="py-24 px-4 md:px-12 relative overflow-hidden mt-12">
+    <footer id="contact" class="py-16 md:py-24 px-4 md:px-12 relative overflow-hidden mt-12">
         <div class="absolute inset-0 z-0 pointer-events-none flex justify-center items-center">
-            <div class="w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-volt/20 rounded-full blur-[120px] absolute -bottom-1/4 -left-1/4"></div>
-            <div class="w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] bg-blue-500/10 rounded-full blur-[100px] absolute top-0 -right-1/4"></div>
+            <div class="w-[80vw] h-[80vw] md:w-[60vw] md:h-[60vw] bg-volt/10 rounded-full blur-[100px] absolute -bottom-1/4 -left-1/4"></div>
         </div>
 
-        <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center md:items-end relative z-10 bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-10 md:p-16 shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden">
+        <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center md:items-end relative z-10 bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[2rem] md:rounded-[3rem] p-8 md:p-16 shadow-2xl overflow-hidden">
             
-            <div class="absolute -bottom-10 -right-10 font-heading text-[15vw] text-white/5 pointer-events-none leading-none select-none z-0">
+            <div class="absolute -bottom-6 -right-6 md:-bottom-10 md:-right-10 font-heading text-[20vw] md:text-[15vw] text-white/5 pointer-events-none leading-none select-none z-0">
                 RITHIK
             </div>
 
-            <!-- NEW UNIQUE ELEMENT: System Status & Live Clock (Top Right) -->
-            <div class="absolute top-10 right-10 md:top-16 md:right-16 hidden sm:flex flex-col items-end z-20">
-                <div class="flex items-center gap-3 bg-dark/50 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full mb-4">
+            <!-- System Status (Hidden on very small screens, visible on md+) -->
+            <div class="absolute top-8 right-8 hidden sm:flex flex-col items-end z-20">
+                <div class="flex items-center gap-2 bg-dark/50 px-3 py-1.5 rounded-full border border-white/10 mb-2">
                     <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-volt opacity-75"></span>
+                        <span class="animate-ping absolute h-full w-full rounded-full bg-volt opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-volt"></span>
                     </span>
-                    <span class="text-[10px] font-bold uppercase tracking-widest text-volt">Available for Work</span>
+                    <span class="text-[8px] font-bold uppercase tracking-widest text-volt">Online</span>
                 </div>
-                <div class="text-right">
-                    <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Local Time // IST</p>
-                    <p class="font-mono text-xl text-white/80 tracking-widest" id="live-time">00:00:00</p>
-                </div>
+                <p class="font-mono text-xs text-white/50 tracking-tighter" id="live-time">00:00:00</p>
             </div>
 
             <div class="relative z-10">
-                <!-- Adjusted leading to prevent overlap -->
-                <h2 class="font-heading text-6xl md:text-[8rem] leading-[1] mb-8 text-white">LET'S<br><span class="text-volt">BUILD.</span></h2>
+                <h2 class="font-heading text-5xl md:text-[8rem] leading-[1] mb-8 text-white">LET'S<br><span class="text-volt">BUILD.</span></h2>
                 <div class="flex gap-4">
-                    <a href="mailto:rithikur@gmail.com" class="w-14 h-14 bg-white/10 text-white border border-white/20 rounded-full flex items-center justify-center hover:bg-volt hover:text-dark hover:border-volt hover:scale-110 transition-all duration-300">
-                        <i data-lucide="mail" class="w-6 h-6"></i>
+                    <a href="mailto:rithikur@gmail.com" class="w-12 h-12 md:w-14 md:h-14 bg-white/10 text-white border border-white/20 rounded-full flex items-center justify-center hover:bg-volt hover:text-dark hover:scale-110 transition-all duration-300">
+                        <i data-lucide="mail" class="w-5 h-5 md:w-6 md:h-6"></i>
                     </a>
-                    <a href="tel:+919842789499" class="w-14 h-14 bg-white/10 text-white border border-white/20 rounded-full flex items-center justify-center hover:bg-volt hover:text-dark hover:border-volt hover:scale-110 transition-all duration-300">
-                        <i data-lucide="phone" class="w-6 h-6"></i>
+                    <a href="https://www.linkedin.com/in/rithik-u-r/" target="_blank" class="w-12 h-12 md:w-14 md:h-14 bg-white/10 text-white border border-white/20 rounded-full flex items-center justify-center hover:bg-volt hover:text-dark hover:scale-110 transition-all duration-300">
+                        <i data-lucide="linkedin" class="w-5 h-5 md:w-6 md:h-6"></i>
                     </a>
-                    <a href="https://www.linkedin.com/in/rithik-u-r/" target="_blank" class="w-14 h-14 bg-white/10 text-white border border-white/20 rounded-full flex items-center justify-center hover:bg-volt hover:text-dark hover:border-volt hover:scale-110 transition-all duration-300">
-                        <i data-lucide="linkedin" class="w-6 h-6"></i>
-                    </a>
-                    <a href="https://github.com/rithikur" target="_blank" class="w-14 h-14 bg-white/10 text-white border border-white/20 rounded-full flex items-center justify-center hover:bg-volt hover:text-dark hover:border-volt hover:scale-110 transition-all duration-300">
-                        <i data-lucide="github" class="w-6 h-6"></i>
+                    <a href="https://github.com/rithikur" target="_blank" class="w-12 h-12 md:w-14 md:h-14 bg-white/10 text-white border border-white/20 rounded-full flex items-center justify-center hover:bg-volt hover:text-dark hover:scale-110 transition-all duration-300">
+                        <i data-lucide="github" class="w-5 h-5 md:w-6 md:h-6"></i>
                     </a>
                 </div>
             </div>
             
             <div class="md:text-right font-bold tracking-wider relative z-10 text-white">
-                <p class="text-2xl mb-2">rithikur@gmail.com</p>
-                <p class="text-xl text-gray-400 font-medium">+91 9842789499</p>
-                <p class="mt-8 text-sm text-gray-500 uppercase tracking-widest">&copy; 2026 RITHIK U R.</p>
+                <p class="text-xl md:text-2xl mb-1 md:mb-2">rithikur@gmail.com</p>
+                <p class="text-sm md:text-xl text-gray-400 font-medium">+91 9842789499</p>
+                <p class="mt-6 md:mt-8 text-[10px] md:text-sm text-gray-500 uppercase tracking-widest font-normal opacity-60">
+                    &copy; 2026 RITHIK U R.
+                </p>
             </div>
         </div>
     </footer>
@@ -459,17 +465,38 @@
         gsap.ticker.add((time) => { lenis.raf(time * 1000) });
         gsap.ticker.lagSmoothing(0);
 
-        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+        // Mobile Menu Logic
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        const toggleMenu = () => {
+            mobileMenu.classList.toggle('open');
+            document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+        };
+
+        menuToggle.addEventListener('click', toggleMenu);
+        menuClose.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            document.body.style.overflow = '';
+        }));
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                lenis.scrollTo(this.getAttribute('href'), { offset: -50 });
+                const target = this.getAttribute('href');
+                if (target !== '#') {
+                    lenis.scrollTo(target, { offset: -50 });
+                }
             });
         });
 
-        // --- Live Clock JS ---
-        const timeEl = document.getElementById('live-time');
-        if (timeEl) {
-            setInterval(() => {
+        // Live Clock
+        setInterval(() => {
+            const timeEl = document.getElementById('live-time');
+            if (timeEl) {
                 const now = new Date();
                 timeEl.textContent = now.toLocaleTimeString('en-IN', {
                     timeZone: 'Asia/Kolkata',
@@ -478,62 +505,52 @@
                     minute: '2-digit',
                     second: '2-digit'
                 });
-            }, 1000);
-        }
+            }
+        }, 1000);
 
+        // Animations
         gsap.from(".reveal-up", {
-            y: 100,
+            y: 60,
             opacity: 0,
             duration: 1.2,
             stagger: 0.1,
-            ease: "power4.out",
-            delay: 0.2
+            ease: "power4.out"
         });
 
         gsap.utils.toArray('.reveal-fade').forEach(element => {
             gsap.from(element, {
                 scrollTrigger: {
                     trigger: element,
-                    start: "top 85%",
+                    start: "top 90%",
                     toggleActions: "play none none reverse"
                 },
-                y: 50,
+                y: 30,
                 opacity: 0,
                 duration: 1,
                 ease: "power3.out"
             });
         });
 
-        // --- Custom Magnetic Cursor & Reactive Grid ---
+        // Mouse Tracking
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorRing = document.querySelector('.cursor-ring');
         
-        // Track mouse globally
         window.addEventListener('mousemove', (e) => {
-            // Update CSS variables for Reactive Background
             const x = (e.clientX / window.innerWidth) * 100;
             const y = (e.clientY / window.innerHeight) * 100;
             document.documentElement.style.setProperty('--mouse-x', `${x}%`);
             document.documentElement.style.setProperty('--mouse-y', `${y}%`);
 
-            // Move custom cursor elements via GSAP (Desktop only)
             if(window.innerWidth > 768 && cursorDot && cursorRing) {
-                gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0, ease: "none" });
-                gsap.to(cursorRing, { x: e.clientX, y: e.clientY, duration: 0.15, ease: "power2.out" });
+                gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0 });
+                gsap.to(cursorRing, { x: e.clientX, y: e.clientY, duration: 0.15 });
             }
         });
 
-        // Add magnetic/hover effect to interactable elements
-        const interactables = document.querySelectorAll('a, button, .group, .bg-panel');
-        interactables.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                if(cursorRing) cursorRing.classList.add('active');
-            });
-            el.addEventListener('mouseleave', () => {
-                if(cursorRing) cursorRing.classList.remove('active');
-            });
+        document.querySelectorAll('a, button, .group, .bg-panel').forEach(el => {
+            el.addEventListener('mouseenter', () => cursorRing?.classList.add('active'));
+            el.addEventListener('mouseleave', () => cursorRing?.classList.remove('active'));
         });
-
     </script>
 </body>
 </html>
