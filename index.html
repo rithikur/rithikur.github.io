@@ -68,6 +68,18 @@
             transform: translateY(0); 
         }
 
+        /* NEON GLOW EFFECTS */
+        .neon-wire {
+            filter: drop-shadow(0 0 3px #ccff00) drop-shadow(0 0 8px #ccff00);
+            stroke-linecap: round;
+        }
+        
+        /* Hitboxes for easy clicking */
+        .wire-hitbox {
+            cursor: pointer;
+            pointer-events: auto;
+        }
+
         /* DEBUG MODE / X-RAY LENS */
         body.debug-mode * { border: 1px solid rgba(204, 255, 0, 0.1) !important; }
         body.debug-mode .cursor-ring {
@@ -162,15 +174,36 @@
         </div>
     </div>
 
-    <!-- BACKGROUND WIRES -->
+    <!-- BACKGROUND WIRES WITH INTERACTIVE HITBOXES -->
     <div id="wires-container" class="fixed inset-0 z-0 pointer-events-none opacity-30">
         <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur" />
+                    <feFlood flood-color="#ccff00" result="color" />
+                    <feComposite in="color" in2="blur" operator="in" result="glow" />
+                    <feMerge>
+                        <feMergeNode in="glow" />
+                        <feMergeNode in="glow" />
+                        <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                </filter>
+            </defs>
+
+            <!-- WIRE 1 -->
             <path class="wire-path" d="M -50 150 L 250 150 L 250 350 L 600 350 L 600 100 L 1400 100" stroke="#ccff00" fill="none" stroke-opacity="0.1"/>
-            <path id="wire-pulse-1" class="wire-pulse" d="M -50 150 L 250 150 L 250 350 L 600 350 L 600 100 L 1400 100" stroke="#ccff00" fill="none" stroke-width="2" stroke-dasharray="100, 1000" stroke-dashoffset="1100"/>
+            <path id="wire-pulse-1" class="neon-wire" filter="url(#neon-glow)" d="M -50 150 L 250 150 L 250 350 L 600 350 L 600 100 L 1400 100" stroke="#ccff00" fill="none" stroke-width="2" stroke-dasharray="150, 1000" stroke-dashoffset="1150"/>
+            <path class="wire-hitbox" d="M -50 150 L 250 150 L 250 350 L 600 350 L 600 100 L 1400 100" stroke="transparent" fill="none" stroke-width="30" onclick="surgeWire(1)"/>
+
+            <!-- WIRE 2 -->
             <path class="wire-path" d="M 1400 750 L 1000 750 L 1000 550 L 700 550 L 700 850 L -100 850" stroke="#ccff00" fill="none" stroke-opacity="0.1"/>
-            <path id="wire-pulse-2" class="wire-pulse" d="M 1400 750 L 1000 750 L 1000 550 L 700 550 L 700 850 L -100 850" stroke="#ccff00" fill="none" stroke-width="2" stroke-dasharray="100, 1000" stroke-dashoffset="1100"/>
+            <path id="wire-pulse-2" class="neon-wire" filter="url(#neon-glow)" d="M 1400 750 L 1000 750 L 1000 550 L 700 550 L 700 850 L -100 850" stroke="#ccff00" fill="none" stroke-width="2" stroke-dasharray="150, 1000" stroke-dashoffset="1150"/>
+            <path class="wire-hitbox" d="M 1400 750 L 1000 750 L 1000 550 L 700 550 L 700 850 L -100 850" stroke="transparent" fill="none" stroke-width="30" onclick="surgeWire(2)"/>
+
+            <!-- WIRE 3 -->
             <path class="wire-path" d="M 300 -100 L 300 250 L -100 250" stroke="#ccff00" fill="none" stroke-opacity="0.1"/>
-            <path id="wire-pulse-3" class="wire-pulse" d="M 300 -100 L 300 250 L -100 250" stroke="#ccff00" fill="none" stroke-width="2" stroke-dasharray="100, 1000" stroke-dashoffset="1100"/>
+            <path id="wire-pulse-3" class="neon-wire" filter="url(#neon-glow)" d="M 300 -100 L 300 250 L -100 250" stroke="#ccff00" fill="none" stroke-width="2" stroke-dasharray="150, 1000" stroke-dashoffset="1150"/>
+            <path class="wire-hitbox" d="M 300 -100 L 300 250 L -100 250" stroke="transparent" fill="none" stroke-width="30" onclick="surgeWire(3)"/>
         </svg>
     </div>
 
@@ -334,16 +367,17 @@
     </section>
 
     <!-- Footer -->
-    <footer id="contact" class="py-16 md:py-24 px-6 md:px-12 relative overflow-hidden mt-12 mb-20 pointer-events-none">
+    <footer id="contact" class="py-16 md:py-24 px-6 md:px-12 relative overflow-hidden mt-12 mb-20">
         <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center md:items-end relative z-10 bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-8 md:p-16 shadow-2xl glass-sheen">
             
+            <!-- BACKGROUND WATERMARK WRAPPER -->
             <div class="absolute inset-0 overflow-hidden rounded-[3rem] pointer-events-none">
                 <div id="parallax-name" class="absolute right-0 bottom-[-5%] font-heading text-[20vw] text-white/5 pointer-events-none select-none z-0 tracking-tighter leading-none whitespace-nowrap origin-bottom-right">
                     RITHIK
                 </div>
             </div>
             
-            <div class="absolute top-8 right-8 md:top-14 md:right-14 flex flex-col items-end z-20 pointer-events-auto">
+            <div class="absolute top-8 right-8 md:top-14 md:right-14 flex flex-col items-end z-20">
                 <div class="flex items-center gap-2 bg-[#1e1e1e] px-3 py-1.5 rounded-full border border-white/5 mb-3 shadow-inner">
                     <span class="w-1.5 h-1.5 rounded-full bg-volt shadow-[0_0_8px_#ccff00]"></span>
                     <span class="text-[9px] font-bold uppercase tracking-widest text-volt">Available for Work</span>
@@ -360,14 +394,15 @@
                         <span class="inline-block">B</span><span class="inline-block">U</span><span class="inline-block">I</span><span class="inline-block">L</span><span class="inline-block">D</span><span class="inline-block">.</span>
                     </div>
                 </h2>
-                <div class="flex gap-4 relative z-20 pointer-events-auto">
+                <!-- BUTTONS Z-INDEX ELEVATED -->
+                <div class="flex gap-4 relative z-20">
                     <a href="mailto:rithikur@gmail.com" id="copy-email-btn" class="social-icon group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target"><i data-lucide="mail" class="w-5 h-5"></i></a>
                     <a href="https://www.linkedin.com/in/rithik-u-r/" target="_blank" class="social-icon group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
                     <a href="https://github.com/rithikur" target="_blank" class="social-icon group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target"><i data-lucide="github" class="w-5 h-5"></i></a>
                 </div>
             </div>
 
-            <div class="md:text-right font-bold tracking-wider relative z-20 text-white mt-12 md:mt-0 pointer-events-auto">
+            <div class="md:text-right font-bold tracking-wider relative z-20 text-white mt-12 md:mt-0">
                 <div id="copy-email-trigger" class="inline-block group cursor-pointer haptic-target mb-1">
                     <p id="email-text" class="text-xl md:text-3xl font-heading group-hover:text-volt transition-colors lowercase">rithikur@gmail.com</p>
                     <div class="h-px w-0 group-hover:w-full bg-volt transition-all duration-500"></div>
@@ -382,9 +417,9 @@
         lucide.createIcons();
 
         // 1. GLOBAL UTILITIES
-        function triggerHaptic(duration = 15) {
+        function triggerHaptic(pattern = 15) {
             if (window.navigator && window.navigator.vibrate) { 
-                try { window.navigator.vibrate(duration); } catch(e) {} 
+                try { window.navigator.vibrate(pattern); } catch(e) {} 
             }
         }
 
@@ -417,7 +452,6 @@
                         scrollOsc.type = 'triangle';
                         scrollOsc.frequency.setValueAtTime(40, audioCtx.currentTime); 
                         scrollGain.gain.setValueAtTime(0, audioCtx.currentTime); 
-                        
                         scrollOsc.connect(scrollGain);
                         scrollGain.connect(audioCtx.destination);
                         scrollOsc.start();
@@ -434,7 +468,7 @@
                     audioBtn.classList.remove('text-volt');
                     audioBtn.innerHTML = (audioIndicator ? audioIndicator.outerHTML : '') + ' SOUND: OFF';
                 }
-                triggerHaptic(20);
+                triggerHaptic(15); // STANDARD SINGLE HAPTIC
             };
         }
 
@@ -512,7 +546,7 @@
             gsap.to(cmdPalette, { opacity: 1, duration: 0.2 });
             gsap.to(cmdModal, { scale: 1, duration: 0.3, ease: "back.out(1.5)" });
             document.body.style.overflow = 'hidden';
-            setTimeout(() => { if(cmdInput) cmdInput.focus(); renderCmd(); }, 100);
+            setTimeout(() => { cmdInput.focus(); renderCmd(); }, 100);
         }
 
         function closeCmd() {
@@ -536,6 +570,7 @@
             e.currentTarget.classList.toggle('bg-volt');
             e.currentTarget.classList.toggle('text-dark');
             playHoverSound(300);
+            triggerHaptic(15); // STANDARD SINGLE HAPTIC
         };
 
         // NAVIGATION (SMOOTH SCROLL + MOBILE AUTO-CLOSE)
@@ -555,30 +590,44 @@
                         document.body.style.overflow = '';
                     }
                 }
-                triggerHaptic(15);
+                triggerHaptic(15); // STANDARD SINGLE HAPTIC
             });
         });
 
-        // Click Ripple & Wire Power Surge (With Electric Surge Haptics)
-        window.addEventListener('click', (e) => {
-            if(e.target.closest('button, a, input, .mobile-link')) return; 
-            const ripple = document.createElement('div');
-            ripple.className = 'fixed rounded-full border-2 border-volt pointer-events-none z-[9999]';
-            ripple.style.left = e.clientX + 'px'; ripple.style.top = e.clientY + 'px'; ripple.style.transform = 'translate(-50%, -50%)';
-            document.body.appendChild(ripple);
-            gsap.fromTo(ripple, { width: 0, height: 0, opacity: 1 }, { width: 150, height: 150, opacity: 0, duration: 0.6, ease: "power2.out", onComplete: () => ripple.remove() });
+        // --- ACCURATE WIRE SURGE LOGIC ---
+        function surgeWire(id) {
+            const wire = document.getElementById(`wire-pulse-${id}`);
+            if(!wire) return;
             
-            const w1 = document.getElementById('wire-pulse-1');
-            const w2 = document.getElementById('wire-pulse-2');
-            const w3 = document.getElementById('wire-pulse-3');
-            if(w1 && w2 && w3) {
-                // FINELY TUNED ELECTRIC SURGE HAPTICS
-                if (window.navigator && window.navigator.vibrate) {
-                    window.navigator.vibrate([5, 20, 5, 20, 5]); 
+            // SPECIAL "ELECTRIC SURGE" HAPTIC PATTERN: Only for wires
+            triggerHaptic([5, 20, 5, 20, 5]);
+            playHoverSound(400);
+
+            // Accurate Neon Surge
+            gsap.killTweensOf(wire);
+            gsap.fromTo(wire, 
+                { strokeDashoffset: 1150, strokeWidth: 12, strokeOpacity: 1 }, 
+                { 
+                    strokeDashoffset: -1150, 
+                    strokeWidth: 2, 
+                    strokeOpacity: 0.3, 
+                    duration: 3.5, 
+                    ease: "power2.out", 
+                    onComplete: animateDataPulses 
                 }
-                gsap.fromTo([w1, w2, w3], { strokeDashoffset: 1100, strokeWidth: 8, strokeOpacity: 1 }, { strokeDashoffset: -1100, strokeWidth: 2, strokeOpacity: 0.2, duration: 3.5, ease: "power2.out" });
-            }
-        });
+            );
+        }
+
+        let wireTweens = [];
+        const animateDataPulses = () => {
+            gsap.killTweensOf(["#wire-pulse-1", "#wire-pulse-2", "#wire-pulse-3"]);
+            wireTweens = [
+                gsap.fromTo("#wire-pulse-1", { strokeDashoffset: 1150, strokeWidth: 2, strokeOpacity: 0.3 }, { strokeDashoffset: -1150, duration: 4, repeat: -1, ease: "none" }),
+                gsap.fromTo("#wire-pulse-2", { strokeDashoffset: -1150, strokeWidth: 2, strokeOpacity: 0.3 }, { strokeDashoffset: 1150, duration: 5, repeat: -1, ease: "none", delay: 1 }),
+                gsap.fromTo("#wire-pulse-3", { strokeDashoffset: 1150, strokeWidth: 2, strokeOpacity: 0.3 }, { strokeDashoffset: -1150, duration: 3, repeat: -1, ease: "none", delay: 0.5 })
+            ];
+        };
+        animateDataPulses();
 
         // Custom Mouse Tracker
         window.onmousemove = (e) => {
@@ -635,7 +684,7 @@
             el.addEventListener('mouseleave', () => {
                 if(window.innerWidth > 768) document.querySelector('.cursor-ring')?.classList.remove('active');
             });
-            el.addEventListener('click', () => triggerHaptic(20));
+            el.addEventListener('click', () => triggerHaptic(15)); // STANDARD SINGLE HAPTIC
         });
 
         // Tilt Cards
@@ -652,7 +701,7 @@
         function copyToClipboard() {
             const el = document.createElement('textarea'); el.value = "rithikur@gmail.com"; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
             const txt = document.getElementById('email-text');
-            if(txt) { const orig = txt.textContent; txt.textContent = "COPIED!"; triggerHaptic(50); setTimeout(() => { txt.textContent = orig; }, 2000); }
+            if(txt) { const orig = txt.textContent; txt.textContent = "COPIED!"; triggerHaptic(15); setTimeout(() => { txt.textContent = orig; }, 2000); }
         }
         const copyTrig = document.getElementById('copy-email-trigger');
         const copyBtn = document.getElementById('copy-email-btn');
@@ -683,8 +732,8 @@
         const mToggle = document.getElementById('menu-toggle');
         const mClose = document.getElementById('menu-close');
         const mMenu = document.getElementById('mobile-menu');
-        if(mToggle) mToggle.onclick = () => { mMenu.classList.add('open'); document.body.style.overflow = 'hidden'; triggerHaptic(); };
-        if(mClose) mClose.onclick = () => { mMenu.classList.remove('open'); document.body.style.overflow = ''; triggerHaptic(); };
+        if(mToggle) mToggle.onclick = () => { mMenu.classList.add('open'); document.body.style.overflow = 'hidden'; triggerHaptic(15); };
+        if(mClose) mClose.onclick = () => { mMenu.classList.remove('open'); document.body.style.overflow = ''; triggerHaptic(15); };
     </script>
 </body>
 </html>
