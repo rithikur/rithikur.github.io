@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rithik U R // Digital Portfolio</title>
+    <title>Rithik U R</title>
     
     <!-- Favicon using the new logo -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z' fill='none' stroke='%23ccff00' stroke-width='8'/><rect x='40' y='40' width='20' height='20' fill='%23ccff00'/></svg>">
@@ -11,19 +11,12 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
     <!-- GSAP & ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
-    <!-- Lenis for Smooth Scrolling -->
+    <!-- Lenis -->
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
-
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <script>
@@ -34,154 +27,118 @@
                         heading: ['Oswald', 'sans-serif'],
                         body: ['Plus Jakarta Sans', 'sans-serif'],
                     },
-                    colors: {
-                        volt: '#ccff00',
-                        dark: '#050505',
-                        panel: '#111111',
-                        border: '#262626'
-                    }
+                    colors: { volt: '#ccff00', dark: '#050505', panel: '#111111', border: '#262626' }
                 }
             }
         }
     </script>
 
     <style>
-        ::selection { background-color: #ccff00; color: #000; }
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
         
-        @media (pointer: fine) {
-            body { cursor: none; }
-            a, button { cursor: none; }
-        }
+        ::selection { background-color: #ccff00; color: #000; }
+        @media (pointer: fine) { body { cursor: none; } a, button { cursor: none; } }
 
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.5s ease; }
         h1, h2, h3, h4, .font-heading { text-transform: uppercase; line-height: 0.95; }
         
+        /* Smooth scroll container behavior */
+        html.lenis { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+        .lenis.lenis-scrolling iframe { pointer-events: none; }
+
         section { scroll-margin-top: 100px; }
 
-        /* Grainy Noise Overlay */
         .noise::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.04;
-            pointer-events: none;
-            z-index: 150;
+            opacity: 0.04; pointer-events: none; z-index: 150;
         }
 
-        /* Background Grid */
+        /* DEBUG MODE */
+        body.debug-mode * { border: 1px solid rgba(204, 255, 0, 0.15) !important; background-image: none !important; }
+        body.debug-mode .cursor-ring {
+            width: 250px !important; 
+            height: 250px !important;
+            background: transparent !important;
+            backdrop-filter: invert(1) hue-rotate(180deg) grayscale(1) contrast(1.5) !important;
+            border: 1px dashed #ccff00 !important;
+            z-index: 10000 !important;
+        }
+        body.debug-mode .cursor-ring::after {
+            content: "+"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: #ccff00; font-family: monospace; font-size: 24px; pointer-events: none;
+        }
+        body.debug-mode .cursor-dot { display: none !important; }
+
+        /* Grid */
         :root { --mouse-x: 50%; --mouse-y: 50%; }
         .grid-bg {
             background-size: 40px 40px;
-            background-image: 
-                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
-            mask-image: radial-gradient(circle 600px at var(--mouse-x) var(--mouse-y), black 0%, transparent 100%);
-            -webkit-mask-image: radial-gradient(circle 800px at var(--mouse-x) var(--mouse-y), black 0%, transparent 100%);
-        }
-
-        /* Glitch Effect */
-        .glitch { position: relative; display: inline-block; }
-        .glitch::before, .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: transparent;
-        }
-        .glitch::before { left: 2px; text-shadow: -2px 0 #ff00c1; clip-path: inset(20% 0 80% 0); animation: glitch-anim 2s infinite linear alternate-reverse; }
-        .glitch::after { left: -2px; text-shadow: 2px 0 #00ffff; clip-path: inset(80% 0 20% 0); animation: glitch-anim 3s infinite linear alternate-reverse reverse; }
-        
-        @keyframes glitch-anim {
-            0% { clip-path: inset(20% 0 80% 0); transform: translate(0); }
-            40% { clip-path: inset(60% 0 30% 0); transform: translate(2px, -1px); }
-            80% { clip-path: inset(10% 0 70% 0); transform: translate(2px, 1px); }
-            100% { clip-path: inset(30% 0 40% 0); transform: translate(0); }
-        }
-
-        /* Scanline Animation */
-        .scanline {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(to bottom, transparent, #ccff00, transparent);
-            opacity: 0.1;
-            pointer-events: none;
-            animation: scan 4s linear infinite;
-        }
-        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
-
-        /* Background Wires */
-        .wire-path { fill: none; stroke: #ccff00; stroke-width: 1; stroke-opacity: 0.08; stroke-dasharray: 1000; }
-        .wire-pulse { 
-            fill: none; 
-            stroke: #ccff00; 
-            stroke-width: 2; 
-            filter: drop-shadow(0 0 6px #ccff00); 
-            stroke-dasharray: 100, 1000; 
-            stroke-dashoffset: 1100;
+            background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            mask-image: radial-gradient(circle 800px at var(--mouse-x) var(--mouse-y), black 0%, transparent 100%);
         }
 
         /* Cursor */
         .cursor-dot { position: fixed; top: 0; left: 0; width: 8px; height: 8px; background: #ccff00; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); }
-        .cursor-ring { position: fixed; top: 0; left: 0; width: 40px; height: 40px; border: 1px solid rgba(204, 255, 0, 0.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: all 0.2s; }
-        .cursor-ring.active { width: 65px; height: 65px; background: rgba(204, 255, 0, 0.05); border-color: #ccff00; }
+        .cursor-ring { position: fixed; top: 0; left: 0; width: 40px; height: 40px; border: 1px solid rgba(204, 255, 0, 0.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s, background 0.2s; }
+        .cursor-ring.active { width: 65px !important; height: 65px !important; background: rgba(204, 255, 0, 0.05); border-color: #ccff00; }
 
-        .marquee-content { animation: marquee 20s linear infinite; }
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        /* Marquee */
+        .marquee-content, .marquee-content-reverse { display: flex; flex-wrap: nowrap; will-change: transform; }
+        .marquee-content span, .marquee-content-reverse span { white-space: nowrap; flex-shrink: 0; }
+        
+        .tilt-card { transform-style: preserve-3d; transition: transform 0.15s ease-out; perspective: 1000px; }
+        .glass-sheen { position: relative; overflow: hidden; }
+        .glass-sheen::after { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.03) 50%, transparent 55%); pointer-events: none; }
+        
+        .logo-core { animation: pulse-core 2s ease-in-out infinite; }
+        @keyframes pulse-core { 0%, 100% { opacity: 1; filter: drop-shadow(0 0 2px #ccff00); } 50% { opacity: 0.7; filter: drop-shadow(0 0 8px #ccff00); } }
 
-        #mobile-menu { transform: translateY(-100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-        #mobile-menu.open { transform: translateY(0); }
-
-        /* Vertical Progress Bar */
+        /* Sidebar Progress */
         .progress-indicator {
-            position: fixed;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 100;
-            display: none;
+            position: fixed; left: 20px; top: 50%; transform: translateY(-50%); z-index: 100; display: none;
         }
         @media (min-width: 1024px) { .progress-indicator { display: block; } }
 
-        /* Card Tilt Utility */
-        .tilt-card { transform-style: preserve-3d; transition: transform 0.1s ease-out; will-change: transform; }
-        
-        /* Glass Refraction Sheen */
-        .glass-sheen {
-            position: relative;
-            overflow: hidden;
-        }
-        .glass-sheen::after {
-            content: "";
-            position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.03) 50%, transparent 55%);
-            pointer-events: none;
-            z-index: 5;
+        /* Responsive Text Utility */
+        .fluid-heading {
+            font-size: clamp(3rem, 12vw, 9rem);
         }
 
-        /* LOGO STYLES */
-        .brand-logo {
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .brand-logo:hover {
-            transform: scale(1.1) rotate(5deg);
-        }
-        .logo-core {
-            animation: pulse-core 2s ease-in-out infinite;
-        }
-        @keyframes pulse-core {
-            0%, 100% { opacity: 1; filter: drop-shadow(0 0 2px #ccff00); }
-            50% { opacity: 0.7; filter: drop-shadow(0 0 8px #ccff00); }
-        }
+        /* CMD Palette Custom Scrollbar */
+        #cmd-list::-webkit-scrollbar { width: 4px; }
+        #cmd-list::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
     </style>
 </head>
-<body class="relative bg-dark text-white noise">
+<body class="relative bg-dark text-white noise overflow-x-hidden">
 
-    <!-- Custom Cursor -->
+    <!-- BIOS-BOOT PRELOADER -->
+    <div id="boot-screen" class="fixed inset-0 z-[200] bg-dark text-volt font-mono text-xs md:text-sm p-8 flex flex-col justify-end overflow-hidden border-b-4 border-volt">
+        <div class="mb-4 font-bold opacity-50">RITHIK_OS [Version 2.6.0]</div>
+        <div id="boot-log" class="flex flex-col gap-1 opacity-80 h-[80vh] justify-end"></div>
+    </div>
+
+    <!-- COMMAND PALETTE -->
+    <div id="cmd-palette" class="fixed inset-0 z-[150] bg-dark/80 backdrop-blur-xl hidden flex items-start justify-center pt-[15vh] px-4 opacity-0 transition-opacity">
+        <div class="w-full max-w-2xl bg-panel border border-border rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col transform scale-95 transition-transform" id="cmd-modal">
+            <div class="p-4 border-b border-border flex items-center gap-3">
+                <i data-lucide="terminal" class="text-volt w-5 h-5"></i>
+                <input type="text" id="cmd-input" placeholder="Type a command or search (e.g., 'Contact')" class="w-full bg-transparent text-white outline-none font-mono text-sm md:text-base placeholder:text-gray-600" autocomplete="off">
+                <div class="text-[10px] text-gray-500 border border-gray-700 rounded px-2 py-0.5 whitespace-nowrap">ESC</div>
+            </div>
+            <div id="cmd-list" class="p-2 max-h-[50vh] overflow-y-auto font-mono text-xs md:text-sm text-gray-300">
+                <!-- Commands populated by JS -->
+            </div>
+        </div>
+    </div>
+
     <div class="cursor-dot hidden md:block"></div>
     <div class="cursor-ring hidden md:block"></div>
 
-    <!-- Scroll Progress Sidebar -->
+    <!-- SIDEBAR PROGRESS BAR -->
     <div class="progress-indicator">
         <div class="flex flex-col items-center gap-6">
             <span class="font-heading text-[10px] tracking-widest text-white/20 uppercase rotate-[-90deg] origin-center translate-y-8">Scroll</span>
@@ -192,41 +149,57 @@
         </div>
     </div>
 
-    <!-- Background Wires Layer -->
-    <div id="wires-container" class="fixed inset-0 z-0 pointer-events-none opacity-40">
+    <!-- PERSISTENT OS BAR WITH AUDIO TOGGLE -->
+    <div class="fixed bottom-0 left-0 w-full z-[120] bg-dark/90 backdrop-blur-md border-t border-white/5 py-2 px-6 flex justify-between items-center font-mono text-[10px] text-gray-500 hidden md:flex">
+        <div class="flex gap-6 items-center">
+            <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span> SYSTEM: STABLE</div>
+            <div class="flex items-center gap-2"><i data-lucide="folder" class="w-3 h-3"></i> <span id="os-path">ROOT/HOME</span></div>
+            <!-- AUDIO TOGGLE -->
+            <button id="audio-toggle" class="flex items-center gap-2 hover:text-white transition-colors haptic-target outline-none pointer-events-auto">
+                <span class="w-1.5 h-1.5 bg-gray-600 rounded-full" id="audio-indicator"></span> SOUND: OFF
+            </button>
+        </div>
+        <div class="flex gap-6 items-center">
+            <div class="flex gap-2 items-center text-white/30"><span class="border border-white/20 px-1 rounded">⌘K</span> CMD MENU</div>
+            <div id="scroll-percent">0% SCROLLED</div>
+            <div class="text-white/40">v2.6.0_STABLE</div>
+        </div>
+    </div>
+
+    <!-- BACKGROUND WIRES -->
+    <div id="wires-container" class="fixed inset-0 z-0 pointer-events-none opacity-30">
         <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <path class="wire-path" d="M -50 150 L 250 150 L 250 350 L 600 350 L 600 100 L 1400 100" />
-            <path id="wire-pulse-1" class="wire-pulse" d="M -50 150 L 250 150 L 250 350 L 600 350 L 600 100 L 1400 100" />
-            <path class="wire-path" d="M 1400 750 L 1000 750 L 1000 550 L 700 550 L 700 850 L -100 850" />
-            <path id="wire-pulse-2" class="wire-pulse" d="M 1400 750 L 1000 750 L 1000 550 L 700 550 L 700 850 L -100 850" />
-            <path class="wire-path" d="M 300 -100 L 300 250 L -100 250" />
-            <path id="wire-pulse-3" class="wire-pulse" d="M 300 -100 L 300 250 L -100 250" />
+            <path class="wire-path" d="M -50 150 L 250 150 L 250 350 L 600 350 L 600 100 L 1400 100" stroke="#ccff00" fill="none" stroke-opacity="0.1"/>
+            <path id="wire-pulse-1" class="wire-pulse" d="M -50 150 L 250 150 L 250 350 L 600 350 L 600 100 L 1400 100" stroke="#ccff00" fill="none" stroke-width="2" stroke-dasharray="100, 1000" stroke-dashoffset="1100"/>
+            <path class="wire-path" d="M 1400 750 L 1000 750 L 1000 550 L 700 550 L 700 850 L -100 850" stroke="#ccff00" fill="none" stroke-opacity="0.1"/>
+            <path id="wire-pulse-2" class="wire-pulse" d="M 1400 750 L 1000 750 L 1000 550 L 700 550 L 700 850 L -100 850" stroke="#ccff00" fill="none" stroke-width="2" stroke-dasharray="100, 1000" stroke-dashoffset="1100"/>
+            <path class="wire-path" d="M 300 -100 L 300 250 L -100 250" stroke="#ccff00" fill="none" stroke-opacity="0.1"/>
+            <path id="wire-pulse-3" class="wire-pulse" d="M 300 -100 L 300 250 L -100 250" stroke="#ccff00" fill="none" stroke-width="2" stroke-dasharray="100, 1000" stroke-dashoffset="1100"/>
         </svg>
     </div>
 
-    <!-- Nav -->
+    <!-- Navigation -->
     <nav class="fixed top-0 w-full z-[100] bg-dark/40 backdrop-blur-xl border-b border-white/5 p-4 md:p-6 flex justify-between items-center">
         <div class="flex items-center gap-4">
-            <!-- CUSTOM LOGO -->
-            <div class="brand-logo w-10 h-10">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Outer Hexagon Frame -->
-                    <path d="M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z" fill="none" stroke="#ccff00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                    <!-- Fragmented Data Lines -->
-                    <path d="M30 30 L45 30 M55 30 L70 30 M30 70 L45 70 M55 70 L70 70" stroke="white" stroke-width="2" stroke-opacity="0.5"/>
-                    <!-- Central Node Core -->
+            <div class="brand-logo w-10 h-10 haptic-target cursor-pointer" onclick="lenis.scrollTo(0, {duration: 1.5})">
+                <svg viewBox="0 0 100 100">
+                    <path d="M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z" fill="none" stroke="#ccff00" stroke-width="4"/>
                     <rect class="logo-core" x="42" y="42" width="16" height="16" fill="#ccff00" transform="rotate(45 50 50)"/>
                 </svg>
             </div>
             <div class="font-heading text-xl md:text-2xl font-bold tracking-wider uppercase">RITHIK <span class="text-volt">U R</span></div>
         </div>
-        <div class="hidden md:flex gap-8 font-bold text-sm tracking-widest uppercase">
-            <a href="#about" class="hover:text-volt transition-colors">About</a>
-            <a href="#stack" class="hover:text-volt transition-colors">Stack</a>
-            <a href="#vibe" class="hover:text-volt transition-colors">Vibe</a>
-            <a href="#contact" class="hover:text-volt transition-colors">Contact</a>
+        <div class="hidden md:flex gap-8 font-bold text-[10px] tracking-widest uppercase items-center">
+            <a href="#about" class="nav-link hover:text-volt transition-colors haptic-target">About</a>
+            <a href="#stack" class="nav-link hover:text-volt transition-colors haptic-target">Stack</a>
+            <a href="#vibe" class="nav-link hover:text-volt transition-colors haptic-target">Vibe</a>
+            <a href="#contact" class="nav-link hover:text-volt transition-colors haptic-target">Contact</a>
+            <!-- X-RAY TOGGLE -->
+            <button id="debug-toggle" class="bg-white/5 border border-white/10 px-3 py-1.5 rounded flex items-center gap-2 hover:bg-volt hover:text-dark transition-all haptic-target outline-none">
+                <i data-lucide="scan-line" class="w-3 h-3"></i> LENS
+            </button>
         </div>
-        <button id="menu-toggle" class="md:hidden text-white"><i data-lucide="menu"></i></button>
+        <button id="menu-toggle" class="md:hidden text-white haptic-target"><i data-lucide="menu"></i></button>
     </nav>
 
     <!-- Mobile Menu Overlay -->
@@ -235,213 +208,190 @@
         <a href="#stack" class="mobile-link font-heading text-4xl font-bold hover:text-volt">Stack</a>
         <a href="#vibe" class="mobile-link font-heading text-4xl font-bold hover:text-volt">Vibe</a>
         <a href="#contact" class="mobile-link font-heading text-4xl font-bold hover:text-volt">Contact</a>
-        <button id="menu-close" class="mt-8 text-volt uppercase tracking-widest font-bold text-xs">Close</button>
+        <button id="menu-close" class="mt-8 text-volt uppercase tracking-widest font-bold text-xs haptic-target">Close</button>
     </div>
 
-    <!-- HERO SECTION -->
+    <!-- Hero -->
     <header id="home" class="relative min-h-[100vh] flex flex-col justify-center overflow-hidden pt-32 pb-20">
         <div class="absolute inset-0 grid-bg pointer-events-none z-0"></div>
-        <div class="z-10 px-6 md:px-12 flex flex-col items-center text-center">
-            <p class="font-body text-volt font-bold tracking-[0.3em] uppercase mb-4 text-[10px] md:text-sm reveal-up">Information Technology</p>
-            <h1 class="font-heading text-[12vw] sm:text-[14vw] md:text-[12vw] font-bold text-white leading-[0.9] reveal-up max-w-[90vw]">
+        <div class="z-10 px-6 md:px-12 flex flex-col items-center text-center pointer-events-none">
+            <p class="font-body text-volt font-bold tracking-[0.3em] uppercase mb-4 text-[10px] md:text-sm reveal-up">Information Technology Undergraduate</p>
+            <h1 class="font-heading text-[11vw] font-bold text-white leading-[0.9] reveal-up max-w-[100vw] whitespace-nowrap overflow-visible">
                 RITHIK <span class="text-transparent" style="-webkit-text-stroke: 1.5px #333;">U R</span>
             </h1>
-            <div class="w-full max-w-2xl mt-8 reveal-up flex flex-col md:flex-row items-center gap-6 justify-center">
-                <p class="text-gray-400 text-base md:text-xl font-medium leading-relaxed text-center px-4">
-                    Building the foundation. Writing logic. Obsessed with Full Stack Development.
-                </p>
+            <div class="w-full max-w-2xl mt-8 reveal-up">
+                <p class="text-gray-400 text-base md:text-xl font-medium leading-relaxed px-4">Building the foundation. Mastering logic. Obsessed with Full Stack.</p>
             </div>
         </div>
     </header>
 
-    <!-- MARQUEE -->
-    <div class="bg-volt text-dark py-3 md:py-4 rotate-[-1deg] scale-105 z-20 relative overflow-hidden my-12">
-        <div class="marquee-wrapper">
-            <div class="marquee-content font-heading text-2xl md:text-4xl font-bold tracking-widest flex items-center">
-                <span>FULL STACK DEV</span><span class="mx-4 md:mx-6">⚡</span>
-                <span>PYTHON & C</span><span class="mx-4 md:mx-6">⚡</span>
-                <span>JAVASCRIPT</span><span class="mx-4 md:mx-6">⚡</span>
-                <span>BLENDER 3D</span><span class="mx-4 md:mx-6">⚡</span>
-                <span>PRACTICAL LEARNING</span><span class="mx-4 md:mx-6">⚡</span>
-                <span>SOFTWARE ENGINEERING</span><span class="mx-4 md:mx-6">⚡</span>
-                <!-- Duplicate for loop -->
-                <span>FULL STACK DEV</span><span class="mx-4 md:mx-6">⚡</span>
-                <span>PYTHON & C</span><span class="mx-4 md:mx-6">⚡</span>
-                <span>JAVASCRIPT</span><span class="mx-4 md:mx-6">⚡</span>
-                <span>BLENDER 3D</span><span class="mx-4 md:mx-6">⚡</span>
-                <span>PRACTICAL LEARNING</span><span class="mx-4 md:mx-6">⚡</span>
-                <span>SOFTWARE ENGINEERING</span><span class="mx-4 md:mx-6">⚡</span>
+    <!-- KINETIC TRACKS (Updated with Quadruple buffering for seamless loop) -->
+    <div id="kinetic-section" class="relative z-20 py-12 overflow-hidden marquee-wrapper pointer-events-auto">
+        <div class="marquee-track bg-volt text-dark py-4 rotate-[-1.5deg] scale-105 relative z-10 shadow-xl overflow-hidden">
+            <div id="marquee-l" class="marquee-content font-heading text-2xl md:text-4xl font-bold tracking-widest flex items-center">
+                <!-- Content Set 1 -->
+                <span>FULL STACK DEV</span><span class="mx-6">⚡</span><span>PYTHON & C</span><span class="mx-6">⚡</span><span>BLENDER 3D</span><span class="mx-6">⚡</span><span>JAVASCRIPT</span><span class="mx-6">⚡</span>
+                <!-- Content Set 2 -->
+                <span>FULL STACK DEV</span><span class="mx-6">⚡</span><span>PYTHON & C</span><span class="mx-6">⚡</span><span>BLENDER 3D</span><span class="mx-6">⚡</span><span>JAVASCRIPT</span><span class="mx-6">⚡</span>
+                <!-- Content Set 3 -->
+                <span>FULL STACK DEV</span><span class="mx-6">⚡</span><span>PYTHON & C</span><span class="mx-6">⚡</span><span>BLENDER 3D</span><span class="mx-6">⚡</span><span>JAVASCRIPT</span><span class="mx-6">⚡</span>
+                <!-- Content Set 4 (Added for maximum loop stability) -->
+                <span>FULL STACK DEV</span><span class="mx-6">⚡</span><span>PYTHON & C</span><span class="mx-6">⚡</span><span>BLENDER 3D</span><span class="mx-6">⚡</span><span>JAVASCRIPT</span><span class="mx-6">⚡</span>
+            </div>
+        </div>
+        <div class="marquee-track border-y border-white/10 py-3 rotate-[1.5deg] scale-105 -mt-6 bg-dark/80 backdrop-blur-sm overflow-hidden">
+            <div id="marquee-r" class="marquee-content-reverse font-heading text-xl md:text-2xl font-bold tracking-[0.3em] flex items-center opacity-30">
+                <!-- Content Set 1 -->
+                <span class="text-transparent" style="-webkit-text-stroke: 1px white;">ALGORITHMIC THINKING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">PRACTICAL LEARNING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">UI ARCHITECTURE</span><span class="mx-8">/</span>
+                <!-- Content Set 2 -->
+                <span class="text-transparent" style="-webkit-text-stroke: 1px white;">ALGORITHMIC THINKING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">PRACTICAL LEARNING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">UI ARCHITECTURE</span><span class="mx-8">/</span>
+                <!-- Content Set 3 -->
+                <span class="text-transparent" style="-webkit-text-stroke: 1px white;">ALGORITHMIC THINKING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">PRACTICAL LEARNING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">UI ARCHITECTURE</span><span class="mx-8">/</span>
+                <!-- Content Set 4 -->
+                <span class="text-transparent" style="-webkit-text-stroke: 1px white;">ALGORITHMIC THINKING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">PRACTICAL LEARNING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">UI ARCHITECTURE</span><span class="mx-8">/</span>
             </div>
         </div>
     </div>
 
-    <!-- ABOUT / EDUCATION -->
-    <section id="about" class="py-24 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
+    <!-- Education Section -->
+    <section id="about" class="py-16 md:py-24 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10 pointer-events-none">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
             <div class="lg:col-span-5 space-y-12">
                 <div class="reveal-fade">
                     <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">Academic Core</p>
                     <h2 class="font-heading text-5xl md:text-7xl">FOUNDATION</h2>
                 </div>
-                <div class="flex gap-12 border-t border-border pt-8 reveal-fade">
-                    <div>
-                        <p class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-1">Sem 1 CGPA</p>
-                        <p class="font-heading text-6xl md:text-8xl text-volt">8.15</p>
-                    </div>
-                    <div>
-                        <p class="text-gray-500 text-sm font-bold uppercase tracking-wider mb-1">Graduation</p>
-                        <p class="font-heading text-6xl md:text-8xl text-white">2029</p>
-                    </div>
+                <div class="flex gap-6 md:gap-12 border-t border-border pt-8 reveal-fade">
+                    <div><p class="text-gray-500 text-sm font-bold uppercase mb-1">Sem 1 CGPA</p><p class="font-heading text-6xl md:text-8xl text-volt">8.15</p></div>
+                    <div><p class="text-gray-500 text-sm font-bold uppercase mb-1">Graduation</p><p class="font-heading text-6xl md:text-8xl text-white">2029</p></div>
                 </div>
             </div>
-            
-            <div class="lg:col-span-7 space-y-6">
-                <!-- Terminal Component -->
+            <div class="lg:col-span-7 space-y-6 pointer-events-auto">
                 <div class="bg-[#0a0a0a] rounded-xl border border-border overflow-hidden shadow-2xl reveal-fade tilt-card haptic-target">
                     <div class="bg-panel px-4 py-2 border-b border-border flex items-center gap-2">
-                        <div class="flex gap-1.5">
-                            <div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
-                            <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
-                            <div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
-                        </div>
-                        <span class="text-[10px] font-mono text-gray-500 ml-4">zsh — rithik@portfolio</span>
+                        <div class="flex gap-1.5"><div class="w-2.5 h-2.5 rounded-full bg-red-500/40"></div><div class="w-2.5 h-2.5 rounded-full bg-yellow-500/40"></div><div class="w-2.5 h-2.5 rounded-full bg-green-500/40"></div></div>
+                        <span class="text-[10px] font-mono text-gray-500 ml-4">zsh — rithik@sys</span>
                     </div>
                     <div class="p-6 font-mono text-sm leading-relaxed min-h-[160px]">
                         <p class="text-volt mb-2">$ status --current</p>
                         <p id="terminal-text" class="text-gray-400"></p>
                     </div>
                 </div>
-
-                <div class="bg-panel p-8 border border-border rounded-3xl reveal-fade relative overflow-hidden group tilt-card haptic-target">
-                    <div class="scanline opacity-0 group-hover:opacity-10 transition-opacity"></div>
-                    <div class="flex flex-col md:flex-row justify-between items-start mb-8 border-b border-border pb-8 gap-4">
-                        <div>
-                            <h3 class="font-heading text-3xl mb-1 text-white uppercase">B.Tech IT</h3>
-                            <p class="text-gray-400 font-medium">KPR Engineering College, Coimbatore</p>
-                        </div>
-                        <div class="bg-dark px-4 py-2 rounded-full border border-border w-fit">
-                            <span class="w-2 h-2 rounded-full bg-volt inline-block mr-2 animate-pulse"></span>
-                            <span class="text-[10px] font-bold uppercase tracking-widest text-volt">Active</span>
-                        </div>
-                    </div>
-                    <ul class="space-y-4 text-lg text-gray-300 font-medium">
-                        <li class="flex items-start gap-4">
-                            <i data-lucide="crosshair" class="w-6 h-6 text-volt shrink-0 mt-1"></i>
-                            <p>Studying modern web frameworks through practical builds.</p>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- TECH STACK -->
-    <section id="stack" class="py-24 bg-panel border-y border-border clip-angle relative overflow-hidden">
-        <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 reveal-fade gap-4">
-                <div>
-                    <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">Skillsets</p>
-                    <h2 class="font-heading text-6xl md:text-8xl glitch" data-text="TECH STACK">TECH STACK</h2>
-                </div>
-            </div>
+    <!-- Tech Stack Section -->
+    <section id="stack" class="py-16 md:py-24 bg-panel border-y border-border relative overflow-hidden pointer-events-none">
+        <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10 pointer-events-auto">
+            <h2 class="font-heading text-6xl md:text-8xl mb-16 glitch" data-text="TECH STACK">TECH STACK</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Skill Card -->
                 <div class="group bg-dark border border-border p-8 hover:border-volt transition-all reveal-fade relative overflow-hidden tilt-card haptic-target">
-                    <div class="scanline"></div>
-                    <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10 group-hover:text-white/20 transition-colors">01</span><i data-lucide="code-2" class="w-6 h-6 text-volt"></i></div>
-                    <h3 class="font-heading text-2xl mb-2 text-white uppercase text-center">PYTHON & C</h3>
-                    <p class="text-gray-500 text-sm font-medium">Core systems and algorithms.</p>
+                    <div class="scanline opacity-0 group-hover:opacity-100"></div>
+                    <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10">01</span><i data-lucide="code-2" class="w-6 h-6 text-volt"></i></div>
+                    <h3 class="font-heading text-2xl mb-2 text-white">PYTHON & C</h3>
+                    <p class="text-gray-500 text-sm">Foundational logic and systems programming.</p>
                 </div>
                 <div class="group bg-dark border border-border p-8 hover:border-volt transition-all reveal-fade relative overflow-hidden tilt-card haptic-target">
-                    <div class="scanline"></div>
-                    <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10 group-hover:text-white/20 transition-colors">02</span><i data-lucide="zap" class="w-6 h-6 text-volt"></i></div>
-                    <h3 class="font-heading text-2xl mb-2 text-white uppercase text-center">JAVASCRIPT</h3>
-                    <p class="text-gray-500 text-sm font-medium">Interactive logic development.</p>
+                    <div class="scanline opacity-0 group-hover:opacity-100"></div>
+                    <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10">02</span><i data-lucide="zap" class="w-6 h-6 text-volt"></i></div>
+                    <h3 class="font-heading text-2xl mb-2 text-white">JAVASCRIPT</h3>
+                    <p class="text-gray-500 text-sm">Building interactive digital ecosystems.</p>
                 </div>
-                <div class="group bg-volt text-dark border border-volt p-8 reveal-fade relative overflow-hidden tilt-card haptic-target text-center">
+                <div class="group bg-volt text-dark border border-volt p-8 reveal-fade relative overflow-hidden tilt-card haptic-target">
                     <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-black/10">03</span><i data-lucide="box" class="w-6 h-6 text-dark"></i></div>
                     <h3 class="font-heading text-2xl mb-2 uppercase text-dark">BLENDER</h3>
-                    <p class="text-dark/80 text-sm font-bold">Spatial 3D reasoning foundations.</p>
+                    <p class="text-dark/80 text-sm font-bold">3D reasoning and spatial architecture.</p>
                 </div>
                 <div class="group bg-dark border border-border p-8 hover:border-volt transition-all reveal-fade relative overflow-hidden tilt-card haptic-target">
-                    <div class="scanline"></div>
-                    <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10 group-hover:text-white/20 transition-colors">04</span><i data-lucide="layers" class="w-6 h-6 text-volt"></i></div>
-                    <h3 class="font-heading text-2xl mb-2 text-white uppercase text-center">WEB BASICS</h3>
-                    <p class="text-gray-500 text-sm font-medium">Semantic structures & CSS.</p>
+                    <div class="scanline opacity-0 group-hover:opacity-100"></div>
+                    <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10">04</span><i data-lucide="layers" class="w-6 h-6 text-volt"></i></div>
+                    <h3 class="font-heading text-2xl mb-2 text-white">WEB STACK</h3>
+                    <p class="text-gray-500 text-sm">Semantic HTML5 & Modern CSS architecture.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- VIBE -->
-    <section id="vibe" class="py-24 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
-        <div class="reveal-fade mb-16">
+    <!-- VIBE / WHAT I LIKE SECTION -->
+    <section id="vibe" class="py-16 md:py-24 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10 pointer-events-none">
+        <div class="reveal-fade mb-16 pointer-events-auto">
             <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">Lifestyle</p>
             <h2 class="font-heading text-6xl md:text-8xl">WHAT I LIKE</h2>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6">
-            <div class="md:col-span-2 md:row-span-2 bg-panel p-12 border border-border rounded-3xl hover:border-volt group overflow-hidden flex flex-col justify-end min-h-[400px] relative tilt-card haptic-target">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pointer-events-auto">
+            <div class="bg-panel p-10 md:p-12 border border-border rounded-[2rem] hover:border-volt group overflow-hidden flex flex-col justify-end min-h-[350px] relative tilt-card haptic-target md:row-span-2">
                 <i data-lucide="wrench" class="absolute -right-10 -top-10 w-64 h-64 text-white/5 group-hover:text-volt/10 transition-colors"></i>
                 <div class="w-16 h-16 bg-volt text-dark rounded-full flex items-center justify-center mb-8"><i data-lucide="wrench"></i></div>
                 <h3 class="font-heading text-4xl mb-4 text-white uppercase">PRACTICAL TECH</h3>
-                <p class="text-gray-400 font-medium text-lg">Hands-on tinkering. Breaks things to understand them better.</p>
+                <p class="text-gray-400 font-medium text-lg max-w-sm">Hands-on tinkering. Breaks things to understand them better.</p>
             </div>
-            <div class="md:col-span-2 md:row-span-1 bg-panel p-8 border border-border rounded-3xl flex items-center gap-8 hover:border-volt group tilt-card haptic-target">
+            
+            <div class="bg-panel p-8 border border-border rounded-[2rem] flex items-center gap-6 md:gap-8 hover:border-volt group tilt-card haptic-target">
                 <div class="w-16 h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors"><i data-lucide="music"></i></div>
-                <div><h3 class="font-heading text-3xl mb-1 text-white uppercase">MUSIC</h3><p class="text-gray-400 font-medium text-lg">Focus fuel.</p></div>
+                <div>
+                    <h3 class="font-heading text-3xl mb-1 text-white uppercase">MUSIC</h3>
+                    <p class="text-gray-400 font-medium text-base">Focus fuel.</p>
+                </div>
             </div>
-            <div class="md:col-span-2 md:row-span-1 bg-panel p-8 border border-border rounded-3xl flex items-center gap-8 hover:border-volt group tilt-card haptic-target">
+            
+            <div class="bg-panel p-8 border border-border rounded-[2rem] flex items-center gap-6 md:gap-8 hover:border-volt group tilt-card haptic-target">
                 <div class="w-16 h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors"><i data-lucide="trees"></i></div>
-                <div><h3 class="font-heading text-3xl mb-1 text-white uppercase">NATURE</h3><p class="text-gray-400 font-medium text-lg">Calm balance.</p></div>
+                <div>
+                    <h3 class="font-heading text-3xl mb-1 text-white uppercase">NATURE</h3>
+                    <p class="text-gray-400 font-medium text-base">Calm balance.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer id="contact" class="py-24 px-6 md:px-12 relative overflow-hidden mt-12 mb-12">
-        <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-            <div id="footer-orb-1" class="absolute w-[40vw] h-[40vw] bg-volt/10 rounded-full blur-[100px] top-[-10%] left-[-10%]"></div>
-            <div id="footer-orb-2" class="absolute w-[30vw] h-[30vw] bg-blue-500/5 rounded-full blur-[80px] bottom-[10%] right-[10%]"></div>
-            <div id="mouse-orb" class="absolute w-[20vw] h-[20vw] bg-volt/5 rounded-full blur-[60px] opacity-0 transition-opacity duration-500"></div>
-        </div>
+    <!-- Footer -->
+    <footer id="contact" class="py-16 md:py-24 px-6 md:px-12 relative overflow-hidden mt-12 mb-20 pointer-events-none">
+        <div id="footer-orb-1" class="absolute w-[40vw] h-[40vw] bg-volt/10 rounded-full blur-[100px] top-[-10%] left-[-10%] pointer-events-none"></div>
+        <div id="mouse-orb" class="absolute w-[20vw] h-[20vw] bg-volt/5 rounded-full blur-[60px] opacity-0 transition-opacity pointer-events-none"></div>
 
-        <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center md:items-end relative z-10 bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-10 md:p-16 shadow-[0_30px_100px_rgba(0,0,0,0.8)] glass-sheen">
+        <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center md:items-end relative z-10 bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-8 md:p-16 shadow-2xl glass-sheen">
             
-            <!-- Parallax Name in Background -->
-            <div id="parallax-name" class="absolute bottom-0 right-0 font-heading text-[22vw] text-white/5 pointer-events-none select-none z-0 tracking-tighter leading-[0.7] transform translate-y-[25%] translate-x-[15%]">
+            <!-- BACKGROUND PARALLAX WATERMARK -->
+            <div id="parallax-name" class="absolute right-0 bottom-[-5%] font-heading text-[20vw] text-white/5 pointer-events-none select-none z-0 tracking-tighter leading-none whitespace-nowrap origin-bottom-right">
                 RITHIK
             </div>
             
-            <div class="absolute top-10 right-10 md:top-14 md:right-14 flex flex-col items-end z-20">
+            <div class="absolute top-8 right-8 md:top-14 md:right-14 flex flex-col items-end z-20 pointer-events-auto">
                 <div class="flex items-center gap-2 bg-[#1e1e1e] px-3 py-1.5 rounded-full border border-white/5 mb-3 shadow-inner">
                     <span class="w-1.5 h-1.5 rounded-full bg-volt shadow-[0_0_8px_#ccff00]"></span>
                     <span class="text-[9px] font-bold uppercase tracking-widest text-volt">Available for Work</span>
                 </div>
-                <div class="text-right">
-                    <p class="text-[9px] text-gray-500 uppercase tracking-widest mb-0.5 opacity-60">Local Time // IST</p>
-                    <p class="font-mono text-lg text-white/80 tracking-widest" id="live-time">00:00:00</p>
-                </div>
+                <p class="font-mono text-lg text-white/80 tracking-widest" id="live-time">00:00:00</p>
             </div>
 
-            <div class="relative z-10">
-                <h2 class="font-heading text-6xl md:text-[9rem] leading-[0.9] mb-12 text-white uppercase">LET'S<br><span class="text-volt">BUILD.</span></h2>
-                <div class="flex gap-4">
-                    <a href="mailto:rithikur@gmail.com" class="social-icon group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target"><i data-lucide="mail" class="w-5 h-5"></i></a>
-                    <a href="tel:+919842789499" class="social-icon group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target"><i data-lucide="phone" class="w-5 h-5"></i></a>
+            <div class="relative z-10 w-full overflow-visible">
+                <!-- STACKED MAGNETIC TEXT -->
+                <h2 id="magnetic-text" class="font-heading text-[18vw] sm:text-[14vw] md:text-[8.5rem] lg:text-[10rem] xl:text-[11rem] leading-[0.85] mb-8 text-white uppercase whitespace-nowrap flex flex-col items-start w-full pointer-events-none select-none">
+                    <div class="flex flex-nowrap shrink-0">
+                        <span class="inline-block">L</span><span class="inline-block">E</span><span class="inline-block">T</span><span class="inline-block">'</span><span class="inline-block">S</span>
+                    </div>
+                    <div class="flex flex-nowrap text-volt shrink-0">
+                        <span class="inline-block">B</span><span class="inline-block">U</span><span class="inline-block">I</span><span class="inline-block">L</span><span class="inline-block">D</span><span class="inline-block">.</span>
+                    </div>
+                </h2>
+                <!-- BUTTONS Z-INDEX ELEVATED -->
+                <div class="flex gap-4 relative z-20 pointer-events-auto">
+                    <a href="mailto:rithikur@gmail.com" id="copy-email-btn" class="social-icon group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target"><i data-lucide="mail" class="w-5 h-5"></i></a>
                     <a href="https://www.linkedin.com/in/rithik-u-r/" target="_blank" class="social-icon group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
                     <a href="https://github.com/rithikur" target="_blank" class="social-icon group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target"><i data-lucide="github" class="w-5 h-5"></i></a>
                 </div>
             </div>
 
-            <div class="md:text-right font-bold tracking-wider relative z-10 text-white mt-12 md:mt-0">
-                <div id="copy-email" class="inline-block group cursor-pointer haptic-target mb-1">
+            <!-- RIGHT CONTACT DETAILS ELEVATED TO AVOID OVERLAP -->
+            <div class="md:text-right font-bold tracking-wider relative z-20 text-white mt-12 md:mt-0 pointer-events-auto">
+                <div id="copy-email-trigger" class="inline-block group cursor-pointer haptic-target mb-1">
                     <p id="email-text" class="text-xl md:text-3xl font-heading group-hover:text-volt transition-colors lowercase">rithikur@gmail.com</p>
                     <div class="h-px w-0 group-hover:w-full bg-volt transition-all duration-500"></div>
                 </div>
                 <p class="text-lg md:text-xl text-white/90 font-heading mb-10 tracking-widest">+91 9842789499</p>
-                <div class="flex flex-col md:items-end">
-                    <p class="text-[9px] text-white/20 uppercase tracking-[0.4em] font-normal">&copy; 2026 RITHIK U R.</p>
-                </div>
+                <p class="text-[9px] text-white/20 uppercase tracking-[0.4em]">&copy; 2026 RITHIK U R.</p>
             </div>
         </div>
     </footer>
@@ -449,153 +399,432 @@
     <script>
         lucide.createIcons();
 
-        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => { lenis.raf(time * 1000) });
-
-        // Mobile Menu
-        const menuToggle = document.getElementById('menu-toggle');
-        const menuClose = document.getElementById('menu-close');
-        const mobileMenu = document.getElementById('mobile-menu');
-        menuToggle.onclick = () => { mobileMenu.classList.add('open'); document.body.style.overflow='hidden'; triggerHaptic(); };
-        menuClose.onclick = () => { mobileMenu.classList.remove('open'); document.body.style.overflow=''; triggerHaptic(); };
-
-        // Smooth Scroll
-        document.querySelectorAll('nav a[href^="#"], .mobile-link').forEach(anchor => {
-            anchor.onclick = (e) => {
-                e.preventDefault();
-                lenis.scrollTo(anchor.getAttribute('href'), { offset: -50 });
-                if(mobileMenu.classList.contains('open')) menuClose.click();
-                triggerHaptic();
-            };
-        });
-
-        // Haptic Feedback
+        // --- 1. GLOBAL UTILITIES ---
         function triggerHaptic(duration = 15) {
-            if ("vibrate" in navigator) { navigator.vibrate(duration); }
+            if (window.navigator && window.navigator.vibrate) { 
+                try { window.navigator.vibrate(duration); } catch(e) {} 
+            }
         }
 
-        // Copy Email
-        const copyEmail = document.getElementById('copy-email');
-        const emailText = document.getElementById('email-text');
-        copyEmail.onclick = () => {
-            const val = "rithikur@gmail.com";
-            const el = document.createElement('textarea');
-            el.value = val; document.body.appendChild(el);
-            el.select(); document.execCommand('copy');
-            document.body.removeChild(el);
-            const orig = emailText.textContent;
-            emailText.textContent = "COPIED!"; emailText.style.color = "#ccff00";
-            triggerHaptic(50);
-            setTimeout(() => { emailText.textContent = orig; emailText.style.color = ""; }, 2000);
-        };
+        // --- 2. LENIS SMOOTH SCROLL INIT ---
+        const lenis = new Lenis({ 
+            duration: 1.2, 
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+            smooth: true 
+        });
+        lenis.stop(); 
 
-        // --- MOUSE & TILT & PARALLAX ---
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+        
+        gsap.ticker.add((time) => { lenis.raf(time * 1000) });
+        lenis.on('scroll', ScrollTrigger.update);
+
+        // --- 3. DYNAMIC AUDIO ENGINE ---
+        let audioCtx, scrollOsc, scrollGain;
+        let soundEnabled = false;
+        
+        const audioBtn = document.getElementById('audio-toggle');
+        const audioIndicator = document.getElementById('audio-indicator');
+        
+        if(audioBtn) {
+            audioBtn.onclick = () => {
+                if(!soundEnabled) {
+                    try {
+                        const AudioContext = window.AudioContext || window.webkitAudioContext;
+                        audioCtx = new AudioContext();
+                        scrollOsc = audioCtx.createOscillator();
+                        scrollGain = audioCtx.createGain();
+                        scrollOsc.type = 'triangle';
+                        scrollOsc.frequency.setValueAtTime(40, audioCtx.currentTime); 
+                        scrollGain.gain.setValueAtTime(0, audioCtx.currentTime); 
+                        
+                        scrollOsc.connect(scrollGain);
+                        scrollGain.connect(audioCtx.destination);
+                        scrollOsc.start();
+                        
+                        soundEnabled = true;
+                        if(audioIndicator) audioIndicator.className = 'w-1.5 h-1.5 bg-volt rounded-full animate-pulse shadow-[0_0_8px_#ccff00]';
+                        audioBtn.classList.add('text-volt');
+                        audioBtn.innerHTML = (audioIndicator ? audioIndicator.outerHTML : '') + ' SOUND: ON';
+                        playHoverSound(600); 
+                    } catch(e) { console.error("Audio API blocked:", e); }
+                } else {
+                    if(scrollOsc) scrollOsc.stop();
+                    if(audioCtx) audioCtx.close();
+                    soundEnabled = false;
+                    if(audioIndicator) audioIndicator.className = 'w-1.5 h-1.5 bg-gray-600 rounded-full';
+                    audioBtn.classList.remove('text-volt');
+                    audioBtn.innerHTML = (audioIndicator ? audioIndicator.outerHTML : '') + ' SOUND: OFF';
+                }
+                triggerHaptic(20);
+            };
+        }
+
+        function playHoverSound(freq = 800) {
+            if(!soundEnabled || !audioCtx) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(freq/2, audioCtx.currentTime + 0.1);
+                gain.gain.setValueAtTime(0.01, audioCtx.currentTime); 
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.1);
+            } catch(e) {}
+        }
+
+        // --- 4. BIOS BOOT PRELOADER ---
+        const bootScreen = document.getElementById('boot-screen');
+        const bootLog = document.getElementById('boot-log');
+        const bootMessages = [
+            "Initializing Hardware Interface...",
+            "CPU: Rithik_Architecture [v2.6]... OK",
+            "Checking Memory Allocation... 64000K OK",
+            "Loading Base UI Matrix...",
+            "Injecting CSS Assets... DONE",
+            "Connecting Web Audio API... STANDBY",
+            "Starting Lenis Scroll Engine...",
+            "[SYSTEM READY] Booting in 3... 2... 1..."
+        ];
+        let bootIndex = 0;
+
+        function bootStep() {
+            if(!bootScreen || !bootLog) { lenis.start(); return; }
+            if(bootIndex < bootMessages.length) {
+                const p = document.createElement('div');
+                p.textContent = `> ${bootMessages[bootIndex]}`;
+                bootLog.appendChild(p);
+                bootIndex++;
+                setTimeout(bootStep, Math.random() * 150 + 50); 
+            } else {
+                setTimeout(() => {
+                    gsap.to(bootScreen, { 
+                        yPercent: -100, 
+                        opacity: 0,
+                        duration: 0.8, 
+                        ease: "power4.inOut", 
+                        onComplete: () => {
+                            bootScreen.remove();
+                            lenis.start(); 
+                            gsap.from(".reveal-up", { y: 60, opacity: 0, duration: 1.2, stagger: 0.1, ease: "power4.out" });
+                        }
+                    });
+                }, 400);
+            }
+        }
+        window.addEventListener('load', bootStep);
+
+        // --- 5. COMMAND PALETTE ---
+        const cmdPalette = document.getElementById('cmd-palette');
+        const cmdModal = document.getElementById('cmd-modal');
+        const cmdInput = document.getElementById('cmd-input');
+        const cmdList = document.getElementById('cmd-list');
+
+        const commands = [
+            { title: "Jump to /home", action: () => lenis.scrollTo('#home', {offset:-100}) },
+            { title: "Jump to /about", action: () => lenis.scrollTo('#about', {offset:-100}) },
+            { title: "Jump to /tech-stack", action: () => lenis.scrollTo('#stack', {offset:-100}) },
+            { title: "Jump to /vibe", action: () => lenis.scrollTo('#vibe', {offset:-100}) },
+            { title: "Jump to /contact", action: () => lenis.scrollTo('#contact', {offset:-100}) },
+            { title: "System: Toggle X-Ray Lens", action: () => document.getElementById('debug-toggle')?.click() },
+            { title: "System: Toggle Audio Engine", action: () => document.getElementById('audio-toggle')?.click() },
+            { title: "Action: Copy Email", action: () => document.getElementById('copy-email-btn')?.click() }
+        ];
+
+        function renderCmd(filter = "") {
+            if(!cmdList) return;
+            cmdList.innerHTML = "";
+            const filtered = commands.filter(c => c.title.toLowerCase().includes(filter.toLowerCase()));
+            filtered.forEach((cmd, i) => {
+                const el = document.createElement('div');
+                el.className = `p-3 rounded cursor-pointer transition-colors flex justify-between items-center mb-1 ${i===0?'bg-white/10 text-white border border-white/20':'hover:bg-white/5 border border-transparent'}`;
+                el.innerHTML = `<span>${cmd.title}</span> <span class="text-white/20 text-[10px]">⏎</span>`;
+                el.onclick = () => { cmd.action(); closeCmd(); };
+                el.onmouseenter = () => { playHoverSound(1000); document.querySelector('.cursor-ring')?.classList.add('active'); };
+                el.onmouseleave = () => document.querySelector('.cursor-ring')?.classList.remove('active');
+                cmdList.appendChild(el);
+            });
+        }
+
+        function openCmd() {
+            if(!cmdPalette) return;
+            cmdPalette.classList.remove('hidden');
+            gsap.to(cmdPalette, { opacity: 1, duration: 0.2 });
+            gsap.to(cmdModal, { scale: 1, duration: 0.3, ease: "back.out(1.5)" });
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => { if(cmdInput) cmdInput.focus(); renderCmd(); }, 100);
+            playHoverSound(400);
+        }
+
+        function closeCmd() {
+            if(!cmdPalette) return;
+            gsap.to(cmdModal, { scale: 0.95, duration: 0.2 });
+            gsap.to(cmdPalette, { opacity: 0, duration: 0.2, onComplete: () => {
+                cmdPalette.classList.add('hidden');
+                document.body.style.overflow = '';
+                if(cmdInput) cmdInput.value = "";
+            }});
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                if(cmdPalette && cmdPalette.classList.contains('hidden')) openCmd(); else closeCmd();
+            }
+            if (e.key === 'Escape' && cmdPalette && !cmdPalette.classList.contains('hidden')) closeCmd();
+            if (e.key === 'Enter' && cmdPalette && !cmdPalette.classList.contains('hidden')) {
+                const firstCmd = cmdList?.firstElementChild;
+                if(firstCmd) firstCmd.click();
+            }
+        });
+        if(cmdInput) cmdInput.addEventListener('input', (e) => renderCmd(e.target.value));
+        if(cmdPalette) cmdPalette.addEventListener('click', (e) => { if(e.target === cmdPalette) closeCmd(); });
+
+        // --- 6. INTERACTIONS ---
+        const debugBtn = document.getElementById('debug-toggle');
+        if(debugBtn) {
+            debugBtn.onclick = (e) => {
+                document.body.classList.toggle('debug-mode');
+                e.currentTarget.classList.toggle('bg-volt');
+                e.currentTarget.classList.toggle('text-dark');
+                playHoverSound(300);
+            };
+        }
+
+        // SMOOTH SCROLL HANDLER
+        document.querySelectorAll('nav a.nav-link, .mobile-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    lenis.scrollTo(targetElement, { offset: -100, duration: 1.5, easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) });
+                    const mMenu = document.getElementById('mobile-menu');
+                    if (mMenu?.classList.contains('open')) {
+                        mMenu.classList.remove('open');
+                        document.body.style.overflow = '';
+                    }
+                }
+                triggerHaptic(15);
+            });
+        });
+
+        // Copy Email Logic
+        function copyToClipboard() {
+            const el = document.createElement('textarea'); 
+            el.value = "rithikur@gmail.com"; 
+            document.body.appendChild(el); 
+            el.select(); document.execCommand('copy'); document.body.removeChild(el);
+            const txt = document.getElementById('email-text');
+            if(txt) {
+                const orig = txt.textContent; 
+                txt.textContent = "COPIED!"; 
+                triggerHaptic(50);
+                setTimeout(() => { txt.textContent = orig; }, 2000);
+            }
+        }
+        const copyTrig = document.getElementById('copy-email-trigger');
+        const copyBtn = document.getElementById('copy-email-btn');
+        if(copyTrig) copyTrig.onclick = copyToClipboard;
+        if(copyBtn) copyBtn.onclick = (e) => { e.preventDefault(); copyToClipboard(); };
+
+        // Mouse Tracking
         const mouseOrb = document.getElementById('mouse-orb');
-        const wiresContainer = document.getElementById('wires-container');
-
         window.onmousemove = (e) => {
             const { clientX, clientY } = e;
-            const xPercent = (clientX/window.innerWidth)*100;
-            const yPercent = (clientY/window.innerHeight)*100;
-            
-            document.documentElement.style.setProperty('--mouse-x', `${xPercent}%`);
-            document.documentElement.style.setProperty('--mouse-y', `${yPercent}%`);
+            document.documentElement.style.setProperty('--mouse-x', `${(clientX/window.innerWidth)*100}%`);
+            document.documentElement.style.setProperty('--mouse-y', `${(clientY/window.innerHeight)*100}%`);
             
             if(window.innerWidth > 768) {
                 gsap.to(".cursor-dot", { x: clientX, y: clientY, duration: 0 });
                 gsap.to(".cursor-ring", { x: clientX, y: clientY, duration: 0.15 });
-                
-                // Parallax shift for wires layer
-                gsap.to(wiresContainer, { x: (clientX - window.innerWidth/2) * 0.02, y: (clientY - window.innerHeight/2) * 0.02, duration: 1 });
-                
-                if(mouseOrb) {
-                    gsap.to(mouseOrb, { x: clientX - (window.innerWidth * 0.1), y: clientY - (window.innerWidth * 0.1), opacity: 1, duration: 1 });
-                }
+                if(mouseOrb) gsap.to(mouseOrb, { x: clientX - 100, y: clientY - 100, opacity: 1, duration: 1 });
+
+                const chars = document.querySelectorAll('#magnetic-text span');
+                chars.forEach(char => {
+                    if(!char.innerText.trim()) return;
+                    const rect = char.getBoundingClientRect();
+                    const bX = rect.left + rect.width / 2;
+                    const bY = rect.top + rect.height / 2;
+                    const dist = Math.hypot(clientX - bX, clientY - bY);
+                    if (dist < 150) {
+                        gsap.to(char, { x: (clientX - bX) * 0.4, y: (clientY - bY) * 0.4, duration: 0.4 });
+                    } else {
+                        gsap.to(char, { x: 0, y: 0, duration: 0.4 });
+                    }
+                });
             }
         };
 
-        // Tilt Cards
+        // Wire Animation & Surge
+        let wireTweens = [];
+        const animateDataPulses = () => {
+            wireTweens.forEach(t => t.kill());
+            wireTweens = [
+                gsap.fromTo("#wire-pulse-1", { strokeDashoffset: 1100 }, { strokeDashoffset: -1100, duration: 4, repeat: -1, ease: "none" }),
+                gsap.fromTo("#wire-pulse-2", { strokeDashoffset: -1100 }, { strokeDashoffset: 1100, duration: 5, repeat: -1, ease: "none", delay: 1 }),
+                gsap.fromTo("#wire-pulse-3", { strokeDashoffset: 1100 }, { strokeDashoffset: -1100, duration: 3, repeat: -1, ease: "none", delay: 0.5 })
+            ];
+        };
+
+        window.addEventListener('click', (e) => {
+            if(e.target.closest('button, a, .social-icon, .haptic-target, input')) return; 
+
+            const ripple = document.createElement('div');
+            ripple.className = 'fixed rounded-full border-2 border-volt pointer-events-none z-[9999]';
+            ripple.style.left = e.clientX + 'px'; 
+            ripple.style.top = e.clientY + 'px'; 
+            ripple.style.transform = 'translate(-50%, -50%)';
+            document.body.appendChild(ripple);
+            gsap.fromTo(ripple, { width: 0, height: 0, opacity: 1 }, { width: 150, height: 150, opacity: 0, duration: 0.6, ease: "power2.out", onComplete: () => ripple.remove() });
+
+            const w1 = document.getElementById('wire-pulse-1');
+            const w2 = document.getElementById('wire-pulse-2');
+            const w3 = document.getElementById('wire-pulse-3');
+            if(w1 && w2 && w3) {
+                wireTweens.forEach(t => t.kill());
+                gsap.fromTo([w1, w2, w3], 
+                    { strokeDashoffset: 1100, strokeWidth: 8, strokeOpacity: 1 },
+                    { strokeDashoffset: -1100, strokeWidth: 2, strokeOpacity: 0.2, duration: 3.5, ease: "power2.out", overwrite: true, onComplete: animateDataPulses }
+                );
+            }
+        });
+        animateDataPulses();
+
+        // Cursor feedback
+        document.querySelectorAll('a, button, .social-icon, .group, .bg-panel, .haptic-target, .nav-link').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                document.querySelector('.cursor-ring')?.classList.add('active');
+                playHoverSound(800);
+            });
+            el.addEventListener('mouseleave', () => document.querySelector('.cursor-ring')?.classList.remove('active'));
+            el.addEventListener('click', () => triggerHaptic(20));
+        });
+
+        // --- 7. MARQUEE (GSAP QUAD-BUFFERED LOOP) ---
+        const marqueeL = gsap.fromTo("#marquee-l", { xPercent: 0 }, { xPercent: -25, duration: 15, repeat: -1, ease: "none", force3D: true });
+        const marqueeR = gsap.fromTo("#marquee-r", { xPercent: -25 }, { xPercent: 0, duration: 20, repeat: -1, ease: "none", force3D: true });
+
+        let isHoveringMarquee = false;
+        let targetTimeScale = 1;
+        let currentTimeScale = 1;
+
+        document.querySelectorAll('.marquee-track').forEach(track => {
+            track.addEventListener('mouseenter', () => {
+                isHoveringMarquee = true;
+                gsap.to([marqueeL, marqueeR], { timeScale: 0.15, duration: 0.5, overwrite: true });
+            });
+            track.addEventListener('mouseleave', () => {
+                isHoveringMarquee = false;
+                currentTimeScale = 0.15; 
+            });
+        });
+
+        gsap.ticker.add(() => {
+            if (!isHoveringMarquee) {
+                currentTimeScale += (targetTimeScale - currentTimeScale) * 0.1; 
+                marqueeL.timeScale(currentTimeScale);
+                marqueeR.timeScale(currentTimeScale);
+                targetTimeScale += (1 - targetTimeScale) * 0.05; 
+            }
+        });
+
+        // --- 8. SCROLL ENGINE ---
+        const skewKinetic = gsap.quickTo("#kinetic-section", "skewY", { duration: 0.5, ease: "power2.out" });
+        const updateProgressBar = gsap.quickTo("#progress-bar", "height", { duration: 0.1, ease: "none" });
+
+        lenis.on('scroll', ({ scroll, limit, velocity }) => {
+            const v = Math.abs(velocity);
+            
+            if(soundEnabled && scrollGain && scrollOsc && audioCtx) {
+                scrollOsc.frequency.setTargetAtTime(40 + (v * 0.5), audioCtx.currentTime, 0.1);
+                scrollGain.gain.setTargetAtTime(Math.min(v * 0.002, 0.05), audioCtx.currentTime, 0.1); 
+            }
+
+            if (!isHoveringMarquee) {
+                targetTimeScale = 1 + Math.min(v * 0.015, 3); 
+            }
+
+            if (document.getElementById('kinetic-section')) {
+                skewKinetic(Math.min(Math.max(velocity * 0.03, -3), 3));
+            }
+
+            const sp = document.getElementById('scroll-percent');
+            if(sp) sp.innerText = `${Math.round((scroll/limit)*100)}% SCROLLED`;
+            
+            const scrollPos = window.scrollY + 200;
+            const sections = ['home', 'about', 'stack', 'vibe', 'contact'];
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && scrollPos >= el.offsetTop) {
+                    const path = document.getElementById('os-path');
+                    const label = document.getElementById('section-label');
+                    if(path) path.innerText = `ROOT/${id.toUpperCase()}`;
+                    if(label) label.textContent = id.charAt(0).toUpperCase() + id.slice(1);
+                }
+            });
+            updateProgressBar(`${(scroll/limit)*100}%`);
+        });
+
+        // --- 9. TILT CARDS ---
         document.querySelectorAll('.tilt-card').forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 if(window.innerWidth <= 768) return;
                 const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                gsap.to(card, { rotateY: x / 25, rotateX: -y / 25, duration: 0.4, ease: "power2.out" });
+                gsap.to(card, { rotateY: (e.clientX - rect.left - rect.width/2)/25, rotateX: -(e.clientY - rect.top - rect.height/2)/25, duration: 0.4, ease: "power2.out" });
             });
-            card.addEventListener('mouseleave', () => {
-                gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.6, ease: "power3.out" });
-            });
+            card.addEventListener('mouseleave', () => gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.6, ease: "power3.out" }));
         });
 
-        // Magnetic Hover
-        document.querySelectorAll('a, button, .social-icon, .group, .bg-panel, .haptic-target').forEach(el => {
-            el.onmouseenter = () => document.querySelector('.cursor-ring')?.classList.add('active');
-            el.onmouseleave = () => document.querySelector('.cursor-ring')?.classList.remove('active');
-            el.addEventListener('click', () => triggerHaptic(20));
-        });
-
-        // Footer Motion Parallax
-        ScrollTrigger.create({
-            trigger: "#contact",
-            start: "top bottom",
-            onUpdate: (self) => {
-                const p = self.progress;
-                gsap.set("#parallax-name", { x: (1 - p) * 150 });
-                gsap.set("#footer-orb-1", { x: p * 100, y: p * -50 });
-                gsap.set("#footer-orb-2", { x: p * -100, y: p * 50 });
+        // --- 10. FOOTER NAME PARALLAX ---
+        gsap.fromTo("#parallax-name", 
+            { xPercent: 15 }, 
+            { xPercent: -35, 
+              ease: "none",
+              scrollTrigger: {
+                  trigger: "#contact", 
+                  start: "top bottom",
+                  end: "bottom bottom",
+                  scrub: 1.5
+              }
             }
-        });
+        );
 
-        // Terminal Effect
-        const terminalOutput = ["> Initializing student_profile.sys", "> Loading academic_foundation... OK [8.15 CGPA]", "> Scanning interest_stack... FULL STACK FOUND", "> Learning_mode: ACTIVE", "> Status: Obsessed with building something better."];
+        // --- 11. TERMINAL ---
+        const terminalOutput = ["> Initializing system.core", "> Academic Foundation... OK", "> IT Undergraduate Status... ACTIVE", "> Interest: Full Stack Development", "> Objective: Award-winning digital products."];
         let t_i = 0; let lineIdx = 0;
-        const terminalEl = document.getElementById('terminal-text');
         function typeLine() {
+            const term = document.getElementById('terminal-text');
+            if (!term) return;
             if (lineIdx < terminalOutput.length) {
                 const line = terminalOutput[lineIdx];
                 if (t_i < line.length) {
-                    terminalEl.innerHTML += line.charAt(t_i); t_i++; setTimeout(typeLine, 20);
-                } else {
-                    terminalEl.innerHTML += "<br>"; t_i = 0; lineIdx++; setTimeout(typeLine, 400);
-                }
+                    term.innerHTML += line.charAt(t_i); t_i++; setTimeout(typeLine, 20);
+                } else { term.innerHTML += "<br>"; t_i = 0; lineIdx++; setTimeout(typeLine, 400); }
             }
         }
         ScrollTrigger.create({ trigger: "#about", start: "top 80%", onEnter: () => typeLine(), once: true });
-
-        // Continuous Data Pulses for Wires
-        const animateDataPulses = () => {
-            gsap.to("#wire-pulse-1", { strokeDashoffset: -1000, duration: 4, repeat: -1, ease: "none" });
-            gsap.to("#wire-pulse-2", { strokeDashoffset: 1100, duration: 5, repeat: -1, ease: "none", delay: 1 });
-            gsap.to("#wire-pulse-3", { strokeDashoffset: -1100, duration: 3, repeat: -1, ease: "none", delay: 0.5 });
-        };
-        window.onload = animateDataPulses;
-
-        // Progress update
-        const sectionIds = ['#home', '#about', '#stack', '#vibe', '#contact'];
-        const sectionNames = ['Home', 'About', 'Stack', 'Vibe', 'Contact'];
-        lenis.on('scroll', ({ scroll, limit }) => {
-            const progress = (scroll / limit) * 100;
-            gsap.to("#progress-bar", { height: `${progress}%`, duration: 0.1 });
-            const scrollPos = window.scrollY + 200;
-            sectionIds.forEach((id, i) => {
-                const el = document.querySelector(id);
-                if (el && scrollPos >= el.offsetTop) document.getElementById('section-label').textContent = sectionNames[i];
-            });
-        });
-
-        // Clock
-        setInterval(() => {
-            const el = document.getElementById('live-time');
-            if(el) el.textContent = new Date().toLocaleTimeString('en-IN', { timeZone:'Asia/Kolkata', hour12:false, hour:'2-digit', minute:'2-digit', second:'2-digit'});
+        
+        setInterval(() => { 
+            const lt = document.getElementById('live-time');
+            if(lt) lt.textContent = new Date().toLocaleTimeString('en-IN', { hour12:false, hour:'2-digit', minute:'2-digit', second:'2-digit' }); 
         }, 1000);
 
-        // Intro
-        gsap.from(".reveal-up", { y: 60, opacity: 0, duration: 1.2, stagger: 0.1, ease: "power4.out" });
-        gsap.utils.toArray('.reveal-fade').forEach(el => {
-            gsap.from(el, { scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none reverse" }, y: 30, opacity: 0, duration: 1, ease: "power3.out" });
-        });
+        // --- 12. MOBILE MENU ---
+        const mToggle = document.getElementById('menu-toggle');
+        const mClose = document.getElementById('menu-close');
+        const mMenu = document.getElementById('mobile-menu');
+        if(mToggle) mToggle.onclick = () => { mMenu.classList.add('open'); document.body.style.overflow = 'hidden'; triggerHaptic(); };
+        if(mClose) mClose.onclick = () => { mMenu.classList.remove('open'); document.body.style.overflow = ''; triggerHaptic(); };
+
     </script>
 </body>
 </html>
