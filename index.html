@@ -1,739 +1,300 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-[#050505] text-[#f4f4f5] antialiased overflow-x-hidden">
+<html lang="en" class="antialiased overflow-x-hidden">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rithik U R</title>
-    
-    <!-- Favicon using the new logo -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z' fill='none' stroke='%23ccff00' stroke-width='8'/><rect x='40' y='40' width='20' height='20' fill='%23ccff00'/></svg>">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rithik U R — Full Stack Developer & IT Undergraduate</title>
+  <meta name="description" content="Rithik U R — Information Technology undergraduate, Full Stack developer, Python, JavaScript, Blender 3D enthusiast. Building the foundation. Mastering logic." />
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- GSAP & ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
-    <!-- Lenis -->
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        heading: ['Oswald', 'sans-serif'],
-                        body: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
-                    colors: { volt: '#ccff00', dark: '#050505', panel: '#111111', border: '#262626' }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-        
-        ::selection { background-color: #ccff00; color: #000; }
-        @media (pointer: fine) { body { cursor: none; } a, button { cursor: none; } }
-
-        body { font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.5s ease; }
-        h1, h2, h3, h4, .font-heading { text-transform: uppercase; line-height: 0.95; }
-        
-        /* Smooth scroll container behavior */
-        html.lenis { height: auto; }
-        .lenis.lenis-smooth { scroll-behavior: auto !important; }
-        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-        .lenis.lenis-stopped { overflow: hidden; }
-        .lenis.lenis-scrolling iframe { pointer-events: none; }
-
-        /* CALIBRATED SCROLL MARGIN for proper landing */
-        section { scroll-margin-top: 100px; }
-        @media (min-width: 768px) { section { scroll-margin-top: 120px; } }
-
-        .noise::before {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.04; pointer-events: none; z-index: 150;
-        }
-
-        /* MOBILE MENU LOGIC */
-        #mobile-menu { 
-            transform: translateY(-100%); 
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
-        }
-        #mobile-menu.open { 
-            transform: translateY(0); 
-        }
-
-        /* NEON GLOW EFFECTS */
-        .neon-wire {
-            filter: drop-shadow(0 0 3px #ccff00) drop-shadow(0 0 8px #ccff00);
-            stroke-linecap: round;
-        }
-        
-        /* Hitboxes for easy clicking */
-        .wire-hitbox {
-            cursor: pointer;
-            pointer-events: auto;
-        }
-
-        /* DEBUG MODE / X-RAY LENS */
-        body.debug-mode * { border: 1px solid rgba(204, 255, 0, 0.1) !important; }
-        body.debug-mode .cursor-ring {
-            width: 250px !important; 
-            height: 250px !important;
-            background: transparent !important;
-            backdrop-filter: invert(1) hue-rotate(180deg) grayscale(1) contrast(1.5) !important;
-            border: 1px dashed #ccff00 !important;
-            z-index: 10000 !important;
-        }
-
-        /* Grid */
-        :root { --mouse-x: 50%; --mouse-y: 50%; }
-        .grid-bg {
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
-            mask-image: radial-gradient(circle 800px at var(--mouse-x) var(--mouse-y), black 0%, transparent 100%);
-        }
-
-        /* Cursor */
-        .cursor-dot { position: fixed; top: 0; left: 0; width: 8px; height: 8px; background: #ccff00; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); }
-        .cursor-ring { position: fixed; top: 0; left: 0; width: 40px; height: 40px; border: 1px solid rgba(204, 255, 0, 0.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s, background 0.2s; }
-        .cursor-ring.active { width: 65px !important; height: 65px !important; background: rgba(204, 255, 0, 0.05); border-color: #ccff00; }
-
-        /* Marquee Styles */
-        .marquee-content, .marquee-content-reverse { display: flex; flex-wrap: nowrap; will-change: transform; }
-        .marquee-content span, .marquee-content-reverse span { white-space: nowrap; flex-shrink: 0; }
-        
-        .tilt-card { transform-style: preserve-3d; transition: transform 0.15s ease-out; perspective: 1000px; }
-        .glass-sheen { position: relative; overflow: hidden; }
-        .glass-sheen::after { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.03) 50%, transparent 55%); pointer-events: none; }
-        
-        .logo-core { animation: pulse-core 2s ease-in-out infinite; }
-        @keyframes pulse-core { 0%, 100% { opacity: 1; filter: drop-shadow(0 0 2px #ccff00); } 50% { opacity: 0.7; filter: drop-shadow(0 0 8px #ccff00); } }
-
-        /* Sidebar Progress */
-        .progress-indicator { position: fixed; left: 20px; top: 50%; transform: translateY(-50%); z-index: 100; display: none; }
-        @media (min-width: 1024px) { .progress-indicator { display: block; } }
-
-        /* CMD Palette Custom Scrollbar */
-        #cmd-list::-webkit-scrollbar { width: 4px; }
-        #cmd-list::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-    </style>
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z' fill='none' stroke='%23ccff00' stroke-width='8'/><rect x='40' y='40' width='20' height='20' fill='%23ccff00'/></svg>" />
+  
+  <style>
+    /* Inline styles to prevent white flash before Tailwind loads */
+    html, body {
+      background-color: #050505;
+      color: #f4f4f5;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    #boot-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background-color: #050505;
+      color: #ccff00;
+      border-bottom: 4px solid #ccff00;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+    }
+  </style>
 </head>
-<body class="relative bg-dark text-white noise overflow-x-hidden">
+<body class="relative bg-dark text-white overflow-x-hidden">
+  
+  <!-- GLOBAL NOISE OVERLAY -->
+  <div class="noise-overlay"></div>
 
-    <!-- BIOS-BOOT PRELOADER -->
-    <div id="boot-screen" class="fixed inset-0 z-[200] bg-dark text-volt font-mono text-xs md:text-sm p-8 flex flex-col justify-end overflow-hidden border-b-4 border-volt">
-        <div class="mb-4 font-bold opacity-50">RITHIK_OS [Version 2.6.0]</div>
-        <div id="boot-log" class="flex flex-col gap-1 opacity-80 h-[80vh] justify-end"></div>
+  <!-- BIOS-BOOT PRELOADER -->
+  <div id="boot-screen" class="font-mono text-xs md:text-sm">
+    <div class="mb-4 font-bold opacity-50">RITHIK_OS [Version 3.0.0_PERF]</div>
+    <div id="boot-log" class="flex flex-col gap-1 opacity-80 h-[80vh] justify-end"></div>
+  </div>
+
+  <!-- COMMAND PALETTE -->
+  <div id="cmd-palette" class="fixed inset-0 z-[150] bg-dark/95 hidden flex items-start justify-center pt-[15vh] px-4 opacity-0 transition-opacity duration-300">
+    <div class="w-full max-w-2xl bg-panel border border-border rounded-2xl shadow-xl overflow-hidden flex flex-col transform scale-95 transition-transform duration-300" id="cmd-modal">
+      <div class="p-4 border-b border-border flex items-center gap-3">
+        <i data-lucide="terminal" class="text-volt w-5 h-5"></i>
+        <input type="text" id="cmd-input" placeholder="Type a command or search (e.g., 'Contact')" class="w-full bg-transparent text-white outline-none font-mono text-sm md:text-base placeholder:text-gray-600" autocomplete="off" />
+        <div class="text-[10px] text-gray-500 border border-gray-700 rounded px-2 py-0.5 whitespace-nowrap">ESC</div>
+      </div>
+      <div id="cmd-list" class="p-2 max-h-[50vh] overflow-y-auto font-mono text-xs md:text-sm text-gray-300"></div>
     </div>
+  </div>
 
-    <!-- COMMAND PALETTE -->
-    <div id="cmd-palette" class="fixed inset-0 z-[150] bg-dark/80 backdrop-blur-xl hidden flex items-start justify-center pt-[15vh] px-4 opacity-0 transition-opacity">
-        <div class="w-full max-w-2xl bg-panel border border-border rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col transform scale-95 transition-transform" id="cmd-modal">
-            <div class="p-4 border-b border-border flex items-center gap-3">
-                <i data-lucide="terminal" class="text-volt w-5 h-5"></i>
-                <input type="text" id="cmd-input" placeholder="Type a command or search (e.g., 'Contact')" class="w-full bg-transparent text-white outline-none font-mono text-sm md:text-base placeholder:text-gray-600" autocomplete="off">
-                <div class="text-[10px] text-gray-500 border border-gray-700 rounded px-2 py-0.5 whitespace-nowrap">ESC</div>
-            </div>
-            <div id="cmd-list" class="p-2 max-h-[50vh] overflow-y-auto font-mono text-xs md:text-sm text-gray-300"></div>
-        </div>
+  <!-- SIDEBAR SCROLL PROGRESS -->
+  <div class="progress-indicator hidden lg:block fixed left-[20px] top-1/2 -translate-y-1/2 z-[100]">
+    <div class="flex flex-col items-center gap-6">
+      <span class="font-heading text-[10px] tracking-widest text-white/20 uppercase rotate-[-90deg] origin-center translate-y-8">Scroll</span>
+      <div class="w-px h-32 bg-white/10 relative">
+        <div id="progress-bar" class="absolute top-0 left-0 w-full bg-volt h-0"></div>
+      </div>
+      <div id="section-label" class="font-heading text-xs tracking-[0.2em] text-volt uppercase rotate-[-90deg] origin-center -translate-y-8">Home</div>
     </div>
+  </div>
 
-    <div class="cursor-dot hidden md:block"></div>
-    <div class="cursor-ring hidden md:block"></div>
-
-    <!-- SIDEBAR PROGRESS BAR -->
-    <div class="progress-indicator">
-        <div class="flex flex-col items-center gap-6">
-            <span class="font-heading text-[10px] tracking-widest text-white/20 uppercase rotate-[-90deg] origin-center translate-y-8">Scroll</span>
-            <div class="w-px h-32 bg-white/10 relative">
-                <div id="progress-bar" class="absolute top-0 left-0 w-full bg-volt h-0"></div>
-            </div>
-            <div id="section-label" class="font-heading text-xs tracking-[0.2em] text-volt uppercase rotate-[-90deg] origin-center -translate-y-8">Home</div>
-        </div>
+  <!-- PERSISTENT OS BAR -->
+  <div class="fixed bottom-0 left-0 w-full z-[120] bg-dark/95 border-t border-white/5 py-2 px-6 justify-between items-center font-mono text-[10px] text-gray-500 hidden md:flex">
+    <div class="flex gap-6 items-center">
+      <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span> SYSTEM: MAX_PERF</div>
+      <div class="flex items-center gap-2"><i data-lucide="folder" class="w-3 h-3"></i> <span id="os-path">ROOT/HOME</span></div>
+      <button id="audio-toggle" class="flex items-center gap-2 hover:text-white transition-colors haptic-target outline-none">
+        <span class="w-1.5 h-1.5 bg-gray-600 rounded-full" id="audio-indicator"></span> SOUND: OFF
+      </button>
     </div>
-
-    <!-- PERSISTENT OS BAR WITH AUDIO TOGGLE -->
-    <div class="fixed bottom-0 left-0 w-full z-[120] bg-dark/90 backdrop-blur-md border-t border-white/5 py-2 px-6 flex justify-between items-center font-mono text-[10px] text-gray-500 hidden md:flex">
-        <div class="flex gap-6 items-center">
-            <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span> SYSTEM: STABLE</div>
-            <div class="flex items-center gap-2"><i data-lucide="folder" class="w-3 h-3"></i> <span id="os-path">ROOT/HOME</span></div>
-            <button id="audio-toggle" class="flex items-center gap-2 hover:text-white transition-colors haptic-target outline-none">
-                <span class="w-1.5 h-1.5 bg-gray-600 rounded-full" id="audio-indicator"></span> SOUND: OFF
-            </button>
-        </div>
-        <div class="flex gap-6 items-center">
-            <div class="flex gap-2 items-center text-white/30"><span class="border border-white/20 px-1 rounded">⌘K</span> CMD MENU</div>
-            <div id="scroll-percent">0% SCROLLED</div>
-            <div class="text-white/40">v2.6.0_STABLE</div>
-        </div>
+    <div class="flex gap-6 items-center">
+      <div class="flex gap-2 items-center text-white/30"><span class="border border-white/20 px-1 rounded">⌘K</span> CMD MENU</div>
+      <div id="scroll-percent">0% SCROLLED</div>
+      <div class="text-white/40">v3.0.0_STABLE</div>
     </div>
+  </div>
 
-    <!-- BACKGROUND WIRES WITH INTERACTIVE HITBOXES -->
-    <div id="wires-container" class="fixed inset-0 z-0 pointer-events-none opacity-30">
-        <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur" />
-                    <feFlood flood-color="#ccff00" result="color" />
-                    <feComposite in="color" in2="blur" operator="in" result="glow" />
-                    <feMerge>
-                        <feMergeNode in="glow" />
-                        <feMergeNode in="glow" />
-                        <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                </filter>
-            </defs>
+  <!-- BACKGROUND PLASMA MESH (Alternative to Neon Wires) -->
+  <div id="plasma-container" class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+    <div class="plasma-orb orb-1"></div>
+    <div class="plasma-orb orb-2"></div>
+    <div class="plasma-orb orb-3"></div>
+  </div>
 
-            <!-- WIRE 1 -->
-            <path class="wire-path" d="M -50 150 L 250 150 L 250 350 L 600 350 L 600 100 L 1400 100" stroke="#ccff00" fill="none" stroke-opacity="0.1"/>
-            <path id="wire-pulse-1" class="neon-wire" filter="url(#neon-glow)" d="M -50 150 L 250 150 L 250 350 L 600 350 L 600 100 L 1400 100" stroke="#ccff00" fill="none" stroke-width="2" stroke-dasharray="150, 1000" stroke-dashoffset="1150"/>
-            <path class="wire-hitbox" d="M -50 150 L 250 150 L 250 350 L 600 350 L 600 100 L 1400 100" stroke="transparent" fill="none" stroke-width="30" onclick="surgeWire(1)"/>
-
-            <!-- WIRE 2 -->
-            <path class="wire-path" d="M 1400 750 L 1000 750 L 1000 550 L 700 550 L 700 850 L -100 850" stroke="#ccff00" fill="none" stroke-opacity="0.1"/>
-            <path id="wire-pulse-2" class="neon-wire" filter="url(#neon-glow)" d="M 1400 750 L 1000 750 L 1000 550 L 700 550 L 700 850 L -100 850" stroke="#ccff00" fill="none" stroke-width="2" stroke-dasharray="150, 1000" stroke-dashoffset="1150"/>
-            <path class="wire-hitbox" d="M 1400 750 L 1000 750 L 1000 550 L 700 550 L 700 850 L -100 850" stroke="transparent" fill="none" stroke-width="30" onclick="surgeWire(2)"/>
-
-            <!-- WIRE 3 -->
-            <path class="wire-path" d="M 300 -100 L 300 250 L -100 250" stroke="#ccff00" fill="none" stroke-opacity="0.1"/>
-            <path id="wire-pulse-3" class="neon-wire" filter="url(#neon-glow)" d="M 300 -100 L 300 250 L -100 250" stroke="#ccff00" fill="none" stroke-width="2" stroke-dasharray="150, 1000" stroke-dashoffset="1150"/>
-            <path class="wire-hitbox" d="M 300 -100 L 300 250 L -100 250" stroke="transparent" fill="none" stroke-width="30" onclick="surgeWire(3)"/>
+  <!-- NAVIGATION -->
+  <nav class="fixed top-0 w-full z-[100] bg-dark/95 border-b border-white/5 p-4 md:p-6 flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <div class="brand-logo magnetic w-10 h-10 haptic-target cursor-pointer p-1">
+        <svg viewBox="0 0 100 100">
+          <path d="M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z" fill="none" stroke="var(--color-volt)" stroke-width="4"/>
+          <rect class="logo-core" x="42" y="42" width="16" height="16" fill="var(--color-volt)" transform="rotate(45 50 50)"/>
         </svg>
+      </div>
+      <div class="font-heading text-xl md:text-2xl font-bold tracking-wider uppercase">RITHIK <span class="text-volt">U R</span></div>
     </div>
-
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-[100] bg-dark/40 backdrop-blur-xl border-b border-white/5 p-4 md:p-6 flex justify-between items-center">
-        <div class="flex items-center gap-4">
-            <div class="brand-logo w-10 h-10 haptic-target cursor-pointer" onclick="lenis.scrollTo(0, {duration: 1.5})">
-                <svg viewBox="0 0 100 100">
-                    <path d="M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z" fill="none" stroke="#ccff00" stroke-width="4"/>
-                    <rect class="logo-core" x="42" y="42" width="16" height="16" fill="#ccff00" transform="rotate(45 50 50)"/>
-                </svg>
-            </div>
-            <div class="font-heading text-xl md:text-2xl font-bold tracking-wider uppercase">RITHIK <span class="text-volt">U R</span></div>
-        </div>
-        <div class="hidden md:flex gap-8 font-bold text-[10px] tracking-widest uppercase items-center">
-            <a href="#about" class="nav-link hover:text-volt transition-colors haptic-target">About</a>
-            <a href="#stack" class="nav-link hover:text-volt transition-colors haptic-target">Stack</a>
-            <a href="#vibe" class="nav-link hover:text-volt transition-colors haptic-target">Vibe</a>
-            <a href="#contact" class="nav-link hover:text-volt transition-colors haptic-target">Contact</a>
-            <button id="debug-toggle" class="bg-white/5 border border-white/10 px-3 py-1.5 rounded flex items-center gap-2 hover:bg-volt hover:text-dark transition-all haptic-target outline-none">
-                <i data-lucide="scan-line" class="w-3 h-3"></i> LENS
-            </button>
-        </div>
-        <button id="menu-toggle" class="md:hidden text-white haptic-target p-2 -mr-2"><i data-lucide="menu"></i></button>
-    </nav>
-
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 z-[130] bg-dark flex flex-col items-center justify-center gap-8 md:hidden">
-        <a href="#about" class="mobile-link font-heading text-4xl font-bold hover:text-volt">About</a>
-        <a href="#stack" class="mobile-link font-heading text-4xl font-bold hover:text-volt">Stack</a>
-        <a href="#vibe" class="mobile-link font-heading text-4xl font-bold hover:text-volt">Vibe</a>
-        <a href="#contact" class="mobile-link font-heading text-4xl font-bold hover:text-volt">Contact</a>
-        <button id="menu-close" class="mt-8 text-volt uppercase tracking-widest font-bold text-xs haptic-target p-4">Close</button>
+    <div class="hidden md:flex gap-8 font-bold text-[10px] tracking-widest uppercase items-center">
+      <a href="#about" class="nav-link hover:text-volt transition-colors haptic-target">About</a>
+      <a href="#stack" class="nav-link hover:text-volt transition-colors haptic-target">Stack</a>
+      <a href="#vibe" class="nav-link hover:text-volt transition-colors haptic-target">Vibe</a>
+      <a href="#contact" class="nav-link hover:text-volt transition-colors haptic-target">Contact</a>
     </div>
+    <button id="menu-toggle" class="md:hidden text-white haptic-target p-2 -mr-2"><i data-lucide="menu"></i></button>
+  </nav>
 
-    <!-- Hero -->
-    <header id="home" class="relative min-h-[100vh] flex flex-col justify-center overflow-hidden pt-32 pb-20">
-        <div class="absolute inset-0 grid-bg pointer-events-none z-0"></div>
-        <div class="z-10 px-6 md:px-12 flex flex-col items-center text-center">
-            <p class="font-body text-volt font-bold tracking-[0.3em] uppercase mb-4 text-[10px] md:text-sm reveal-up">Information Technology Undergraduate</p>
-            <h1 class="font-heading text-[11vw] font-bold text-white leading-[0.9] reveal-up max-w-[100vw] whitespace-nowrap overflow-visible">
-                RITHIK <span class="text-transparent" style="-webkit-text-stroke: 1.5px #333;">U R</span>
-            </h1>
-            <div class="w-full max-w-2xl mt-8 reveal-up">
-                <p class="text-gray-400 text-base md:text-xl font-medium leading-relaxed px-4">Building the foundation. Mastering logic. Obsessed with Full Stack.</p>
-            </div>
-        </div>
-    </header>
+  <!-- MOBILE MENU OVERLAY -->
+  <div id="mobile-menu" class="fixed inset-0 z-[130] bg-dark flex flex-col items-center justify-center gap-8 md:hidden">
+    <a href="#about" class="mobile-link font-heading text-4xl font-bold hover:text-volt">About</a>
+    <a href="#stack" class="mobile-link font-heading text-4xl font-bold hover:text-volt">Stack</a>
+    <a href="#vibe" class="mobile-link font-heading text-4xl font-bold hover:text-volt">Vibe</a>
+    <a href="#contact" class="mobile-link font-heading text-4xl font-bold hover:text-volt">Contact</a>
+    <button id="menu-close" class="mt-8 text-volt uppercase tracking-widest font-bold text-xs haptic-target p-4">Close</button>
+  </div>
 
-    <!-- KINETIC TRACKS -->
-    <div id="kinetic-section" class="relative z-20 py-12 overflow-hidden marquee-wrapper">
-        <div class="marquee-track bg-volt text-dark py-4 rotate-[-1.5deg] scale-105 relative z-10 shadow-xl overflow-hidden">
-            <div id="marquee-l" class="marquee-content font-heading text-2xl md:text-4xl font-bold tracking-widest flex items-center">
-                <span>FULL STACK DEV</span><span class="mx-6">⚡</span><span>PYTHON & C</span><span class="mx-6">⚡</span><span>BLENDER 3D</span><span class="mx-6">⚡</span><span>JAVASCRIPT</span><span class="mx-6">⚡</span>
-                <span>FULL STACK DEV</span><span class="mx-6">⚡</span><span>PYTHON & C</span><span class="mx-6">⚡</span><span>BLENDER 3D</span><span class="mx-6">⚡</span><span>JAVASCRIPT</span><span class="mx-6">⚡</span>
-                <span>FULL STACK DEV</span><span class="mx-6">⚡</span><span>PYTHON & C</span><span class="mx-6">⚡</span><span>BLENDER 3D</span><span class="mx-6">⚡</span><span>JAVASCRIPT</span><span class="mx-6">⚡</span>
-                <span>FULL STACK DEV</span><span class="mx-6">⚡</span><span>PYTHON & C</span><span class="mx-6">⚡</span><span>BLENDER 3D</span><span class="mx-6">⚡</span><span>JAVASCRIPT</span><span class="mx-6">⚡</span>
-            </div>
-        </div>
-        <div class="marquee-track border-y border-white/10 py-3 rotate-[1.5deg] scale-105 -mt-6 bg-dark/80 backdrop-blur-sm overflow-hidden">
-            <div id="marquee-r" class="marquee-content-reverse font-heading text-xl md:text-2xl font-bold tracking-[0.3em] flex items-center opacity-30">
-                <span class="text-transparent" style="-webkit-text-stroke: 1px white;">ALGORITHMIC THINKING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">PRACTICAL LEARNING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">UI ARCHITECTURE</span><span class="mx-8">/</span>
-                <span class="text-transparent" style="-webkit-text-stroke: 1px white;">ALGORITHMIC THINKING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">PRACTICAL LEARNING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">UI ARCHITECTURE</span><span class="mx-8">/</span>
-                <span class="text-transparent" style="-webkit-text-stroke: 1px white;">ALGORITHMIC THINKING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">PRACTICAL LEARNING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">UI ARCHITECTURE</span><span class="mx-8">/</span>
-                <span class="text-transparent" style="-webkit-text-stroke: 1px white;">ALGORITHMIC THINKING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">PRACTICAL LEARNING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">UI ARCHITECTURE</span><span class="mx-8">/</span>
-            </div>
-        </div>
+  <!-- HERO -->
+  <header id="home" class="relative min-h-[100vh] flex flex-col justify-center overflow-hidden pt-32 pb-20">
+    <div class="absolute inset-0 grid-bg pointer-events-none z-0"></div>
+    <div class="hero-spotlight-bg"></div>
+    <div class="z-10 px-6 md:px-12 flex flex-col items-center text-center">
+      <p class="font-body text-volt font-bold tracking-[0.3em] uppercase mb-4 text-[10px] md:text-sm reveal-up">Information Technology Undergraduate</p>
+      <h1 class="font-heading text-[11vw] font-bold text-white leading-[0.9] reveal-up max-w-[100vw] whitespace-nowrap overflow-visible">
+        RITHIK <span class="text-transparent" style="-webkit-text-stroke: 1.5px #333;">U R</span>
+      </h1>
+      <div class="w-full max-w-2xl mt-8 reveal-up">
+        <p class="text-gray-400 text-base md:text-xl font-medium leading-relaxed px-4">Building the foundation. Mastering logic. Obsessed with Full Stack.</p>
+      </div>
     </div>
+  </header>
 
-    <!-- About Section -->
-    <section id="about" class="py-16 md:py-24 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
-            <div class="lg:col-span-5 space-y-12">
-                <div class="reveal-fade">
-                    <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">Academic Core</p>
-                    <h2 class="font-heading text-5xl md:text-7xl">FOUNDATION</h2>
-                </div>
-                <div class="flex gap-6 md:gap-12 border-t border-border pt-8 reveal-fade">
-                    <div><p class="text-gray-500 text-sm font-bold uppercase mb-1">Sem 1 CGPA</p><p class="font-heading text-6xl md:text-8xl text-volt">8.15</p></div>
-                    <div><p class="text-gray-500 text-sm font-bold uppercase mb-1">Graduation</p><p class="font-heading text-6xl md:text-8xl text-white">2029</p></div>
-                </div>
-            </div>
-            <div class="lg:col-span-7 space-y-6">
-                <div class="bg-[#0a0a0a] rounded-xl border border-border overflow-hidden shadow-2xl reveal-fade tilt-card haptic-target">
-                    <div class="bg-panel px-4 py-2 border-b border-border flex items-center gap-2">
-                        <div class="flex gap-1.5"><div class="w-2.5 h-2.5 rounded-full bg-red-500/40"></div><div class="w-2.5 h-2.5 rounded-full bg-yellow-500/40"></div><div class="w-2.5 h-2.5 rounded-full bg-green-500/40"></div></div>
-                        <span class="text-[10px] font-mono text-gray-500 ml-4">zsh — rithik@sys</span>
-                    </div>
-                    <div class="p-6 font-mono text-sm leading-relaxed min-h-[160px]">
-                        <p class="text-volt mb-2">$ status --current</p>
-                        <p id="terminal-text" class="text-gray-400"></p>
-                    </div>
-                </div>
-            </div>
+  <!-- KINETIC MARQUEE TRACKS -->
+  <div id="kinetic-section" class="relative z-20 py-12 overflow-hidden marquee-wrapper">
+    <div class="marquee-track bg-volt text-dark py-4 rotate-[-1.5deg] scale-105 relative z-10 shadow-xl overflow-hidden">
+      <div id="marquee-l" class="marquee-content font-heading text-2xl md:text-4xl font-bold tracking-widest flex items-center">
+        <span>FULL STACK DEV</span><span class="mx-6">⚡</span><span>PYTHON &amp; C</span><span class="mx-6">⚡</span><span>BLENDER 3D</span><span class="mx-6">⚡</span><span>JAVASCRIPT</span><span class="mx-6">⚡</span>
+        <span>FULL STACK DEV</span><span class="mx-6">⚡</span><span>PYTHON &amp; C</span><span class="mx-6">⚡</span><span>BLENDER 3D</span><span class="mx-6">⚡</span><span>JAVASCRIPT</span><span class="mx-6">⚡</span>
+        <span>FULL STACK DEV</span><span class="mx-6">⚡</span><span>PYTHON &amp; C</span><span class="mx-6">⚡</span><span>BLENDER 3D</span><span class="mx-6">⚡</span><span>JAVASCRIPT</span><span class="mx-6">⚡</span>
+        <span>FULL STACK DEV</span><span class="mx-6">⚡</span><span>PYTHON &amp; C</span><span class="mx-6">⚡</span><span>BLENDER 3D</span><span class="mx-6">⚡</span><span>JAVASCRIPT</span><span class="mx-6">⚡</span>
+      </div>
+    </div>
+    <div class="marquee-track border-y border-white/10 py-3 rotate-[1.5deg] scale-105 -mt-6 bg-dark/95 overflow-hidden">
+      <div id="marquee-r" class="marquee-content-reverse font-heading text-xl md:text-2xl font-bold tracking-[0.3em] flex items-center opacity-30">
+        <span class="text-transparent" style="-webkit-text-stroke: 1px white;">ALGORITHMIC THINKING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">PRACTICAL LEARNING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">UI ARCHITECTURE</span><span class="mx-8">/</span>
+        <span class="text-transparent" style="-webkit-text-stroke: 1px white;">ALGORITHMIC THINKING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">PRACTICAL LEARNING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">UI ARCHITECTURE</span><span class="mx-8">/</span>
+        <span class="text-transparent" style="-webkit-text-stroke: 1px white;">ALGORITHMIC THINKING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">PRACTICAL LEARNING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">UI ARCHITECTURE</span><span class="mx-8">/</span>
+        <span class="text-transparent" style="-webkit-text-stroke: 1px white;">ALGORITHMIC THINKING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">PRACTICAL LEARNING</span><span class="mx-8">/</span><span class="text-transparent" style="-webkit-text-stroke: 1px white;">UI ARCHITECTURE</span><span class="mx-8">/</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT SECTION -->
+  <section id="about" class="py-16 md:py-24 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+      <div class="lg:col-span-5 space-y-12">
+        <div class="reveal-fade">
+          <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">Academic Core</p>
+          <h2 class="font-heading text-5xl md:text-7xl scramble-text" data-text="FOUNDATION">FOUNDATION</h2>
         </div>
-    </section>
-
-    <!-- Tech Stack Section -->
-    <section id="stack" class="py-16 md:py-24 bg-panel border-y border-border relative overflow-hidden">
-        <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
-            <h2 class="font-heading text-6xl md:text-8xl mb-16 glitch" data-text="TECH STACK">TECH STACK</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="group bg-dark border border-border p-8 hover:border-volt transition-all reveal-fade relative overflow-hidden tilt-card haptic-target">
-                    <div class="scanline opacity-0 group-hover:opacity-100"></div>
-                    <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10">01</span><i data-lucide="code-2" class="w-6 h-6 text-volt"></i></div>
-                    <h3 class="font-heading text-2xl mb-2 text-white">PYTHON & C</h3>
-                    <p class="text-gray-500 text-sm">Foundational logic and systems programming.</p>
-                </div>
-                <div class="group bg-dark border border-border p-8 hover:border-volt transition-all reveal-fade relative overflow-hidden tilt-card haptic-target">
-                    <div class="scanline opacity-0 group-hover:opacity-100"></div>
-                    <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10">02</span><i data-lucide="zap" class="w-6 h-6 text-volt"></i></div>
-                    <h3 class="font-heading text-2xl mb-2 text-white">JAVASCRIPT</h3>
-                    <p class="text-gray-500 text-sm">Building interactive digital ecosystems.</p>
-                </div>
-                <div class="group bg-volt text-dark border border-volt p-8 reveal-fade relative overflow-hidden tilt-card haptic-target">
-                    <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-black/10">03</span><i data-lucide="box" class="w-6 h-6 text-dark"></i></div>
-                    <h3 class="font-heading text-2xl mb-2 uppercase text-dark">BLENDER</h3>
-                    <p class="text-dark/80 text-sm font-bold">3D reasoning and spatial architecture.</p>
-                </div>
-                <div class="group bg-dark border border-border p-8 hover:border-volt transition-all reveal-fade relative overflow-hidden tilt-card haptic-target">
-                    <div class="scanline opacity-0 group-hover:opacity-100"></div>
-                    <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10">04</span><i data-lucide="layers" class="w-6 h-6 text-volt"></i></div>
-                    <h3 class="font-heading text-2xl mb-2 text-white">WEB STACK</h3>
-                    <p class="text-gray-500 text-sm">Semantic HTML5 & Modern CSS architecture.</p>
-                </div>
-            </div>
+        <div class="flex gap-6 md:gap-12 border-t border-border pt-8 reveal-fade">
+          <div><p class="text-gray-500 text-sm font-bold uppercase mb-1">Sem 1 CGPA</p><p class="font-heading text-6xl md:text-8xl text-volt">8.56</p></div>
+          <div><p class="text-gray-500 text-sm font-bold uppercase mb-1">Graduation</p><p class="font-heading text-6xl md:text-8xl text-white">2029</p></div>
         </div>
-    </section>
-
-    <!-- VIBE / WHAT I LIKE SECTION -->
-    <section id="vibe" class="py-16 md:py-24 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
-        <div class="reveal-fade mb-16">
-            <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">Lifestyle</p>
-            <h2 class="font-heading text-6xl md:text-8xl">WHAT I LIKE</h2>
+      </div>
+      <div class="lg:col-span-7 space-y-6">
+        <div class="bg-[#0a0a0a] rounded-xl border border-border overflow-hidden shadow-2xl reveal-fade haptic-target transform hover:scale-[1.02] hover:border-volt/50 transition-all duration-300">
+          <div class="bg-panel px-4 py-2 border-b border-border flex items-center gap-2">
+            <div class="flex gap-1.5">
+              <div class="w-2.5 h-2.5 rounded-full bg-red-500/40"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/40"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-green-500/40"></div>
+            </div>
+            <span class="text-[10px] font-mono text-gray-500 ml-4">zsh — rithik@sys</span>
+          </div>
+          <div class="p-6 font-mono text-sm leading-relaxed min-h-[160px]">
+            <p class="text-volt mb-2">$ status --current</p>
+            <p id="terminal-text" class="text-gray-400"></p>
+          </div>
         </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-panel p-10 md:p-12 border border-border rounded-[2rem] hover:border-volt group overflow-hidden flex flex-col justify-end min-h-[350px] relative tilt-card haptic-target md:row-span-2">
-                <i data-lucide="wrench" class="absolute -right-10 -top-10 w-64 h-64 text-white/5 group-hover:text-volt/10 transition-colors"></i>
-                <div class="w-16 h-16 bg-volt text-dark rounded-full flex items-center justify-center mb-8"><i data-lucide="wrench"></i></div>
-                <h3 class="font-heading text-4xl mb-4 text-white uppercase">PRACTICAL TECH</h3>
-                <p class="text-gray-400 font-medium text-lg max-w-sm">Hands-on tinkering. Breaks things to understand them better.</p>
-            </div>
-            
-            <div class="bg-panel p-8 border border-border rounded-[2rem] flex items-center gap-6 md:gap-8 hover:border-volt group tilt-card haptic-target">
-                <div class="w-16 h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors"><i data-lucide="music"></i></div>
-                <div>
-                    <h3 class="font-heading text-3xl mb-1 text-white uppercase">MUSIC</h3>
-                    <p class="text-gray-400 font-medium text-base">Focus fuel.</p>
-                </div>
-            </div>
-            
-            <div class="bg-panel p-8 border border-border rounded-[2rem] flex items-center gap-6 md:gap-8 hover:border-volt group tilt-card haptic-target">
-                <div class="w-16 h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors"><i data-lucide="trees"></i></div>
-                <div>
-                    <h3 class="font-heading text-3xl mb-1 text-white uppercase">NATURE</h3>
-                    <p class="text-gray-400 font-medium text-base">Calm balance.</p>
-                </div>
-            </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH STACK SECTION -->
+  <section id="stack" class="py-16 md:py-24 bg-panel border-y border-border relative overflow-hidden">
+    <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
+      <h2 class="font-heading text-6xl md:text-8xl mb-16 scramble-text" data-text="TECH STACK">TECH STACK</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="group bg-dark border border-border p-8 hover:border-volt transition-all reveal-fade relative overflow-hidden haptic-target glitch-hover">
+          <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10">01</span><i data-lucide="code-2" class="w-6 h-6 text-volt"></i></div>
+          <h3 class="font-heading text-2xl mb-2 text-white">PYTHON &amp; C</h3>
+          <p class="text-gray-500 text-sm">Foundational logic and systems programming.</p>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contact" class="py-16 md:py-24 px-6 md:px-12 relative overflow-hidden mt-12 mb-20">
-        <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center md:items-end relative z-10 bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-8 md:p-16 shadow-2xl glass-sheen">
-            
-            <!-- BACKGROUND WATERMARK WRAPPER -->
-            <div class="absolute inset-0 overflow-hidden rounded-[3rem] pointer-events-none">
-                <div id="parallax-name" class="absolute right-0 bottom-[-5%] font-heading text-[20vw] text-white/5 pointer-events-none select-none z-0 tracking-tighter leading-none whitespace-nowrap origin-bottom-right">
-                    RITHIK
-                </div>
-            </div>
-            
-            <div class="absolute top-8 right-8 md:top-14 md:right-14 flex flex-col items-end z-20">
-                <div class="flex items-center gap-2 bg-[#1e1e1e] px-3 py-1.5 rounded-full border border-white/5 mb-3 shadow-inner">
-                    <span class="w-1.5 h-1.5 rounded-full bg-volt shadow-[0_0_8px_#ccff00]"></span>
-                    <span class="text-[9px] font-bold uppercase tracking-widest text-volt">Available for Work</span>
-                </div>
-                <p class="font-mono text-lg text-white/80 tracking-widest" id="live-time-footer">00:00:00</p>
-            </div>
-
-            <div class="relative z-10 w-full overflow-visible">
-                <h2 id="magnetic-text" class="font-heading text-[18vw] sm:text-[14vw] md:text-[8.5rem] lg:text-[10rem] xl:text-[11rem] leading-[0.85] mb-8 text-white uppercase whitespace-nowrap flex flex-col items-start w-full pointer-events-none select-none">
-                    <div class="flex flex-nowrap shrink-0">
-                        <span class="inline-block">L</span><span class="inline-block">E</span><span class="inline-block">T</span><span class="inline-block">'</span><span class="inline-block">S</span>
-                    </div>
-                    <div class="flex flex-nowrap text-volt shrink-0">
-                        <span class="inline-block">B</span><span class="inline-block">U</span><span class="inline-block">I</span><span class="inline-block">L</span><span class="inline-block">D</span><span class="inline-block">.</span>
-                    </div>
-                </h2>
-                <!-- BUTTONS Z-INDEX ELEVATED -->
-                <div class="flex gap-4 relative z-20">
-                    <a href="mailto:rithikur@gmail.com" id="copy-email-btn" class="social-icon group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target"><i data-lucide="mail" class="w-5 h-5"></i></a>
-                    <a href="https://www.linkedin.com/in/rithik-u-r/" target="_blank" class="social-icon group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
-                    <a href="https://github.com/rithikur" target="_blank" class="social-icon group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target"><i data-lucide="github" class="w-5 h-5"></i></a>
-                </div>
-            </div>
-
-            <div class="md:text-right font-bold tracking-wider relative z-20 text-white mt-12 md:mt-0">
-                <div id="copy-email-trigger" class="inline-block group cursor-pointer haptic-target mb-1">
-                    <p id="email-text" class="text-xl md:text-3xl font-heading group-hover:text-volt transition-colors lowercase">rithikur@gmail.com</p>
-                    <div class="h-px w-0 group-hover:w-full bg-volt transition-all duration-500"></div>
-                </div>
-                <p class="text-lg md:text-xl text-white/90 font-heading mb-10 tracking-widest">+91 9842789499</p>
-                <p class="text-[9px] text-white/20 uppercase tracking-[0.4em]">&copy; 2026 RITHIK U R.</p>
-            </div>
+        <div class="group bg-dark border border-border p-8 hover:border-volt transition-all reveal-fade relative overflow-hidden haptic-target glitch-hover">
+          <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10">02</span><i data-lucide="zap" class="w-6 h-6 text-volt"></i></div>
+          <h3 class="font-heading text-2xl mb-2 text-white">JAVASCRIPT</h3>
+          <p class="text-gray-500 text-sm">Building interactive digital ecosystems.</p>
         </div>
-    </footer>
+        <div class="group bg-volt text-dark border border-volt p-8 reveal-fade relative overflow-hidden haptic-target">
+          <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-black/10">03</span><i data-lucide="box" class="w-6 h-6 text-dark"></i></div>
+          <h3 class="font-heading text-2xl mb-2 uppercase text-dark">BLENDER</h3>
+          <p class="text-dark/80 text-sm font-bold">3D reasoning and spatial architecture.</p>
+        </div>
+        <div class="group bg-dark border border-border p-8 hover:border-volt transition-all reveal-fade relative overflow-hidden haptic-target glitch-hover">
+          <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10">04</span><i data-lucide="layers" class="w-6 h-6 text-volt"></i></div>
+          <h3 class="font-heading text-2xl mb-2 text-white">WEB STACK</h3>
+          <p class="text-gray-500 text-sm">Semantic HTML5 &amp; Modern CSS architecture.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <script>
-        lucide.createIcons();
+  <!-- VIBE SECTION -->
+  <section id="vibe" class="py-16 md:py-24 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
+    <div class="reveal-fade mb-16">
+      <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">Lifestyle</p>
+      <h2 class="font-heading text-6xl md:text-8xl scramble-text" data-text="WHAT I LIKE">WHAT I LIKE</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-panel p-10 md:p-12 border border-border rounded-[2rem] hover:border-volt group overflow-hidden flex flex-col justify-end min-h-[350px] relative haptic-target md:row-span-2 transform hover:scale-[1.02] transition-all duration-300">
+        <i data-lucide="wrench" class="absolute -right-10 -top-10 w-64 h-64 text-white/5 group-hover:text-volt/10 transition-colors"></i>
+        <div class="w-16 h-16 bg-volt text-dark rounded-full flex items-center justify-center mb-8"><i data-lucide="wrench"></i></div>
+        <h3 class="font-heading text-4xl mb-4 text-white uppercase">PRACTICAL TECH</h3>
+        <p class="text-gray-400 font-medium text-lg max-w-sm">Hands-on tinkering. Breaks things to understand them better.</p>
+      </div>
+      <div class="bg-panel p-8 border border-border rounded-[2rem] flex items-center gap-6 md:gap-8 hover:border-volt group haptic-target transform hover:scale-[1.02] transition-all duration-300">
+        <div class="w-16 h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors"><i data-lucide="music"></i></div>
+        <div>
+          <h3 class="font-heading text-3xl mb-1 text-white uppercase">MUSIC</h3>
+          <p class="text-gray-400 font-medium text-base">Focus fuel.</p>
+        </div>
+      </div>
+      <div class="bg-panel p-8 border border-border rounded-[2rem] flex items-center gap-6 md:gap-8 hover:border-volt group haptic-target transform hover:scale-[1.02] transition-all duration-300">
+        <div class="w-16 h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors"><i data-lucide="trees"></i></div>
+        <div>
+          <h3 class="font-heading text-3xl mb-1 text-white uppercase">NATURE</h3>
+          <p class="text-gray-400 font-medium text-base">Calm balance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        // 1. GLOBAL UTILITIES
-        function triggerHaptic(pattern = 15) {
-            if (window.navigator && window.navigator.vibrate) { 
-                try { window.navigator.vibrate(pattern); } catch(e) {} 
-            }
-        }
+  <!-- FOOTER / CONTACT -->
+  <footer id="contact" class="py-16 md:py-24 px-6 md:px-12 relative overflow-hidden mt-12 mb-20">
+    <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center md:items-end relative z-10 bg-[#0a0a0a] border border-white/10 rounded-[3rem] p-8 md:p-16 glass-sheen">
 
-        // 2. LENIS SMOOTH SCROLL INIT
-        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
-        lenis.stop(); 
+      <!-- Background watermark -->
+      <div class="absolute inset-0 overflow-hidden rounded-[3rem] pointer-events-none">
+        <div id="parallax-name" class="absolute right-0 bottom-[-5%] font-heading text-[20vw] text-white/5 pointer-events-none select-none z-0 tracking-tighter leading-none whitespace-nowrap origin-bottom-right">
+          RITHIK
+        </div>
+      </div>
 
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
-        gsap.ticker.add((time) => { lenis.raf(time * 1000) });
-        lenis.on('scroll', ScrollTrigger.update);
+      <!-- Live clock + status badge -->
+      <div class="absolute top-8 right-8 md:top-14 md:right-14 flex flex-col items-end z-20">
+        <div class="flex items-center gap-2 bg-[#1e1e1e] px-3 py-1.5 rounded-full border border-white/5 mb-3 shadow-inner">
+          <span class="w-1.5 h-1.5 rounded-full bg-volt shadow-[0_0_8px_#ccff00]"></span>
+          <span class="text-[9px] font-bold uppercase tracking-widest text-volt">Available for Work</span>
+        </div>
+        <p class="font-mono text-lg text-white/80 tracking-widest" id="live-time-footer">00:00:00</p>
+      </div>
 
-        // --- 3. DYNAMIC AUDIO ENGINE ---
-        let audioCtx, scrollOsc, scrollGain;
-        let soundEnabled = false;
-        const audioBtn = document.getElementById('audio-toggle');
-        const audioIndicator = document.getElementById('audio-indicator');
-        
-        if(audioBtn) {
-            audioBtn.onclick = () => {
-                if(!soundEnabled) {
-                    try {
-                        const AudioContext = window.AudioContext || window.webkitAudioContext;
-                        audioCtx = new AudioContext();
-                        scrollOsc = audioCtx.createOscillator();
-                        scrollGain = audioCtx.createGain();
-                        scrollOsc.type = 'triangle';
-                        scrollOsc.frequency.setValueAtTime(40, audioCtx.currentTime); 
-                        scrollGain.gain.setValueAtTime(0, audioCtx.currentTime); 
-                        scrollOsc.connect(scrollGain);
-                        scrollGain.connect(audioCtx.destination);
-                        scrollOsc.start();
-                        soundEnabled = true;
-                        if(audioIndicator) audioIndicator.className = 'w-1.5 h-1.5 bg-volt rounded-full animate-pulse';
-                        audioBtn.innerHTML = (audioIndicator ? audioIndicator.outerHTML : '') + ' SOUND: ON';
-                        playHoverSound(600); 
-                    } catch(e) {}
-                } else {
-                    if(scrollOsc) scrollOsc.stop();
-                    if(audioCtx) audioCtx.close();
-                    soundEnabled = false;
-                    if(audioIndicator) audioIndicator.className = 'w-1.5 h-1.5 bg-gray-600 rounded-full';
-                    audioBtn.classList.remove('text-volt');
-                    audioBtn.innerHTML = (audioIndicator ? audioIndicator.outerHTML : '') + ' SOUND: OFF';
-                }
-                triggerHaptic(15); // STANDARD SINGLE HAPTIC
-            };
-        }
+      <!-- Hero text + social links -->
+      <div class="relative z-10 w-full overflow-visible">
+        <h2 id="magnetic-text" class="font-heading text-[15vw] sm:text-[14vw] md:text-[8.5rem] lg:text-[10rem] xl:text-[11rem] leading-[0.85] mb-8 text-white uppercase whitespace-nowrap flex flex-col items-start w-full pointer-events-none select-none">
+          <div class="flex flex-nowrap shrink-0">
+            <span class="inline-block">L</span><span class="inline-block">E</span><span class="inline-block">T</span><span class="inline-block">'</span><span class="inline-block">S</span>
+          </div>
+          <div class="flex flex-nowrap text-volt shrink-0">
+            <span class="inline-block">B</span><span class="inline-block">U</span><span class="inline-block">I</span><span class="inline-block">L</span><span class="inline-block">D</span><span class="inline-block">.</span>
+          </div>
+        </h2>
+        <div class="flex gap-4 relative z-20">
+          <a href="mailto:rithikur@gmail.com" id="copy-email-btn" class="social-icon magnetic group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target"><i data-lucide="mail" class="w-5 h-5"></i></a>
+          <a href="https://www.linkedin.com/in/rithik-u-r/" target="_blank" class="social-icon magnetic group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          </a>
+          <a href="https://github.com/rithikur" target="_blank" class="social-icon magnetic group w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-dark transition-all duration-500 haptic-target"><i data-lucide="git-branch" class="w-5 h-5"></i></a>
+        </div>
+      </div>
 
-        function playHoverSound(freq = 800) {
-            if(!soundEnabled || !audioCtx) return;
-            try {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'square';
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.01, audioCtx.currentTime); 
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-            } catch(e) {}
-        }
+      <!-- Email + phone + copyright -->
+      <div class="md:text-right font-bold tracking-wider relative z-20 text-white mt-12 md:mt-0">
+        <div id="copy-email-trigger" class="inline-block group cursor-pointer haptic-target mb-1">
+          <p id="email-text" class="text-xl md:text-3xl font-heading group-hover:text-volt transition-colors" style="text-transform: lowercase !important;">rithikur@gmail.com</p>
+          <div class="h-px w-0 group-hover:w-full bg-volt transition-all duration-500"></div>
+        </div>
+        <p class="text-lg md:text-xl text-white/90 font-heading mb-10 tracking-widest">+91 9842789499</p>
+        <p class="text-[9px] text-white/20 uppercase tracking-[0.4em]">&copy; 2026 RITHIK U R.</p>
+      </div>
+    </div>
+  </footer>
 
-        // --- 4. BIOS BOOT PRELOADER ---
-        const bootScreen = document.getElementById('boot-screen');
-        const bootLog = document.getElementById('boot-log');
-        const bootMessages = ["Initializing Hardware Interface...", "CPU: Rithik_Architecture... OK", "Checking Memory... OK", "Injecting CSS Assets... DONE", "Starting Lenis Engine...", "[SYSTEM READY]"];
-        let bootIndex = 0;
-
-        function bootStep() {
-            if(!bootScreen || !bootLog) { lenis.start(); return; }
-            if(bootIndex < bootMessages.length) {
-                const p = document.createElement('div');
-                p.textContent = `> ${bootMessages[bootIndex]}`;
-                bootLog.appendChild(p);
-                bootIndex++;
-                setTimeout(bootStep, Math.random() * 150 + 50); 
-            } else {
-                setTimeout(() => {
-                    gsap.to(bootScreen, { yPercent: -100, opacity: 0, duration: 0.8, ease: "power4.inOut", onComplete: () => {
-                        bootScreen.remove();
-                        lenis.start(); 
-                        gsap.from(".reveal-up", { y: 60, opacity: 0, duration: 1.2, stagger: 0.1, ease: "power4.out" });
-                    }});
-                }, 400);
-            }
-        }
-        window.addEventListener('load', bootStep);
-
-        // --- 5. COMMAND PALETTE ---
-        const cmdPalette = document.getElementById('cmd-palette');
-        const cmdModal = document.getElementById('cmd-modal');
-        const cmdInput = document.getElementById('cmd-input');
-        const cmdList = document.getElementById('cmd-list');
-
-        const commands = [
-            { title: "Jump to /home", action: () => lenis.scrollTo('#home') },
-            { title: "Jump to /about", action: () => lenis.scrollTo('#about') },
-            { title: "Jump to /tech-stack", action: () => lenis.scrollTo('#stack') },
-            { title: "Jump to /vibe", action: () => lenis.scrollTo('#vibe') },
-            { title: "Jump to /contact", action: () => lenis.scrollTo('#contact') },
-            { title: "System: Toggle X-Ray Lens", action: () => document.getElementById('debug-toggle')?.click() },
-            { title: "Action: Copy Email", action: () => document.getElementById('copy-email-btn')?.click() }
-        ];
-
-        function renderCmd(filter = "") {
-            if(!cmdList) return;
-            cmdList.innerHTML = "";
-            commands.filter(c => c.title.toLowerCase().includes(filter.toLowerCase())).forEach((cmd, i) => {
-                const el = document.createElement('div');
-                el.className = `p-3 rounded cursor-pointer transition-colors flex justify-between items-center mb-1 ${i===0?'bg-white/10 text-white border border-white/20':'hover:bg-white/5'}`;
-                el.innerHTML = `<span>${cmd.title}</span> <span class="text-white/20 text-[10px]">⏎</span>`;
-                el.onclick = () => { cmd.action(); closeCmd(); };
-                cmdList.appendChild(el);
-            });
-        }
-
-        function openCmd() {
-            cmdPalette.classList.remove('hidden');
-            gsap.to(cmdPalette, { opacity: 1, duration: 0.2 });
-            gsap.to(cmdModal, { scale: 1, duration: 0.3, ease: "back.out(1.5)" });
-            document.body.style.overflow = 'hidden';
-            setTimeout(() => { cmdInput.focus(); renderCmd(); }, 100);
-        }
-
-        function closeCmd() {
-            gsap.to(cmdModal, { scale: 0.95, duration: 0.2 });
-            gsap.to(cmdPalette, { opacity: 0, duration: 0.2, onComplete: () => {
-                cmdPalette.classList.add('hidden');
-                document.body.style.overflow = '';
-                if(cmdInput) cmdInput.value = "";
-            }});
-        }
-
-        window.addEventListener('keydown', (e) => {
-            if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); if(cmdPalette.classList.contains('hidden')) openCmd(); else closeCmd(); }
-            if (e.key === 'Escape' && !cmdPalette.classList.contains('hidden')) closeCmd();
-        });
-        if(cmdInput) cmdInput.addEventListener('input', (e) => renderCmd(e.target.value));
-
-        // --- 6. INTERACTIONS ---
-        document.getElementById('debug-toggle').onclick = (e) => {
-            document.body.classList.toggle('debug-mode');
-            e.currentTarget.classList.toggle('bg-volt');
-            e.currentTarget.classList.toggle('text-dark');
-            playHoverSound(300);
-            triggerHaptic(15); // STANDARD SINGLE HAPTIC
-        };
-
-        // NAVIGATION (SMOOTH SCROLL + MOBILE AUTO-CLOSE)
-        document.querySelectorAll('.nav-link, .mobile-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    lenis.scrollTo(targetElement, { 
-                        duration: 1.5, 
-                        easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) 
-                    });
-                    const mMenu = document.getElementById('mobile-menu');
-                    if (mMenu?.classList.contains('open')) {
-                        mMenu.classList.remove('open');
-                        document.body.style.overflow = '';
-                    }
-                }
-                triggerHaptic(15); // STANDARD SINGLE HAPTIC
-            });
-        });
-
-        // --- ACCURATE WIRE SURGE LOGIC ---
-        function surgeWire(id) {
-            const wire = document.getElementById(`wire-pulse-${id}`);
-            if(!wire) return;
-            
-            // SPECIAL "ELECTRIC SURGE" HAPTIC PATTERN: Only for wires
-            triggerHaptic([5, 20, 5, 20, 5]);
-            playHoverSound(400);
-
-            // Accurate Neon Surge
-            gsap.killTweensOf(wire);
-            gsap.fromTo(wire, 
-                { strokeDashoffset: 1150, strokeWidth: 12, strokeOpacity: 1 }, 
-                { 
-                    strokeDashoffset: -1150, 
-                    strokeWidth: 2, 
-                    strokeOpacity: 0.3, 
-                    duration: 3.5, 
-                    ease: "power2.out", 
-                    onComplete: animateDataPulses 
-                }
-            );
-        }
-
-        let wireTweens = [];
-        const animateDataPulses = () => {
-            gsap.killTweensOf(["#wire-pulse-1", "#wire-pulse-2", "#wire-pulse-3"]);
-            wireTweens = [
-                gsap.fromTo("#wire-pulse-1", { strokeDashoffset: 1150, strokeWidth: 2, strokeOpacity: 0.3 }, { strokeDashoffset: -1150, duration: 4, repeat: -1, ease: "none" }),
-                gsap.fromTo("#wire-pulse-2", { strokeDashoffset: -1150, strokeWidth: 2, strokeOpacity: 0.3 }, { strokeDashoffset: 1150, duration: 5, repeat: -1, ease: "none", delay: 1 }),
-                gsap.fromTo("#wire-pulse-3", { strokeDashoffset: 1150, strokeWidth: 2, strokeOpacity: 0.3 }, { strokeDashoffset: -1150, duration: 3, repeat: -1, ease: "none", delay: 0.5 })
-            ];
-        };
-        animateDataPulses();
-
-        // Custom Mouse Tracker
-        window.onmousemove = (e) => {
-            const { clientX, clientY } = e;
-            document.documentElement.style.setProperty('--mouse-x', `${(clientX/window.innerWidth)*100}%`);
-            document.documentElement.style.setProperty('--mouse-y', `${(clientY/window.innerHeight)*100}%`);
-            if(window.innerWidth > 768) {
-                gsap.to(".cursor-dot", { x: clientX, y: clientY, duration: 0 });
-                gsap.to(".cursor-ring", { x: clientX, y: clientY, duration: 0.15 });
-            }
-        };
-
-        // 7. MARQUEE & SCROLL ENGINE LINKAGES
-        const marqueeL = gsap.fromTo("#marquee-l", { xPercent: 0 }, { xPercent: -25, duration: 15, repeat: -1, ease: "none" });
-        const marqueeR = gsap.fromTo("#marquee-r", { xPercent: -25 }, { xPercent: 0, duration: 20, repeat: -1, ease: "none" });
-
-        lenis.on('scroll', ({ scroll, limit, velocity }) => {
-            const v = Math.abs(velocity);
-            if(soundEnabled && scrollGain) {
-                scrollOsc.frequency.setTargetAtTime(40 + (v * 0.5), audioCtx.currentTime, 0.1);
-                scrollGain.gain.setTargetAtTime(Math.min(v * 0.002, 0.05), audioCtx.currentTime, 0.1); 
-            }
-            gsap.to([marqueeL, marqueeR], { timeScale: 1 + Math.min(v * 0.02, 4), duration: 0.2, overwrite: "auto" });
-            
-            const scrollPos = window.scrollY + 200;
-            const sections = ['home', 'about', 'stack', 'vibe', 'contact'];
-            sections.forEach(id => {
-                const el = document.getElementById(id);
-                if (el && scrollPos >= el.offsetTop) {
-                    const path = document.getElementById('os-path');
-                    const label = document.getElementById('section-label');
-                    if(path) path.innerText = `ROOT/${id.toUpperCase()}`;
-                    if(label) label.textContent = id.charAt(0).toUpperCase() + id.slice(1);
-                }
-            });
-            const pb = document.getElementById('progress-bar');
-            if(pb) pb.style.height = `${(scroll/limit)*100}%`;
-            const sp = document.getElementById('scroll-percent');
-            if(sp) sp.innerText = `${Math.round((scroll/limit)*100)}% SCROLLED`;
-        });
-
-        // 8. FOOTER NAME PARALLAX
-        gsap.fromTo("#parallax-name", 
-            { xPercent: 15 }, 
-            { xPercent: -35, ease: "none", scrollTrigger: { trigger: "#contact", start: "top bottom", end: "bottom bottom", scrub: 1.5 } }
-        );
-
-        // 9. CURSOR EXPANSION HOVERS
-        document.querySelectorAll('a, button, .group, .haptic-target').forEach(el => {
-            el.addEventListener('mouseenter', () => { 
-                if(window.innerWidth > 768) document.querySelector('.cursor-ring')?.classList.add('active'); 
-                playHoverSound(800); 
-            });
-            el.addEventListener('mouseleave', () => {
-                if(window.innerWidth > 768) document.querySelector('.cursor-ring')?.classList.remove('active');
-            });
-            el.addEventListener('click', () => triggerHaptic(15)); // STANDARD SINGLE HAPTIC
-        });
-
-        // Tilt Cards
-        document.querySelectorAll('.tilt-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                if(window.innerWidth <= 768) return;
-                const rect = card.getBoundingClientRect();
-                gsap.to(card, { rotateY: (e.clientX - rect.left - rect.width/2)/25, rotateX: -(e.clientY - rect.top - rect.height/2)/25, duration: 0.4, ease: "power2.out" });
-            });
-            card.addEventListener('mouseleave', () => gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.6, ease: "power3.out" }));
-        });
-
-        // Copy Email Logic
-        function copyToClipboard() {
-            const el = document.createElement('textarea'); el.value = "rithikur@gmail.com"; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
-            const txt = document.getElementById('email-text');
-            if(txt) { const orig = txt.textContent; txt.textContent = "COPIED!"; triggerHaptic(15); setTimeout(() => { txt.textContent = orig; }, 2000); }
-        }
-        const copyTrig = document.getElementById('copy-email-trigger');
-        const copyBtn = document.getElementById('copy-email-btn');
-        if(copyTrig) copyTrig.onclick = copyToClipboard;
-        if(copyBtn) copyBtn.onclick = (e) => { e.preventDefault(); copyToClipboard(); };
-
-        // Terminal Simulator
-        const terminalOutput = ["> system.init", "> academy.foundation... OK", "> IT_UNDERGRAD... ACTIVE", "> full_stack... DETECTED"];
-        let t_i = 0; let lineIdx = 0;
-        function typeLine() {
-            const term = document.getElementById('terminal-text');
-            if (!term) return;
-            if (lineIdx < terminalOutput.length) {
-                const line = terminalOutput[lineIdx];
-                if (t_i < line.length) { term.innerHTML += line.charAt(t_i); t_i++; setTimeout(typeLine, 20); } 
-                else { term.innerHTML += "<br>"; t_i = 0; lineIdx++; setTimeout(typeLine, 400); }
-            }
-        }
-        ScrollTrigger.create({ trigger: "#about", start: "top 80%", onEnter: () => typeLine(), once: true });
-        
-        setInterval(() => { 
-            const ltf = document.getElementById('live-time-footer'); 
-            const timeStr = new Date().toLocaleTimeString('en-IN', { hour12:false, hour:'2-digit', minute:'2-digit', second:'2-digit' }); 
-            if(ltf) ltf.textContent = timeStr; 
-        }, 1000);
-
-        // Mobile Menu Toggle Listeners
-        const mToggle = document.getElementById('menu-toggle');
-        const mClose = document.getElementById('menu-close');
-        const mMenu = document.getElementById('mobile-menu');
-        if(mToggle) mToggle.onclick = () => { mMenu.classList.add('open'); document.body.style.overflow = 'hidden'; triggerHaptic(15); };
-        if(mClose) mClose.onclick = () => { mMenu.classList.remove('open'); document.body.style.overflow = ''; triggerHaptic(15); };
-    </script>
+  <script type="module" src="/src/main.ts"></script>
 </body>
 </html>
