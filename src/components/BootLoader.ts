@@ -59,9 +59,6 @@ export function initBootLoader(): void {
     });
   }
 
-  if (document.readyState === 'complete') {
-    bootStep();
-  } else {
-    window.addEventListener('load', bootStep);
-  }
+  // Module scripts are deferred, so the DOM is guaranteed to be ready.
+  bootStep();
 }
