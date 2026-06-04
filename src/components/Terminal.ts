@@ -1,9 +1,10 @@
-// Terminal Simulator — typewriter effect triggered by IntersectionObserver
 const terminalOutput = [
   '> system.init',
-  '> academy.foundation... OK',
-  '> IT_UNDERGRAD... ACTIVE',
-  '> full_stack... DETECTED',
+  '> profile.status... HIGHLY_MOTIVATED',
+  '> current_role... IT_UNDERGRAD',
+  '> target... FULL_STACK_DEV',
+  '> executing: Solar_Panel_Cooling_System.exe',
+  '> [SUCCESS] active thermal management engaged.',
 ];
 
 export function initTerminal(): void {
