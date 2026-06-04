@@ -5,7 +5,7 @@ import {
   createIcons,
   Terminal, Folder, ScanLine, Menu,
   Code2, Zap, Box, Layers,
-  Wrench, Music, Trees,
+  Wrench, Cpu, Globe,
   Mail, GitBranch, ExternalLink
 } from 'lucide';
 
@@ -27,7 +27,7 @@ import { initScrambleText } from './components/ScrambleText';
 createIcons({ icons: {
   Terminal, Folder, ScanLine, Menu,
   Code2, Zap, Box, Layers,
-  Wrench, Music, Trees,
+  Wrench, Cpu, Globe,
   Mail, GitBranch, ExternalLink
 } });
 
