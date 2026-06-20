@@ -28,9 +28,12 @@ export function initCommandPalette(): void {
     { title: 'Jump to /home', action: () => smoothScroll('#home') },
     { title: 'Jump to /about', action: () => smoothScroll('#about') },
     { title: 'Jump to /tech-stack', action: () => smoothScroll('#stack') },
+    { title: 'Jump to /projects', action: () => smoothScroll('#projects') },
+    { title: 'Jump to /timeline', action: () => smoothScroll('#timeline') },
     { title: 'Jump to /vibe', action: () => smoothScroll('#vibe') },
     { title: 'Jump to /contact', action: () => smoothScroll('#contact') },
     { title: 'Action: Copy Email', action: () => (document.getElementById('copy-email-btn') as HTMLAnchorElement | null)?.click() },
+    { title: 'Action: View CV', action: () => (document.getElementById('cv-download-btn') as HTMLAnchorElement | null)?.click() },
   ];
 
   function renderCmd(filter = ''): void {

@@ -6,7 +6,8 @@ import {
   Terminal, Folder, ScanLine, Menu,
   Code2, Zap, Box, Layers,
   Wrench, Cpu, Globe,
-  Mail, GitBranch, ExternalLink
+  Mail, GitBranch, ExternalLink,
+  Download
 } from 'lucide';
 
 // Core Engine replaces GSAP/Lenis
@@ -22,13 +23,16 @@ import { initTerminal } from './components/Terminal';
 import { initFooter } from './components/Footer';
 import { initMagneticElements } from './components/Magnetic';
 import { initScrambleText } from './components/ScrambleText';
+import { initCustomCursor } from './components/Cursor';
+import { initHeroTypewriter } from './components/HeroTypewriter';
 
 // Lucide icons — replace <i data-lucide="..."> elements with the named set
 createIcons({ icons: {
   Terminal, Folder, ScanLine, Menu,
   Code2, Zap, Box, Layers,
   Wrench, Cpu, Globe,
-  Mail, GitBranch, ExternalLink
+  Mail, GitBranch, ExternalLink,
+  Download
 } });
 
 // 1. Audio engine
@@ -57,3 +61,9 @@ initScrambleText();
 // 9. Footer & Magnetic UI
 initMagneticElements();
 initFooter();
+
+// 10. Custom cursor
+initCustomCursor();
+
+// 11. Hero rotating typewriter
+initHeroTypewriter();

@@ -13,7 +13,7 @@ export function initScrollEffects(): void {
   const marqueeR = document.getElementById('marquee-r');
 
   // Cache section offsets
-  const sectionIds = ['home', 'about', 'stack', 'vibe', 'contact'];
+  const sectionIds = ['home', 'about', 'stack', 'projects', 'timeline', 'vibe', 'contact'];
   let sectionTops: Array<{ id: string; top: number }> = [];
 
   function cacheSections() {

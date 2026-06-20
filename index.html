@@ -6,6 +6,23 @@
   <title>Rithik U R — Full Stack Developer & IT Undergraduate</title>
   <meta name="description" content="Rithik U R — Information Technology undergraduate, Full Stack developer, Python, JavaScript, Blender 3D enthusiast. Building the foundation. Mastering logic." />
 
+  <!-- SEO Meta Tags -->
+  <meta name="keywords" content="Rithik U R, Rithik, Full Stack Developer, Software Engineer, Information Technology, Python Developer, JavaScript Developer, Blender 3D, Portfolio, Web Developer, Frontend, Backend, Student" />
+  <meta name="author" content="Rithik U R" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:title" content="Rithik U R — Full Stack Developer & IT Undergraduate" />
+  <meta property="og:description" content="Information Technology undergraduate, Full Stack developer, Python, JavaScript, Blender 3D enthusiast. Building the foundation. Mastering logic." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://rithikur.github.io/" />
+  <!-- Replace with an actual screenshot of your site placed in the public folder -->
+  <meta property="og:image" content="https://rithikur.github.io/og-preview.jpeg" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Rithik U R — Full Stack Developer" />
+  <meta name="twitter:description" content="Information Technology undergraduate, Full Stack developer, Python, JavaScript, Blender 3D enthusiast." />
+  <meta name="twitter:image" content="https://rithikur.github.io/og-preview.jpeg" />
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z' fill='none' stroke='%23ccff00' stroke-width='8'/><rect x='40' y='40' width='20' height='20' fill='%23ccff00'/></svg>" />
   
@@ -36,6 +53,9 @@
   
   <!-- GLOBAL NOISE OVERLAY -->
   <div class="noise-overlay"></div>
+
+  <!-- GLOBAL SPOTLIGHT -->
+  <div class="global-spotlight-bg"></div>
 
   <!-- BIOS-BOOT PRELOADER -->
   <div id="boot-screen" class="font-mono text-xs md:text-sm">
@@ -103,6 +123,8 @@
     <div class="hidden md:flex gap-8 font-bold text-[10px] tracking-widest uppercase items-center">
       <a href="#about" class="nav-link hover:text-volt transition-colors haptic-target">About</a>
       <a href="#stack" class="nav-link hover:text-volt transition-colors haptic-target">Stack</a>
+      <a href="#projects" class="nav-link hover:text-volt transition-colors haptic-target">Projects</a>
+      <a href="#timeline" class="nav-link hover:text-volt transition-colors haptic-target">Timeline</a>
       <a href="#vibe" class="nav-link hover:text-volt transition-colors haptic-target">Vibe</a>
       <a href="#contact" class="nav-link hover:text-volt transition-colors haptic-target">Contact</a>
     </div>
@@ -113,6 +135,8 @@
   <div id="mobile-menu" class="fixed inset-0 z-[130] bg-dark flex flex-col items-center justify-center gap-8 md:hidden">
     <a href="#about" class="mobile-link font-heading text-4xl font-bold hover:text-volt">About</a>
     <a href="#stack" class="mobile-link font-heading text-4xl font-bold hover:text-volt">Stack</a>
+    <a href="#projects" class="mobile-link font-heading text-4xl font-bold hover:text-volt">Projects</a>
+    <a href="#timeline" class="mobile-link font-heading text-4xl font-bold hover:text-volt">Timeline</a>
     <a href="#vibe" class="mobile-link font-heading text-4xl font-bold hover:text-volt">Vibe</a>
     <a href="#contact" class="mobile-link font-heading text-4xl font-bold hover:text-volt">Contact</a>
     <button id="menu-close" class="mt-8 text-volt uppercase tracking-widest font-bold text-xs haptic-target p-4">Close</button>
@@ -121,14 +145,25 @@
   <!-- HERO -->
   <header id="home" class="relative min-h-[100vh] flex flex-col justify-center overflow-hidden pt-32 pb-20">
     <div class="absolute inset-0 grid-bg pointer-events-none z-0"></div>
-    <div class="hero-spotlight-bg"></div>
     <div class="z-10 px-6 md:px-12 flex flex-col items-center text-center">
       <p class="font-body text-volt font-bold tracking-[0.3em] uppercase mb-4 text-[10px] md:text-sm reveal-up">Information Technology Undergraduate</p>
       <h1 class="font-heading text-[11vw] font-bold text-white leading-[0.9] reveal-up max-w-[100vw] whitespace-nowrap overflow-visible">
         RITHIK <span class="text-transparent" style="-webkit-text-stroke: 1.5px #333;">U R</span>
       </h1>
+      <!-- Rotating typewriter subtitle -->
       <div class="w-full max-w-2xl mt-8 reveal-up">
-        <p class="text-gray-400 text-base md:text-xl font-medium leading-relaxed px-4">Transitioning foundational programming knowledge into robust Full Stack projects and hardware-integrated solutions.</p>
+        <p class="text-gray-400 text-base md:text-xl font-medium leading-relaxed px-4 min-h-[2em]">
+          <span id="hero-typewriter" class="text-white"></span><span class="hero-cursor">|</span>
+        </p>
+      </div>
+      <!-- CTA Buttons -->
+      <div class="flex flex-wrap gap-4 justify-center mt-10 reveal-up">
+        <a href="#projects" class="nav-link haptic-target inline-flex items-center gap-2 px-7 py-3.5 bg-volt text-dark font-heading font-bold text-sm tracking-widest uppercase rounded-full hover:scale-105 transition-transform duration-300">
+          View Projects
+        </a>
+        <a id="cv-download-btn" href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="haptic-target inline-flex items-center gap-2 px-7 py-3.5 border border-white/20 text-white font-heading font-bold text-sm tracking-widest uppercase rounded-full hover:border-volt hover:text-volt transition-all duration-300">
+          <i data-lucide="external-link" class="w-4 h-4"></i> View CV
+        </a>
       </div>
     </div>
   </header>
@@ -197,12 +232,12 @@
     <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
       <h2 class="font-heading text-6xl md:text-8xl mb-16 scramble-text" data-text="TECH STACK">TECH STACK</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="group bg-dark border border-border p-8 hover:border-volt transition-all reveal-fade relative overflow-hidden haptic-target glitch-hover">
+        <div class="group bg-dark border border-border p-8 hover:border-white/30 transition-all reveal-fade relative overflow-hidden haptic-target glitch-hover">
           <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10">01</span><i data-lucide="code-2" class="w-6 h-6 text-volt"></i></div>
           <h3 class="font-heading text-2xl mb-2 text-white">PYTHON, C, C++, JAVA</h3>
           <p class="text-gray-500 text-sm">Proficient foundational logic, OOP, and systems programming.</p>
         </div>
-        <div class="group bg-dark border border-border p-8 hover:border-volt transition-all reveal-fade relative overflow-hidden haptic-target glitch-hover">
+        <div class="group bg-dark border border-border p-8 hover:border-white/30 transition-all reveal-fade relative overflow-hidden haptic-target glitch-hover">
           <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10">02</span><i data-lucide="zap" class="w-6 h-6 text-volt"></i></div>
           <h3 class="font-heading text-2xl mb-2 text-white">HTML5, CSS3, JS</h3>
           <p class="text-gray-500 text-sm">Bridging academic theory with practical frontend builds.</p>
@@ -210,12 +245,194 @@
         <div class="group bg-volt text-dark border border-volt p-8 reveal-fade relative overflow-hidden haptic-target">
           <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-black/10">03</span><i data-lucide="box" class="w-6 h-6 text-dark"></i></div>
           <h3 class="font-heading text-2xl mb-2 uppercase text-dark">BLENDER 3D</h3>
-          <p class="text-dark/80 text-sm font-bold">Spatial reasoning and mastery of complex software interfaces.</p>
+          <p class="text-dark/80 text-sm font-bold">Basic 3D modeling and navigating software interfaces.</p>
         </div>
-        <div class="group bg-dark border border-border p-8 hover:border-volt transition-all reveal-fade relative overflow-hidden haptic-target glitch-hover">
+        <div class="group bg-dark border border-border p-8 hover:border-white/30 transition-all reveal-fade relative overflow-hidden haptic-target glitch-hover">
           <div class="flex justify-between items-center mb-10"><span class="font-heading text-4xl text-white/10">04</span><i data-lucide="layers" class="w-6 h-6 text-volt"></i></div>
           <h3 class="font-heading text-2xl mb-2 text-white">TOOLS & METHODOLOGY</h3>
           <p class="text-gray-500 text-sm">Git, GitHub, VS Code, Debugging, and Algorithmic Logic.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS SECTION -->
+  <section id="projects" class="py-16 md:py-24 px-6 md:px-12 max-w-[1400px] mx-auto relative z-10">
+    <div class="reveal-fade mb-16">
+      <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">Selected Work</p>
+      <h2 class="font-heading text-6xl md:text-8xl scramble-text" data-text="PROJECTS">PROJECTS</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- Project 1 -->
+      <div class="group bg-panel border border-border rounded-2xl overflow-hidden hover:border-white/30 transition-all duration-500 reveal-fade haptic-target transform hover:scale-[1.02]">
+        <div class="relative overflow-hidden h-48 bg-dark flex items-center justify-center">
+          <div class="absolute inset-0 bg-gradient-to-br from-volt/10 to-transparent"></div>
+          <div class="project-glow-badge absolute top-4 left-4 flex items-center gap-2 bg-dark/80 border border-volt/30 rounded-full px-3 py-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-volt animate-pulse"></span>
+            <span class="text-[9px] font-mono text-volt uppercase tracking-widest">Live</span>
+          </div>
+          <div class="font-heading text-[5rem] text-volt/10 group-hover:text-volt/20 transition-colors select-none">01</div>
+        </div>
+        <div class="p-8">
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">Arduino</span>
+            <span class="tech-tag">Thermal Mgmt</span>
+          </div>
+          <h3 class="font-heading text-2xl mb-2 text-white uppercase">Solar Panel Cooling System</h3>
+          <p class="text-gray-500 text-sm mb-6">Hardware-integrated thermal management system using Arduino sensors and Python to actively regulate solar panel temperatures and improve efficiency.</p>
+          <div class="flex items-center gap-4">
+            <a href="https://github.com/rithikur" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-volt transition-colors haptic-target">
+              <i data-lucide="git-branch" class="w-4 h-4"></i> Source
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="group bg-panel border border-border rounded-2xl overflow-hidden hover:border-white/30 transition-all duration-500 reveal-fade haptic-target transform hover:scale-[1.02]">
+        <div class="relative overflow-hidden h-48 bg-dark flex items-center justify-center">
+          <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent"></div>
+          <div class="font-heading text-[5rem] text-blue-400/10 group-hover:text-blue-400/20 transition-colors select-none">02</div>
+        </div>
+        <div class="p-8">
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="tech-tag">HTML5</span>
+            <span class="tech-tag">CSS3</span>
+            <span class="tech-tag">JavaScript</span>
+          </div>
+          <h3 class="font-heading text-2xl mb-2 text-white uppercase">Personal Portfolio v3</h3>
+          <p class="text-gray-500 text-sm mb-6">This very site — a brutalist OS-themed developer portfolio with a BIOS boot screen, command palette, custom cursor, magnetic UI, and scroll-driven animations. Zero heavy frameworks.</p>
+          <div class="flex items-center gap-4">
+            <a href="https://github.com/rithikur/rithikur.github.io" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-volt transition-colors haptic-target">
+              <i data-lucide="git-branch" class="w-4 h-4"></i> Source
+            </a>
+            <a href="https://rithikur.github.io" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-volt transition-colors haptic-target">
+              <i data-lucide="external-link" class="w-4 h-4"></i> Live
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="group bg-panel border border-border rounded-2xl overflow-hidden hover:border-white/30 transition-all duration-500 reveal-fade haptic-target transform hover:scale-[1.02]">
+        <div class="relative overflow-hidden h-48 bg-dark flex items-center justify-center">
+          <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent"></div>
+          <div class="font-heading text-[5rem] text-purple-400/10 group-hover:text-purple-400/20 transition-colors select-none">03</div>
+        </div>
+        <div class="p-8">
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">OOP</span>
+            <span class="tech-tag">CLI</span>
+          </div>
+          <h3 class="font-heading text-2xl mb-2 text-white uppercase">Python CLI Utilities</h3>
+          <p class="text-gray-500 text-sm mb-6">A collection of command-line tools built with Python — file organizers, system monitors, and automation scripts demonstrating core OOP and systems programming concepts.</p>
+          <div class="flex items-center gap-4">
+            <a href="https://github.com/rithikur" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-volt transition-colors haptic-target">
+              <i data-lucide="git-branch" class="w-4 h-4"></i> Source
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="group bg-volt border border-volt rounded-2xl overflow-hidden transition-all duration-500 reveal-fade haptic-target transform hover:scale-[1.02]">
+        <div class="relative overflow-hidden h-48 bg-dark/20 flex items-center justify-center">
+          <div class="font-heading text-[5rem] text-dark/10 select-none">04</div>
+        </div>
+        <div class="p-8">
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="tech-tag-dark">Blender 3D</span>
+            <span class="tech-tag-dark">Rendering</span>
+            <span class="tech-tag-dark">Modeling</span>
+          </div>
+          <h3 class="font-heading text-2xl mb-2 text-dark uppercase">3D Modeling & Renders</h3>
+          <p class="text-dark/70 text-sm mb-6">A collection of basic 3D modeling projects and renders built in Blender — showcasing foundational spatial reasoning and creative exploration.</p>
+          <div class="flex items-center gap-4">
+            <a href="https://github.com/rithikur" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold text-dark/60 hover:text-dark transition-colors haptic-target">
+              <i data-lucide="git-branch" class="w-4 h-4"></i> Gallery
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TIMELINE SECTION -->
+  <section id="timeline" class="py-16 md:py-24 bg-panel border-y border-border relative overflow-hidden">
+    <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
+      <div class="reveal-fade mb-16">
+        <p class="text-volt font-bold tracking-widest uppercase text-xs mb-2">Milestones</p>
+        <h2 class="font-heading text-6xl md:text-8xl scramble-text" data-text="TIMELINE">TIMELINE</h2>
+      </div>
+      <div class="relative">
+        <!-- Vertical line -->
+        <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-px"></div>
+        <div class="space-y-8">
+
+          <!-- Item -->
+          <div class="timeline-item reveal-fade flex items-start gap-6 md:gap-0 md:grid md:grid-cols-2 md:items-center">
+            <div class="timeline-dot"></div>
+            <div class="md:pr-16 md:text-right pl-10 md:pl-0">
+              <span class="font-mono text-[10px] text-volt tracking-widest">2025 — PRESENT</span>
+              <h4 class="font-heading text-xl md:text-2xl text-white mt-1">B.TECH IT — KPR ENGINEERING</h4>
+              <p class="text-gray-500 text-sm mt-1">Pursuing Information Technology degree. Deep-diving into Data Structures, OOP, and Systems Programming.</p>
+            </div>
+            <div class="hidden md:block md:pl-16">
+              <div class="inline-flex items-center gap-2 bg-dark border border-border rounded-full px-4 py-2">
+                <span class="w-2 h-2 rounded-full bg-volt animate-pulse"></span>
+                <span class="font-mono text-xs text-volt">ACTIVE</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item -->
+          <div class="timeline-item reveal-fade flex items-start gap-6 md:gap-0 md:grid md:grid-cols-2 md:items-center">
+            <div class="timeline-dot"></div>
+            <div class="hidden md:block md:pr-16"></div>
+            <div class="pl-10 md:pl-16">
+              <span class="font-mono text-[10px] text-gray-500 tracking-widest">2025</span>
+              <h4 class="font-heading text-xl md:text-2xl text-white mt-1">PORTFOLIO V3 LAUNCHED</h4>
+              <p class="text-gray-500 text-sm mt-1">Built a full brutalist OS-themed portfolio with custom engine, BIOS boot screen, and zero heavy libraries.</p>
+            </div>
+          </div>
+
+          <!-- Item -->
+          <div class="timeline-item reveal-fade flex items-start gap-6 md:gap-0 md:grid md:grid-cols-2 md:items-center">
+            <div class="timeline-dot"></div>
+            <div class="md:pr-16 md:text-right pl-10 md:pl-0">
+              <span class="font-mono text-[10px] text-gray-500 tracking-widest">2024</span>
+              <h4 class="font-heading text-xl md:text-2xl text-white mt-1">SOLAR PANEL COOLING SYSTEM</h4>
+              <p class="text-gray-500 text-sm mt-1">First hardware project — integrated Python with Arduino for real-time thermal management of solar panels.</p>
+            </div>
+            <div class="hidden md:block md:pl-16"></div>
+          </div>
+
+          <!-- Item -->
+          <div class="timeline-item reveal-fade flex items-start gap-6 md:gap-0 md:grid md:grid-cols-2 md:items-center">
+            <div class="timeline-dot"></div>
+            <div class="hidden md:block md:pr-16"></div>
+            <div class="pl-10 md:pl-16">
+              <span class="font-mono text-[10px] text-gray-500 tracking-widest">2024</span>
+              <h4 class="font-heading text-xl md:text-2xl text-white mt-1">BLENDER 3D — BASIC MODELING</h4>
+              <p class="text-gray-500 text-sm mt-1">Self-taught basic 3D modeling in Blender, focusing on foundational spatial reasoning and simple renders.</p>
+            </div>
+          </div>
+
+          <!-- Item -->
+          <div class="timeline-item reveal-fade flex items-start gap-6 md:gap-0 md:grid md:grid-cols-2 md:items-center">
+            <div class="timeline-dot"></div>
+            <div class="md:pr-16 md:text-right pl-10 md:pl-0">
+              <span class="font-mono text-[10px] text-gray-500 tracking-widest">2023</span>
+              <h4 class="font-heading text-xl md:text-2xl text-white mt-1">FIRST LINE OF CODE</h4>
+              <p class="text-gray-500 text-sm mt-1">Started programming with Python and C. Fell in love with logic and problem solving. No looking back.</p>
+            </div>
+            <div class="hidden md:block md:pl-16"></div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -228,20 +445,20 @@
       <h2 class="font-heading text-6xl md:text-8xl scramble-text" data-text="WHAT I LIKE">WHAT I LIKE</h2>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-panel p-10 md:p-12 border border-border rounded-[2rem] hover:border-volt group overflow-hidden flex flex-col justify-end min-h-[350px] relative haptic-target md:row-span-2 transform hover:scale-[1.02] transition-all duration-300">
+      <div class="bg-panel p-10 md:p-12 border border-border rounded-[2rem] hover:border-white/30 group overflow-hidden flex flex-col justify-end min-h-[350px] relative haptic-target md:row-span-2 transform hover:scale-[1.02] transition-all duration-300">
         <i data-lucide="wrench" class="absolute -right-10 -top-10 w-64 h-64 text-white/5 group-hover:text-volt/10 transition-colors"></i>
         <div class="w-16 h-16 bg-volt text-dark rounded-full flex items-center justify-center mb-8"><i data-lucide="wrench"></i></div>
         <h3 class="font-heading text-4xl mb-4 text-white uppercase">FULL STACK DEV</h3>
         <p class="text-gray-400 font-medium text-lg max-w-sm">Aspiring to master end-to-end web architecture and database management.</p>
       </div>
-      <div class="bg-panel p-8 border border-border rounded-[2rem] flex items-center gap-6 md:gap-8 hover:border-volt group haptic-target transform hover:scale-[1.02] transition-all duration-300">
+      <div class="bg-panel p-8 border border-border rounded-[2rem] flex items-center gap-6 md:gap-8 hover:border-white/30 group haptic-target transform hover:scale-[1.02] transition-all duration-300">
         <div class="w-16 h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors"><i data-lucide="cpu"></i></div>
         <div>
           <h3 class="font-heading text-2xl md:text-3xl mb-1 text-white uppercase">SOFTWARE ENG.</h3>
           <p class="text-gray-400 font-medium text-sm md:text-base">Building scalable, user-centric applications.</p>
         </div>
       </div>
-      <div class="bg-panel p-8 border border-border rounded-[2rem] flex items-center gap-6 md:gap-8 hover:border-volt group haptic-target transform hover:scale-[1.02] transition-all duration-300">
+      <div class="bg-panel p-8 border border-border rounded-[2rem] flex items-center gap-6 md:gap-8 hover:border-white/30 group haptic-target transform hover:scale-[1.02] transition-all duration-300">
         <div class="w-16 h-16 bg-dark border border-border text-volt rounded-full flex items-center justify-center shrink-0 group-hover:bg-volt group-hover:text-dark transition-colors"><i data-lucide="globe"></i></div>
         <div>
           <h3 class="font-heading text-2xl md:text-3xl mb-1 text-white uppercase">LANGUAGES</h3>
