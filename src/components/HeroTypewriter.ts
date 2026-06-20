@@ -8,7 +8,7 @@ const roles = [
 ];
 
 export function initHeroTypewriter(): void {
-  const el = document.getElementById('hero-typewriter');
+  const el = document.getElementById('hero-typewriter') as HTMLElement;
   if (!el) return;
 
   let roleIdx = 0;
